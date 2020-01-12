@@ -7,15 +7,12 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.ControlPanelColors;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.sensors.ColorSensor;
 
 public class ColorWheel extends Component<Robot> {
-    private enum ColorFound {
-        RED, GREEN, BLUE, YELLOW
-    }
-
     private Color[] colors = { ColorMatch.makeColor(Constants.RED[0], Constants.RED[1], Constants.RED[2]),
             ColorMatch.makeColor(Constants.GREEN[0], Constants.GREEN[1], Constants.GREEN[2]),
             ColorMatch.makeColor(Constants.BLUE[0], Constants.BLUE[1], Constants.BLUE[2]),
@@ -30,8 +27,8 @@ public class ColorWheel extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
-        ColorFound currentColor = getSensorColor();
-        ColorFound gotoColor = getGoalSensorColor(getGameColor());
+        ControlPanelColors currentColor = getSensorColor();
+        ControlPanelColors gotoColor = getGoalSensorColor(getGameColor());
 
         if (currentColor == gotoColor) {
             // Stop Moving as we have reached the goal!
@@ -129,27 +126,27 @@ public class ColorWheel extends Component<Robot> {
     public void disabled(Robot robot) {
     }
 
-    private ColorFound getGameColor() {
+    private ControlPanelColors getGameColor() {
         /*
          * Code Borrowed from
          * https://docs.wpilib.org/en/latest/docs/software/wpilib-overview/2020-Game-
          * Data.html
          */
-        ColorFound data;
+        ControlPanelColors data;
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             switch (gameData.charAt(0)) {
             case 'B':
-                data = ColorFound.BLUE;
+                data = ControlPanelColors.BLUE;
                 break;
             case 'G':
-                data = ColorFound.GREEN;
+                data = ControlPanelColors.GREEN;
                 break;
             case 'R':
-                data = ColorFound.RED;
+                data = ControlPanelColors.RED;
                 break;
             case 'Y':
-                data = ColorFound.YELLOW;
+                data = ControlPanelColors.YELLOW;
                 break;
             default:
                 data = null;
@@ -162,20 +159,20 @@ public class ColorWheel extends Component<Robot> {
         return data;
     }
 
-    private ColorFound getSensorColor() {
-        ColorFound data;
+    private ControlPanelColors getSensorColor() {
+        ControlPanelColors data;
         switch (colorSensor.findColorMatch()) {
         case 0:
-            data = ColorFound.RED;
+            data = ControlPanelColors.RED;
             break;
         case 1:
-            data = ColorFound.GREEN;
+            data = ControlPanelColors.GREEN;
             break;
         case 2:
-            data = ColorFound.BLUE;
+            data = ControlPanelColors.BLUE;
             break;
         case 3:
-            data = ColorFound.YELLOW;
+            data = ControlPanelColors.YELLOW;
             break;
         default:
             data = null;
@@ -184,39 +181,33 @@ public class ColorWheel extends Component<Robot> {
         return data;
     }
 
-    private ColorFound getGoalSensorColor(ColorFound color) {
+    private ControlPanelColors getGoalSensorColor(ControlPanelColors color) {
         // Break if the input is null
         assert (color != null);
 
-        ColorFound goal;
-        String goalStr;
+        ControlPanelColors goal;
 
         // Now This is Art!
         switch (color) {
         case RED:
-            goal = ColorFound.BLUE;
-            goalStr = "Blue";
+            goal = ControlPanelColors.BLUE;
             break;
         case GREEN:
-            goal = ColorFound.YELLOW;
-            goalStr = "Yellow";
+            goal = ControlPanelColors.YELLOW;
             break;
         case BLUE:
-            goal = ColorFound.RED;
-            goalStr = "Red";
+            goal = ControlPanelColors.RED;
             break;
         case YELLOW:
-            goal = ColorFound.GREEN;
-            goalStr = "Green";
+            goal = ControlPanelColors.GREEN;
             break;
         default:
             goal = null;
-            goalStr = "";
             break;
         }
 
         if (goal != null)
-            Logger.l("Moving to %s", goalStr);
+            Logger.l("Moving to %s", goal.getName());
         return goal;
     }
 
