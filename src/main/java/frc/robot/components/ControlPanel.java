@@ -13,7 +13,7 @@ import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.sensors.ColorSensor;
 
-public class ColorWheel extends Component<Robot> {
+public class ControlPanel extends Component<Robot> {
     private Color[] colors = { ColorMatch.makeColor(Constants.RED[0], Constants.RED[1], Constants.RED[2]),
             ColorMatch.makeColor(Constants.GREEN[0], Constants.GREEN[1], Constants.GREEN[2]),
             ColorMatch.makeColor(Constants.BLUE[0], Constants.BLUE[1], Constants.BLUE[2]),
