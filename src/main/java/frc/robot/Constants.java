@@ -17,6 +17,8 @@ public final class Constants {
     public static final double[] COMP_GREEN = { 0, 1, 0 };
     public static final double[] COMP_BLUE = { 0, 1, 1 };
 
+    // This code will automaticly change which color profile to use depending if at
+    // competition or at the school.
     public static final double[] YELLOW = (ROBOT_TYPE == RobotType.COMPETITION) ? COMP_YELLOW : PRAC_YELLOW;
     public static final double[] RED = (ROBOT_TYPE == RobotType.COMPETITION) ? COMP_RED : PRAC_RED;
     public static final double[] GREEN = (ROBOT_TYPE == RobotType.COMPETITION) ? COMP_GREEN : PRAC_GREEN;
