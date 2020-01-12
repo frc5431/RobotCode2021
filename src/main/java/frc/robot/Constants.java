@@ -12,6 +12,12 @@ public final class Constants {
     // TODO: Set Proper Motor Values
     public static final int CONTROLPANEL_CANTALON_ID = 0;
     public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
+    
+    // ================================================================================
+    // Vision Data
+    // ================================================================================
+
+    public static final String VISION_FRONT_LIMELIGHT = "";
 
     // ================================================================================
     // Control Panel Specific
