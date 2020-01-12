@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.List;
 
+import frc.robot.components.*;
+
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.robot.TitanRobot;
@@ -11,16 +13,25 @@ public class Robot extends TitanRobot<Robot> {
     DISABLED, AUTO, TELEOP, TEST
   }
 
+  // Component Objects
+  private ColorWheel colorWheel;
+
+  // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
   private List<Component<Robot>> components = List.of();
+
+  // The Following is Initializer Functions
 
   @Override
   public void robotInit() {
     Logger.DEBUG = true;
+
+    // Initialize Components
+    colorWheel = new ColorWheel();
+
+    // Add Components to components Array
+    components = List.of(colorWheel);
   }
-
-
-  // The Following is Initializer Functions
 
   @Override
   public void teleopInit() {
