@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.ControlPanelColors;
+import frc.robot.util.ControlPanelStages;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.sensors.ColorSensor;
@@ -27,13 +28,38 @@ public class ColorWheel extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
+        switch (robot.getControlPanelStage()) {
+        case POSITIONAL:
+            positional(robot);
+            break;
+        case ROTATIONAL:
+            rotational(robot);
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    public void disabled(Robot robot) {
+    }
+
+    private void rotational(Robot robot) {
+        if(true) {
+            robot.setControlPanelStage(ControlPanelStages.POSITIONAL);
+        }
+    }
+
+    private void positional(Robot robot) {
         ControlPanelColors currentColor = getSensorColor();
         ControlPanelColors gotoColor = getGoalSensorColor(getGameColor());
 
         if (currentColor == gotoColor) {
             // Stop Moving as we have reached the goal!
             // TODO: add stop motor code
-            Logger.l("Color Goal has been Reached!\nSkipping Color Wheen Code until FMS changes color.");
+            // TODO: add ability to redo positional
+            robot.setControlPanelStage(ControlPanelStages.OFF);
+            Logger.l("Color Goal has been Reached! Positional Code Says Goodbye!");
         }
 
         // To anyone looking in the future the wheel in this scenario is the object we
@@ -119,11 +145,6 @@ public class ColorWheel extends Component<Robot> {
         default:
             return;
         }
-
-    }
-
-    @Override
-    public void disabled(Robot robot) {
     }
 
     private ControlPanelColors getGameColor() {
