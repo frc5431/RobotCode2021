@@ -3,6 +3,8 @@ package frc.robot.components;
 import com.revrobotics.ColorMatch;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
 
 import frc.robot.Constants;
@@ -21,9 +23,21 @@ public class ControlPanel extends Component<Robot> {
 
     private ColorSensor colorSensor;
 
+    private Talon talon;
+    private Encoder encoder;
+
+    public ControlPanel() {
+        colorSensor = new ColorSensor(Constants.CONTROLPANEL_CONFIDENCE, colors);
+        talon = new Talon(Constants.CONTROLPANEL_CANTALON_ID);
+        talon.setInverted(Constants.CONTROLPANEL_CANTALON_REVERSE);
+
+        encoder = new Encoder(Constants.CONTROLPANEL_ENCODER_SOURCE_A, Constants.CONTROLPANEL_ENCODER_SOURCE_B);
+        encoder.setDistancePerPulse((Constants.CONTROLPANEL_MOTOR_WHEEL_DIAMETER_FEET * Math.PI)
+                / Constants.CONTROLPANEL_ENCODER_PULSES_PER_ROTATION);
+    }
+
     @Override
     public void init(Robot robot) {
-        colorSensor = new ColorSensor(Constants.CONTROLPANEL_CONFIDENCE, colors);
     }
 
     @Override
@@ -45,8 +59,15 @@ public class ControlPanel extends Component<Robot> {
     }
 
     private void rotational(Robot robot) {
-        if(true) {
+        // TODO: Test the following code as it is all done in my head.
+        final double controlPanelCircumfrence = (Math.PI * 2.666);
+        final double talonWheelCircumfrence = (Math.PI * Constants.CONTROLPANEL_MOTOR_WHEEL_DIAMETER_FEET);
+        final double goalDistance = (controlPanelCircumfrence / talonWheelCircumfrence)
+                * Constants.CONTROLPANEL_ROTATIONS;
+        if (encoder.getDistance() > goalDistance) {
             robot.setControlPanelStage(ControlPanelStages.POSITIONAL);
+        } else {
+            talon.set(1);
         }
     }
 
@@ -56,9 +77,10 @@ public class ControlPanel extends Component<Robot> {
 
         if (currentColor == gotoColor) {
             // Stop Moving as we have reached the goal!
-            // TODO: add stop motor code
+            talon.set(0);
             // TODO: add ability to redo positional
             robot.setControlPanelStage(ControlPanelStages.OFF);
+            encoder.reset();
             Logger.l("Color Goal has been Reached! Positional Code Says Goodbye!");
         }
 
@@ -240,14 +262,14 @@ public class ControlPanel extends Component<Robot> {
 
         // We do not need to worry about slowing down with PID as the wheel is slow to
         // turn at max speed on a 775. the logic in the periodic function will be able
-        // to stop the motor.
+        // to stop the motor. It could be done as we have the encoder code ready.
 
         if (cw) {
             // Turn Wheel 45 degrees clockwise
-            // TODO: Add Code to spin the motor counter clockwise
+            talon.set(1);
         } else {
             // Turn Wheel 45 degrees counter clockwise
-            // TODO: Add Code to spin the motor clockwise
+            talon.set(-1);
         }
 
     }
