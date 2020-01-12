@@ -26,6 +26,8 @@ public final class Constants {
 
     public static final double CONTROLPANEL_CONFIDENCE = 0.75;
 
+    // Color Sensor Calibration (RGB)
+
     // TODO: Calibrate Sensor for dummy colors at test field
     public static final double[] PRAC_YELLOW = { 0, 0, 0 };
     public static final double[] PRAC_RED = { 0, 0, 0 };
