@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.util.MotionMagic;
 import frc.robot.util.RobotType;
 
 public final class Constants {
@@ -10,8 +11,25 @@ public final class Constants {
     // ================================================================================
 
     // TODO: Set Proper Motor Values
+
+    public static final int DRIVEBASE_LEFT_FRONT_ID = 0;
+    public static final int DRIVEBASE_LEFT_BACK_ID = 1;
+    public static final boolean DRIVEBASE_LEFT_REVERSE = false;
+
+    public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;    
+    public static final int DRVIEBASE_RIGHT_BACK_ID = 3;
+    public static final boolean DRIVEBASE_RIGHT_REVERSE = false;
+
     public static final int CONTROLPANEL_CANTALON_ID = 0;
     public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
+
+    // ================================================================================
+    // Drive Base Motion Magic
+    // ================================================================================
+
+    // TODO: Set Proper PID Values
+    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_LEFT = new MotionMagic(0, 0.2, 0, 0);
+    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_RIGHT = new MotionMagic(0, 0.2, 0, 0);
 
     // ================================================================================
     // Control Panel Specific
