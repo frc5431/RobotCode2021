@@ -17,6 +17,7 @@ public class Robot extends TitanRobot<Robot> {
   private ControlPanel colorWheel;
   private Dashboard dashboard;
   private Drivebase drivebase;
+  private Teleop teleop;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -33,9 +34,10 @@ public class Robot extends TitanRobot<Robot> {
     colorWheel = new ControlPanel();
     dashboard = new Dashboard();
     drivebase = new Drivebase();
+    teleop = new Teleop();
 
     // Add Components to components Array
-    components = List.of(colorWheel, dashboard, drivebase);
+    components = List.of(colorWheel, dashboard, drivebase, teleop);
   }
 
   @Override
@@ -116,5 +118,19 @@ public class Robot extends TitanRobot<Robot> {
    */
   public void setControlPanelStage(ControlPanelStages controlPanelStage) {
     this.controlPanelStage = controlPanelStage;
+  }
+
+  /**
+   * @return the drivebase
+   */
+  public Drivebase getDrivebase() {
+    return drivebase;
+  }
+  
+  /**
+   * @return the dashboard
+   */
+  public Dashboard getDashboard() {
+    return dashboard;
   }
 }

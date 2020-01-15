@@ -7,6 +7,23 @@ public final class Constants {
     public static final RobotType ROBOT_TYPE = RobotType.PRACTICE;
 
     // ================================================================================
+    // Teleop Controller Data
+    // ================================================================================
+
+    /*
+     * Controller name does not need to be the enitre string but must contain a word
+     * from the HID name.
+     * 
+     * Capitalization does not matter. All strings shoud be translated to lowercase
+     * by the software. Setting the the name of the controller is for safty as you
+     * do not want a secondary controller accidentally controlling the robot when it
+     * may have a different layout.
+     */
+
+    public static final int DRIVER_XBOX_ID = 0;
+    public static final String DRIVER_XBOX_NAME = "xbox 360";
+
+    // ================================================================================
     // Motor ID`s and Reverse State
     // ================================================================================
 
@@ -16,7 +33,7 @@ public final class Constants {
     public static final int DRIVEBASE_LEFT_BACK_ID = 1;
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
 
-    public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;    
+    public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;
     public static final int DRVIEBASE_RIGHT_BACK_ID = 3;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = false;
 
