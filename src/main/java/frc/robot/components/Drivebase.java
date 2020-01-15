@@ -97,14 +97,6 @@ public class Drivebase extends Component<Robot> {
             motor.set(ControlMode.MotionMagic, value);
             break;
         case PERCENTAGE:
-
-            /*
-             * Assertion is used to break if an improper value is used for percentage
-             * driving, for example the user wanted motion magic but percentage was passed.
-             */
-            assert (value > 1);
-            assert (value < -1);
-
             motor.set(ControlMode.PercentOutput, value);
             break;
         }
