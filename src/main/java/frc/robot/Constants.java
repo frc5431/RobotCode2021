@@ -21,6 +21,7 @@ public final class Constants {
      */
 
     public static final int DRIVER_XBOX_ID = 0;
+    public static final double DRIVER_XBOX_DEADZONE = 0.10;
     public static final String DRIVER_XBOX_NAME = "xbox 360";
 
     // ================================================================================

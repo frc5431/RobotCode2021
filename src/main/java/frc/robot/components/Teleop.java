@@ -13,6 +13,7 @@ public class Teleop extends Component<Robot> {
 
     public Teleop() {
         driver = new Xbox(Constants.DRIVER_XBOX_ID);
+        driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
     }
 
     @Override
