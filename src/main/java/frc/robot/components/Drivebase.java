@@ -98,6 +98,10 @@ public class Drivebase extends Component<Robot> {
             break;
         case PERCENTAGE:
 
+            /*
+             * Assertion is used to break if an improper value is used for percentage
+             * driving, for example the user wanted motion magic but percentage was passed.
+             */
             assert (value > 1);
             assert (value < -1);
 
@@ -108,8 +112,12 @@ public class Drivebase extends Component<Robot> {
     }
 
     public void drive(MotorMode mode, double left, double right) {
+        /*
+         * Multithread this for that nanosecond of performance increace!!! Not really.
+         * This Code is used to both set the speed of the left and right sode of the
+         * drivebase.
+         */
         driveMotor(this.left, mode, left);
         driveMotor(this.right, mode, right);
     }
-
 }
