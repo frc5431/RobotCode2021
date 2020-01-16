@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 
 public class Drivebase extends Component<Robot> {
@@ -83,6 +84,8 @@ public class Drivebase extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
+        String msg = "Left: (%f), Right: (%f)";
+        Logger.l(msg, left.get(), right.get());
     }
 
     @Override
