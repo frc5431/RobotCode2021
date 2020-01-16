@@ -245,6 +245,8 @@ public class ControlPanel extends Component<Robot> {
         ControlPanelColors goal;
 
         // Now This is Art!
+        // Our sensor sees x but the field sensor see y
+        // This calculates that.
         switch (color) {
         case RED:
             goal = ControlPanelColors.BLUE;
