@@ -17,7 +17,7 @@ public class Drivebase extends Component<Robot> {
     public Drivebase() {
         left = new WPI_TalonFX(Constants.DRIVEBASE_LEFT_FRONT_ID);
         right = new WPI_TalonFX(Constants.DRIVEBASE_RIGHT_FRONT_ID);
-        
+
         _leftFollow = new WPI_TalonFX(Constants.DRIVEBASE_LEFT_BACK_ID);
         _rightFollow = new WPI_TalonFX(Constants.DRIVEBASE_RIGHT_BACK_ID);
 
