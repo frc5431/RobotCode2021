@@ -79,7 +79,7 @@ public class ControlPanel extends Component<Robot> {
         if(current == lastColor) {
             talon.set(1);
         } else if(colorChanges >= 24) {
-            talon.set(1);
+            talon.set(0);
         } else {
             colorChanges++;
         }
