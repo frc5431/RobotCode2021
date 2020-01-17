@@ -35,7 +35,7 @@ public final class Constants {
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
 
     public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;
-    public static final int DRVIEBASE_RIGHT_BACK_ID = 3;
+    public static final int DRIVEBASE_RIGHT_BACK_ID = 3;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = false;
 
     public static final int CONTROLPANEL_CANTALON_ID = 0;
