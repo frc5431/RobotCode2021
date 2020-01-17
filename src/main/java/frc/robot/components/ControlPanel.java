@@ -3,8 +3,11 @@ package frc.robot.components;
 import com.revrobotics.ColorMatch;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Talon;
+// import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.util.Color;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -22,7 +25,7 @@ public class ControlPanel extends Component<Robot> {
 
     private ColorSensor colorSensor;
 
-    private Talon talon;
+    private WPI_TalonFX talon;
     // private Encoder encoder;
 
     private ControlPanelColors lastColor;
@@ -30,8 +33,9 @@ public class ControlPanel extends Component<Robot> {
 
     public ControlPanel() {
         colorSensor = new ColorSensor(Constants.CONTROLPANEL_CONFIDENCE, colors);
-        talon = new Talon(Constants.CONTROLPANEL_CANTALON_ID);
+        talon = new WPI_TalonFX(Constants.CONTROLPANEL_CANTALON_ID);
         talon.setInverted(Constants.CONTROLPANEL_CANTALON_REVERSE);
+        talon.setNeutralMode(NeutralMode.Brake);
 
         // encoder = new Encoder(Constants.CONTROLPANEL_ENCODER_SOURCE_A, Constants.CONTROLPANEL_ENCODER_SOURCE_B);
         // encoder.setDistancePerPulse((Constants.CONTROLPANEL_MOTOR_WHEEL_DIAMETER_FEET * Math.PI)
