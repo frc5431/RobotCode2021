@@ -21,11 +21,11 @@ public class Drivebase extends Component<Robot> {
         _leftFollow = new WPI_TalonFX(Constants.DRIVEBASE_LEFT_BACK_ID);
         _rightFollow = new WPI_TalonFX(Constants.DRIVEBASE_RIGHT_BACK_ID);
 
-        left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
-        right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
-
         _leftFollow.follow(left);
         _rightFollow.follow(right);
+
+        left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
+        right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
     }
 
     @Override
