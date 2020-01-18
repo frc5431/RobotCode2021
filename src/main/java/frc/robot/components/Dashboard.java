@@ -45,4 +45,12 @@ public class Dashboard extends Component<Robot> {
     public DriveType getSelectedDriveType() {
         return driveType.getSelected();
     }
+
+    public void putString(String key, String value) {
+        SmartDashboard.putString(key, value);
+    }
+
+    public void putNumber(String key, double value) {
+        SmartDashboard.putNumber(key, value);
+    }
 }

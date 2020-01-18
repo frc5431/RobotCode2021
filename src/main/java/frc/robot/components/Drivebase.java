@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
@@ -21,17 +22,19 @@ public class Drivebase extends Component<Robot> {
     private WPI_TalonFX _rightFollow;
 
     public Drivebase() {
-        left = new WPI_TalonFX(Constants.DRIVEBASE_LEFT_FRONT_ID);
-        right = new WPI_TalonFX(Constants.DRIVEBASE_RIGHT_FRONT_ID);
+        left = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_LEFT_ID);
+        right = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_RIGHT_ID);
 
-        _leftFollow = new WPI_TalonFX(Constants.DRIVEBASE_LEFT_BACK_ID);
-        _rightFollow = new WPI_TalonFX(Constants.DRIVEBASE_RIGHT_BACK_ID);
-
-        _leftFollow.follow(left);
-        _rightFollow.follow(right);
+        _leftFollow = new WPI_TalonFX(Constants.DRIVEBASE_BACK_LEFT_ID);
+        _rightFollow = new WPI_TalonFX(Constants.DRIVEBASE_BACK_RIGHT_ID);
 
         left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
         right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
+        _leftFollow.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
+        _rightFollow.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
+
+        _leftFollow.follow(left);
+        _rightFollow.follow(right);
 
         /* Factory Default all hardware to prevent unexpected behavior */
         left.configFactoryDefault();
@@ -101,11 +104,12 @@ public class Drivebase extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
-        final String template = "Motor Set: (%s), Left: (%f), Right: (%f)";
-        final String masterMotors = String.format(template, "Master", left.get(), right.get());
-        final String slaveMotors = String.format(template, "Slave", _leftFollow.get(), _rightFollow.get());
+        final String template = "Left: (%f), Right: (%f)";
+        final String masterMotors = String.format(template, left.get(), right.get());
+        final String slaveMotors = String.format(template, _leftFollow.get(), _rightFollow.get());
 
-        Logger.l("%s\n%s", masterMotors, slaveMotors);
+        robot.getDashboard().putString("Master Motors", masterMotors);
+        robot.getDashboard().putString("Slave Motors", slaveMotors);
     }
 
     @Override

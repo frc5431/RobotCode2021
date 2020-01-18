@@ -37,7 +37,7 @@ public class Robot extends TitanRobot<Robot> {
     teleop = new Teleop();
 
     // Add Components to components Array
-    components = List.of(colorWheel, dashboard, drivebase, teleop);
+    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop);
   }
 
   @Override
