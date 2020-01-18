@@ -32,11 +32,23 @@ public final class Constants {
 
     public static final int DRIVEBASE_LEFT_FRONT_ID = 0;
     public static final int DRIVEBASE_LEFT_BACK_ID = 1;
-    public static final boolean DRIVEBASE_LEFT_REVERSE = false;
+    public static final boolean DRIVEBASE_LEFT_REVERSE = true;
 
     public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;
     public static final int DRIVEBASE_RIGHT_BACK_ID = 3;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = false;
+
+    public static final int CLIMBER_BALANCER_ID = 4;
+    public static final boolean CLIMBER_BALANCER_REVERSE = false;
+
+    public static final int CLIMBER_ELEVATOR_ID = 5;
+    public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
+
+    public static final int SHOOTER_FLYWHEEL_ID = 6;
+    public static final boolean SHOOTER_FLYWHEEL_REVERSE = false;
+
+    public static final int SHOOTER_FEEDER_ID = 7;
+    public static final boolean SHOOTER_FEEDER_REVERSE = false;
 
     public static final int CONTROLPANEL_CANTALON_ID = 0;
     public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
