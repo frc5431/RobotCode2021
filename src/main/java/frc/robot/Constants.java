@@ -37,12 +37,12 @@ public final class Constants {
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
     public static final int DRIVEBASE_TIMEOUT_MS = 30;
 
-    public static final int DRIVEBASE_LEFT_FRONT_ID = 0;
-    public static final int DRIVEBASE_LEFT_BACK_ID = 1;
+    public static final int DRIVEBASE_LEFT_FRONT_ID = 1;
+    public static final int DRIVEBASE_LEFT_BACK_ID = 3;
     public static final boolean DRIVEBASE_LEFT_REVERSE = true;
 
     public static final int DRIVEBASE_RIGHT_FRONT_ID = 2;
-    public static final int DRIVEBASE_RIGHT_BACK_ID = 3;
+    public static final int DRIVEBASE_RIGHT_BACK_ID = 4;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = false;
 
     public static final int CLIMBER_BALANCER_ID = 4;
