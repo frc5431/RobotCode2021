@@ -34,9 +34,7 @@ public final class Constants {
     // Motor ID`s and Reverse State
     // ================================================================================
 
-    public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
-    public static final int DRIVEBASE_TIMEOUT_MS = 30;
-
+    // Drivebase Related
     public static final int DRIVEBASE_FRONT_LEFT_ID = 1;
     public static final int DRIVEBASE_BACK_LEFT_ID = 3;
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
@@ -45,12 +43,16 @@ public final class Constants {
     public static final int DRIVEBASE_BACK_RIGHT_ID = 4;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
 
+    public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
+
+    // Climber Related
     public static final int CLIMBER_BALANCER_ID = 5;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
     public static final int CLIMBER_ELEVATOR_ID = 6;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
+    // Shooter Flywheel Related
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 7;
     public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = true;
 
@@ -59,20 +61,25 @@ public final class Constants {
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
 
+    // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = false;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
 
+    // Intake Related
     public static final int INTAKE_ID = 10;
     public static final boolean INTAKE_REVERSE = false;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
 
+    // Control Panel Related
     public static final int CONTROLPANEL_CANTALON_ID = 0;
     public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
 
     // ================================================================================
     // Drive Base Motion Magic
     // ================================================================================
+
+    public static final int DRIVEBASE_TIMEOUT_MS = 30;
 
     public static final int SLOT_0 = 0;
     public static final int SLOT_1 = 1;
