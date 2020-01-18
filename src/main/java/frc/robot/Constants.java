@@ -50,6 +50,9 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 7;
     public static final boolean SHOOTER_FEEDER_REVERSE = false;
 
+    public static final int INTAKE_ID = 8;
+    public static final boolean INTAKE_REVERSE = false;
+
     public static final int CONTROLPANEL_CANTALON_ID = 0;
     public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
 
