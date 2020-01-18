@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import frc.robot.util.MotionMagic;
 import frc.robot.util.RobotType;
 
@@ -28,7 +30,8 @@ public final class Constants {
     // Motor ID`s and Reverse State
     // ================================================================================
 
-    // TODO: Set Proper Motor Values
+    public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
+    public static final int DRIVEBASE_TIMEOUT_MS = 30;
 
     public static final int DRIVEBASE_LEFT_FRONT_ID = 0;
     public static final int DRIVEBASE_LEFT_BACK_ID = 1;
@@ -57,9 +60,17 @@ public final class Constants {
     // Drive Base Motion Magic
     // ================================================================================
 
+    public static final int SLOT_0 = 0;
+    public static final int SLOT_1 = 1;
+    public static final int SLOT_2 = 2;
+    public static final int SLOT_3 = 3;
+
     // TODO: Set Proper PID Values
-    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_LEFT = new MotionMagic(0, 0.2, 0, 0);
-    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_RIGHT = new MotionMagic(0, 0.2, 0, 0);
+    // P, I, D, F, INTERGRAL, PEAKOUTPUT, CLOSEDLOOPTIME_MS
+    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
+    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_TURN_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
+    public static final int DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT = SLOT_0;
+    public static final int DRIVEBASE_MOTIONMAGIC_TURN_SLOT = SLOT_1;
 
     // ================================================================================
     // Control Panel Specific
