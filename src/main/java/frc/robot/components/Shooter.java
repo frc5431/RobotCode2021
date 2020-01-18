@@ -1,6 +1,5 @@
 package frc.robot.components;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -11,25 +10,25 @@ import frc.team5431.titan.core.robot.Component;
 
 public class Shooter extends Component<Robot> {
 
-    WPI_TalonFX flywheel, feedLeft, feedRight;
-    SpeedControllerGroup feed;
+    WPI_TalonFX flywheelLeft, flywheelRight, feed;
+    SpeedControllerGroup flywheel;
 
     Toggle feedToggle, flywheelToggle;
 
     public Shooter() {
-        flywheel = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_ID);
-        flywheel.setInverted(Constants.SHOOTER_FLYWHEEL_REVERSE);
-        flywheel.setNeutralMode(NeutralMode.Coast);
+        flywheelLeft = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
+        flywheelLeft.setInverted(Constants.SHOOTER_FLYWHEEL_LEFT_REVERSE);
+        flywheelLeft.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
 
-        feedLeft = new WPI_TalonFX(Constants.SHOOTER_FEEDER_LEFT_ID);
-        feedLeft.setInverted(Constants.SHOOTER_FEEDER_LEFT_REVERSE);
-        feedLeft.setNeutralMode(NeutralMode.Brake);
+        flywheelRight = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_RIGHT_ID);
+        flywheelRight.setInverted(Constants.SHOOTER_FLYWHEEL_RIGHT_REVERSE);
+        flywheelRight.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
 
-        feedRight = new WPI_TalonFX(Constants.SHOOTER_FEEDER_RIGHT_ID);
-        feedRight.setInverted(Constants.SHOOTER_FEEDER_RIGHT_REVERSE);
-        feedRight.setNeutralMode(NeutralMode.Brake);
+        feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
+        feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
+        feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
-        feed = new SpeedControllerGroup(feedLeft, feedRight);
+        flywheel = new SpeedControllerGroup(flywheelLeft, flywheelRight);
 
         feedToggle = new Toggle();
         flywheelToggle = new Toggle();

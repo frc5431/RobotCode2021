@@ -14,7 +14,7 @@ public class Robot extends TitanRobot<Robot> {
   }
 
   // Component Objects
-  private ControlPanel colorWheel;
+  // private ControlPanel colorWheel;
   private Dashboard dashboard;
   private Drivebase drivebase;
   private Teleop teleop;
@@ -33,7 +33,7 @@ public class Robot extends TitanRobot<Robot> {
     Logger.DEBUG = true;
 
     // Initialize Components
-    colorWheel = new ControlPanel();
+    // colorWheel = new ControlPanel();
     dashboard = new Dashboard();
     drivebase = new Drivebase();
     teleop = new Teleop();

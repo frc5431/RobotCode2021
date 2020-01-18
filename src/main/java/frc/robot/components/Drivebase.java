@@ -6,12 +6,10 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
 import frc.robot.util.RobotType;
-import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 
 public class Drivebase extends Component<Robot> {

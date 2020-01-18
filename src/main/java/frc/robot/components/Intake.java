@@ -1,6 +1,5 @@
 package frc.robot.components;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
@@ -16,7 +15,7 @@ public class Intake extends Component<Robot> {
     public Intake() {
         intakeMotor = new WPI_TalonFX(Constants.INTAKE_ID);
         intakeMotor.setInverted(Constants.INTAKE_REVERSE);
-        intakeMotor.setNeutralMode(NeutralMode.Coast);
+        intakeMotor.setNeutralMode(Constants.INTAKE_NEUTRALMODE);
 
         toggle = new Toggle();
         toggle.setState(false);

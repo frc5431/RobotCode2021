@@ -51,20 +51,24 @@ public final class Constants {
     public static final int CLIMBER_ELEVATOR_ID = 6;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
-    public static final int SHOOTER_FLYWHEEL_ID = 7;
-    public static final boolean SHOOTER_FLYWHEEL_REVERSE = false;
+    public static final int SHOOTER_FLYWHEEL_LEFT_ID = 7;
+    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = true;
 
-    public static final int SHOOTER_FEEDER_LEFT_ID = 8;
-    public static final boolean SHOOTER_FEEDER_LEFT_REVERSE = false;
+    public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 8;
+    public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = false;
 
-    public static final int SHOOTER_FEEDER_RIGHT_ID = 9;
-    public static final boolean SHOOTER_FEEDER_RIGHT_REVERSE = true;
+    public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
+
+    public static final int SHOOTER_FEEDER_ID = 9;
+    public static final boolean SHOOTER_FEEDER_REVERSE = false;
+    public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
 
     public static final int INTAKE_ID = 10;
     public static final boolean INTAKE_REVERSE = false;
+    public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
 
-    // public static final int CONTROLPANEL_CANTALON_ID = 0;
-    // public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
+    public static final int CONTROLPANEL_CANTALON_ID = 0;
+    public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
 
     // ================================================================================
     // Drive Base Motion Magic
