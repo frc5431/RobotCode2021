@@ -69,7 +69,7 @@ public class Teleop extends Component<Robot> {
                 break;
             }
 
-            drivebase.drive(left, right);
+            drivebase.drivePercentage(left, right);
         }
         else {
             Logger.e("Driver Controller Not Connected");
