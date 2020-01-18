@@ -125,7 +125,7 @@ public class Drivebase extends Component<Robot> {
         right.set(ControlMode.PercentOutput, driveRight);
     }
 
-    public void driveMotionMagic(double target, double feed) {
+    public void driveMotionMagic(double target) {
         right.set(ControlMode.MotionMagic, target);
         left.follow(right);
     }
