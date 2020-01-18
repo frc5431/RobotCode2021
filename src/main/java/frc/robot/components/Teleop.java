@@ -3,6 +3,7 @@ package frc.robot.components;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Robot.Mode;
+import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
@@ -10,10 +11,14 @@ import frc.team5431.titan.core.robot.Component;
 public class Teleop extends Component<Robot> {
 
     private Xbox driver;
+    private LogitechExtreme3D operator;
 
     public Teleop() {
         driver = new Xbox(Constants.DRIVER_XBOX_ID);
         driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
+
+        operator = new LogitechExtreme3D(Constants.OPERATOR_LOGITECH_ID);
+        operator.setDeadzone(Constants.OPERATOR_LOGITECH_DEADZONE);
     }
 
     @Override
@@ -28,6 +33,7 @@ public class Teleop extends Component<Robot> {
 
         // Run the respective controller code!
         driver(robot);
+        operator(robot);
     }
 
     @Override
@@ -70,4 +76,13 @@ public class Teleop extends Component<Robot> {
         }
     }
 
+    private void operator(Robot robot) {
+        final String operatorName  = operator.getName().toLowerCase();
+
+        if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
+
+        } else {
+            Logger.e("Operator Controller Not Connected");
+        }
+    }
 }
