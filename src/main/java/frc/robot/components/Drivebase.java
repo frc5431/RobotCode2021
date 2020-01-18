@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
+import frc.robot.util.RobotType;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 
@@ -66,22 +67,22 @@ public class Drivebase extends Component<Robot> {
 
     private void setPID(final int slot, final MotionMagic gain) {
         ErrorCode eCode = ErrorCode.OK;
-        
+
         eCode = right.config_kP(slot, gain.kP);
         assert (eCode == ErrorCode.OK);
-        
+
         eCode = right.config_kI(slot, gain.kI);
         assert (eCode == ErrorCode.OK);
-        
+
         eCode = right.config_kD(slot, gain.kD);
         assert (eCode == ErrorCode.OK);
-        
+
         eCode = right.config_kF(slot, gain.kF);
         assert (eCode == ErrorCode.OK);
-        
+
         eCode = right.config_IntegralZone(slot, gain.kIntegralZone, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
-        
+
         eCode = right.configClosedLoopPeakOutput(slot, gain.kPeakOutput, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
@@ -108,8 +109,10 @@ public class Drivebase extends Component<Robot> {
         final String masterMotors = String.format(template, left.get(), right.get());
         final String slaveMotors = String.format(template, _leftFollow.get(), _rightFollow.get());
 
-        robot.getDashboard().putString("Master Motors", masterMotors);
-        robot.getDashboard().putString("Slave Motors", slaveMotors);
+        if (Constants.ROBOT_TYPE == RobotType.PRACTICE) {
+            robot.getDashboard().putString("Master Motors", masterMotors);
+            robot.getDashboard().putString("Slave Motors", slaveMotors);
+        }
     }
 
     @Override

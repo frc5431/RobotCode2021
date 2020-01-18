@@ -18,6 +18,8 @@ public class Robot extends TitanRobot<Robot> {
   private Dashboard dashboard;
   private Drivebase drivebase;
   private Teleop teleop;
+  private Intake intake;
+  private Shooter shooter;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -35,9 +37,11 @@ public class Robot extends TitanRobot<Robot> {
     dashboard = new Dashboard();
     drivebase = new Drivebase();
     teleop = new Teleop();
+    intake = new Intake();
+    shooter = new Shooter();
 
     // Add Components to components Array
-    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop);
+    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter);
   }
 
   @Override
@@ -132,5 +136,26 @@ public class Robot extends TitanRobot<Robot> {
    */
   public Dashboard getDashboard() {
     return dashboard;
+  }
+
+  /**
+   * @return the teleop
+   */
+  public Teleop getTeleop() {
+    return teleop;
+  }
+
+  /**
+   * @return the intake
+   */
+  public Intake getIntake() {
+    return intake;
+  }
+
+  /**
+   * @return the shooter
+   */
+  public Shooter getShooter() {
+    return shooter;
   }
 }

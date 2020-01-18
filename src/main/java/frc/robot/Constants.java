@@ -45,23 +45,26 @@ public final class Constants {
     public static final int DRIVEBASE_BACK_RIGHT_ID = 4;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
 
-    public static final int CLIMBER_BALANCER_ID = 4;
+    public static final int CLIMBER_BALANCER_ID = 5;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
-    public static final int CLIMBER_ELEVATOR_ID = 5;
+    public static final int CLIMBER_ELEVATOR_ID = 6;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
-    public static final int SHOOTER_FLYWHEEL_ID = 6;
+    public static final int SHOOTER_FLYWHEEL_ID = 7;
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = false;
 
-    public static final int SHOOTER_FEEDER_ID = 7;
-    public static final boolean SHOOTER_FEEDER_REVERSE = false;
+    public static final int SHOOTER_FEEDER_LEFT_ID = 8;
+    public static final boolean SHOOTER_FEEDER_LEFT_REVERSE = false;
 
-    public static final int INTAKE_ID = 8;
+    public static final int SHOOTER_FEEDER_RIGHT_ID = 9;
+    public static final boolean SHOOTER_FEEDER_RIGHT_REVERSE = true;
+
+    public static final int INTAKE_ID = 10;
     public static final boolean INTAKE_REVERSE = false;
 
-    public static final int CONTROLPANEL_CANTALON_ID = 0;
-    public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
+    // public static final int CONTROLPANEL_CANTALON_ID = 0;
+    // public static final boolean CONTROLPANEL_CANTALON_REVERSE = false;
 
     // ================================================================================
     // Drive Base Motion Magic
