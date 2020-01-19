@@ -31,11 +31,12 @@ public class Dashboard extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         // Setting Data from dashboard
-        robot.getShooter().setShooterSpeed(getNumber("Shooter Speed",0.5));
-        robot.getShooter().setFeedSpeed(getNumber("Feeder Speed",0.5));
+        robot.getShooter().setShooterSpeed(getNumber("Shooter Speed", 0.5));
+        robot.getShooter().setFeedSpeed(getNumber("Feeder Speed", 0.5));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());
+        putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
     }
 
     @Override

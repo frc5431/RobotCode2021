@@ -6,12 +6,15 @@ import frc.robot.Robot.Mode;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
 import frc.team5431.titan.core.misc.Logger;
+import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
 public class Teleop extends Component<Robot> {
 
     private Xbox driver;
     private LogitechExtreme3D operator;
+
+    private Toggle swapDrv = new Toggle();
 
     private boolean warnDriver = false, warnOperator = false;
 
@@ -71,6 +74,13 @@ public class Teleop extends Component<Robot> {
                 break;
             }
 
+            if (swapDrv.getState()) {
+                double oldLeft = left;
+                double oldRight = right;
+
+                left = -oldRight;
+                right = -oldLeft;
+            }
             drivebase.drivePercentage(left, right);
 
             robot.getIntake().getToggle().isToggled(driver.getRawButton(Xbox.Button.A));
@@ -89,11 +99,15 @@ public class Teleop extends Component<Robot> {
         final String operatorName  = operator.getName().toLowerCase();
 
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
-
+            swapDrv.isToggled(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
         } else {
             if(!warnOperator)
                 Logger.e("Operator Controller Not Connected");
             warnOperator = true;
         }
+    }
+
+    public boolean getSwappedDriverStatus() {
+        return swapDrv.getState();
     }
 }
