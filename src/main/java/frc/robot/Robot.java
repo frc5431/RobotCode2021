@@ -14,9 +14,12 @@ public class Robot extends TitanRobot<Robot> {
   }
 
   // Component Objects
-  private ControlPanel colorWheel;
+  // private ControlPanel colorWheel;
   private Dashboard dashboard;
-  private Vision vision;
+  private Drivebase drivebase;
+  private Teleop teleop;
+  private Intake intake;
+  private Shooter shooter;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -30,12 +33,15 @@ public class Robot extends TitanRobot<Robot> {
     Logger.DEBUG = true;
 
     // Initialize Components
-    colorWheel = new ControlPanel();
+    // colorWheel = new ControlPanel();
     dashboard = new Dashboard();
-    vision = new Vision();
+    drivebase = new Drivebase();
+    teleop = new Teleop();
+    intake = new Intake();
+    shooter = new Shooter();
 
     // Add Components to components Array
-    components = List.of(colorWheel, dashboard, vision);
+    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter);
   }
 
   @Override
@@ -116,5 +122,40 @@ public class Robot extends TitanRobot<Robot> {
    */
   public void setControlPanelStage(ControlPanelStages controlPanelStage) {
     this.controlPanelStage = controlPanelStage;
+  }
+
+  /**
+   * @return the drivebase
+   */
+  public Drivebase getDrivebase() {
+    return drivebase;
+  }
+  
+  /**
+   * @return the dashboard
+   */
+  public Dashboard getDashboard() {
+    return dashboard;
+  }
+
+  /**
+   * @return the teleop
+   */
+  public Teleop getTeleop() {
+    return teleop;
+  }
+
+  /**
+   * @return the intake
+   */
+  public Intake getIntake() {
+    return intake;
+  }
+
+  /**
+   * @return the shooter
+   */
+  public Shooter getShooter() {
+    return shooter;
   }
 }
