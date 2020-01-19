@@ -21,11 +21,11 @@ public class Dashboard extends Component<Robot> {
         driveType.setDefaultOption("Tank Drive", DriveType.TANK);
         driveType.addOption("Arcade Drive", DriveType.ARCADE);
         SmartDashboard.putData("Drive Type", driveType);
+        SmartDashboard.putNumber("Shooter Speed", 0.50);
     }
 
     @Override
     public void init(Robot robot) {
-        SmartDashboard.putData("Drive Type", driveType);
     }
 
     @Override
@@ -52,5 +52,15 @@ public class Dashboard extends Component<Robot> {
 
     public void putNumber(String key, double value) {
         SmartDashboard.putNumber(key, value);
+    }
+
+    public String getString(String key, String defaultStr) {
+        putString(key, defaultStr);
+        return SmartDashboard.getString(key, defaultStr);
+    }
+
+    public double getNumber(String key, double defaultNum) {
+        putNumber(key, defaultNum);
+        return SmartDashboard.getNumber(key, defaultNum);
     }
 }

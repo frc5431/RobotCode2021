@@ -50,7 +50,7 @@ public class Shooter extends Component<Robot> {
         }
 
         if (flywheelToggle.getState()) {
-            flywheel.set(1);
+            flywheel.set(robot.getDashboard().getNumber("Shooter Speed", 0.750));
         } else {
             flywheel.set(0);
         }
@@ -66,5 +66,9 @@ public class Shooter extends Component<Robot> {
 
     public Toggle getFlywheelToggle() {
         return flywheelToggle;
+    }
+
+    public double getFlywheelSpeed() {
+        return flywheel.get();
     }
 }

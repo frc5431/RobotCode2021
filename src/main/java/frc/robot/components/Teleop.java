@@ -13,6 +13,8 @@ public class Teleop extends Component<Robot> {
     private Xbox driver;
     private LogitechExtreme3D operator;
 
+    private boolean warnDriver = false, warnOperator = false;
+
     public Teleop() {
         driver = new Xbox(Constants.DRIVER_XBOX_ID);
         driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
@@ -74,10 +76,12 @@ public class Teleop extends Component<Robot> {
             robot.getIntake().getToggle().isToggled(driver.getRawButton(Xbox.Button.A));
             robot.getShooter().getFeedToggle().isToggled(driver.getRawButton(Xbox.Button.A));
 
-            robot.getShooter().getFlywheelToggle().isToggled(driver.getRawButton(Xbox.Button.B));
+            robot.getShooter().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
         }
         else {
-            Logger.l("Driver Controller Not Connected");
+            if(!warnDriver)
+                Logger.e("Driver Controller Not Connected");
+            warnDriver = true;
         }
     }
 
@@ -87,7 +91,9 @@ public class Teleop extends Component<Robot> {
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
 
         } else {
-            Logger.e("Operator Controller Not Connected");
+            if(!warnOperator)
+                Logger.e("Operator Controller Not Connected");
+            warnOperator = true;
         }
     }
 }

@@ -10,6 +10,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
 import frc.robot.util.RobotType;
+import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
 public class Drivebase extends Component<Robot> {
@@ -19,6 +20,8 @@ public class Drivebase extends Component<Robot> {
 
     private WPI_TalonFX _leftFollow;
     private WPI_TalonFX _rightFollow;
+
+    private Toggle swappedDrive;
 
     public Drivebase() {
         left = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_LEFT_ID);
@@ -61,6 +64,9 @@ public class Drivebase extends Component<Robot> {
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
 
         zeroSensors();
+
+        swappedDrive = new Toggle();
+        swappedDrive.setState(false);
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
@@ -126,8 +132,13 @@ public class Drivebase extends Component<Robot> {
     }
 
     public void drivePercentage(double driveLeft, double driveRight) {
-        left.set(ControlMode.PercentOutput, driveLeft);
-        right.set(ControlMode.PercentOutput, driveRight);
+        if(!swappedDrive.getState()) {
+            left.set(ControlMode.PercentOutput, driveLeft);
+            right.set(ControlMode.PercentOutput, driveRight);
+        }
+        else {
+
+        }
     }
 
     public void driveMotionMagic(double target) {
