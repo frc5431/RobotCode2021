@@ -14,6 +14,8 @@ public class Shooter extends Component<Robot> {
     SpeedControllerGroup flywheel;
 
     Toggle feedToggle, flywheelToggle;
+    double shooterSpeed = 0.50;
+    double feedSpeed = 0.5;
 
     public Shooter() {
         flywheelLeft = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
@@ -44,13 +46,13 @@ public class Shooter extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (feedToggle.getState()) {
-            feed.set(1);
+            feed.set(feedSpeed);
         } else {
             feed.set(0);
         }
 
         if (flywheelToggle.getState()) {
-            flywheel.set(robot.getDashboard().getNumber("Shooter Speed", 0.750));
+            flywheel.set(shooterSpeed);
         } else {
             flywheel.set(0);
         }
@@ -70,5 +72,13 @@ public class Shooter extends Component<Robot> {
 
     public double getFlywheelSpeed() {
         return flywheel.get();
+    }
+
+    public void setShooterSpeed(double shooterSpeed) {
+        this.shooterSpeed = shooterSpeed;
+    }
+
+    public void setFeedSpeed(double feedSpeed) {
+        this.feedSpeed = feedSpeed;
     }
 }
