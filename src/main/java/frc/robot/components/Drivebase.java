@@ -140,9 +140,19 @@ public class Drivebase extends Component<Robot> {
         right.selectProfileSlot(slot, 0);
     }
 
-    public void drivePercentage(double driveLeft, double driveRight) {
+    public void drivePercentageTank(double driveLeft, double driveRight) {
         left.set(ControlMode.PercentOutput, driveLeft);
         right.set(ControlMode.PercentOutput, driveRight);
+    }
+
+    public void drivePercentageArcade(double power, double turn) {
+        /*
+         * Arbitrary based turning. Theoretically better as it is controlled by the
+         * speed controller.
+         */
+
+        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn);
+        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn);
     }
 
     private void changeRemoteSensor(MotionMagicCommands command) {

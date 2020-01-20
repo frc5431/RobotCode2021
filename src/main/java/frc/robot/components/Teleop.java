@@ -52,8 +52,11 @@ public class Teleop extends Component<Robot> {
         final String driverName = driver.getName().toLowerCase();
 
         if (driverName.contains(Constants.DRIVER_XBOX_NAME.toLowerCase())) {
-            double left;
-            double right;
+            double left = 0;
+            double right = 0;
+
+            double power = 0;
+            double turn = 0;
 
             /*
              * This code will allow the end user to chose which drive controls to use as
@@ -61,47 +64,51 @@ public class Teleop extends Component<Robot> {
              */
             switch (dashboard.getSelectedDriveType()) {
             case ARCADE:
-                left = -driver.getRawAxis(Xbox.Axis.LEFT_Y) + driver.getRawAxis(Xbox.Axis.LEFT_X) * .5;
-                right = -driver.getRawAxis(Xbox.Axis.LEFT_Y) - driver.getRawAxis(Xbox.Axis.LEFT_X) * .5;
+                power = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1; // Set negative as xbox foward is negative
+                turn = driver.getRawAxis(Xbox.Axis.LEFT_X) * -1; // Set negative as right is negative
+
+                if (swapDrv.getState()) {
+                    power *= -1;
+                    turn *= -1;
+                }
+
+                drivebase.drivePercentageArcade(power, turn);
                 break;
             case TANK:
                 left = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1;
                 right = driver.getRawAxis(Xbox.Axis.RIGHT_Y) * -1;
+
+                if (swapDrv.getState()) {
+                    double oldLeft = left;
+
+                    left = -right;
+                    right = -oldLeft;
+                }
+
+                drivebase.drivePercentageTank(left, right);
                 break;
             default:
-                left = 0;
-                right = 0;
                 break;
             }
-
-            if (swapDrv.getState()) {
-                double oldLeft = left;
-                double oldRight = right;
-
-                left = -oldRight;
-                right = -oldLeft;
-            }
-            drivebase.drivePercentage(left, right);
 
             robot.getIntake().getToggle().isToggled(driver.getRawButton(Xbox.Button.A));
             robot.getShooter().getFeedToggle().isToggled(driver.getRawButton(Xbox.Button.A));
 
             robot.getShooter().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
-        }
-        else {
-            if(!warnDriver)
+        } else {
+            if (!warnDriver)
                 Logger.e("Driver Controller Not Connected");
             warnDriver = true;
         }
     }
 
     private void operator(Robot robot) {
-        final String operatorName  = operator.getName().toLowerCase();
+        final String operatorName = operator.getName().toLowerCase();
 
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
             swapDrv.isToggled(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
         } else {
-            if(!warnOperator)
+            if (!warnOperator)
                 Logger.e("Operator Controller Not Connected");
             warnOperator = true;
         }
