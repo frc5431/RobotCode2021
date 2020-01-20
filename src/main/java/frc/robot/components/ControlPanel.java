@@ -65,19 +65,6 @@ public class ControlPanel extends Component<Robot> {
     }
 
     private void rotational(Robot robot) {
-        /*
-        // TODO: Test the following code as it is all done in my head.
-        final double controlPanelCircumfrence = (Math.PI * 2.666);
-        final double talonWheelCircumfrence = (Math.PI * Constants.CONTROLPANEL_MOTOR_WHEEL_DIAMETER_FEET);
-        final double goalDistance = (controlPanelCircumfrence / talonWheelCircumfrence)
-                * Constants.CONTROLPANEL_ROTATIONS;
-        if (encoder.getDistance() > goalDistance) {
-            robot.setControlPanelStage(ControlPanelStages.POSITIONAL);
-        } else {
-            talon.set(1);
-        }
-        */
-
         // This code shuld be better as it uses the color sensor to turn.
         ControlPanelColors current = getSensorColor();
         if(current == lastColor) {
