@@ -1,5 +1,6 @@
 package frc.robot.components;
 
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.DriveType;
 import frc.team5431.titan.core.robot.Component;
@@ -20,8 +21,8 @@ public class Dashboard extends Component<Robot> {
         driveType.setDefaultOption("Tank Drive", DriveType.TANK);
         driveType.addOption("Arcade Drive", DriveType.ARCADE);
         SmartDashboard.putData("Drive Type", driveType);
-        SmartDashboard.putNumber("Shooter Speed", 0.50);
-        SmartDashboard.putNumber("Feeder Speed", 0.50);
+        SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
+        SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
     }
 
     @Override
@@ -31,8 +32,8 @@ public class Dashboard extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         // Setting Data from dashboard
-        robot.getShooter().setShooterSpeed(getNumber("Shooter Speed", 0.5));
-        robot.getShooter().setFeedSpeed(getNumber("Feeder Speed", 0.5));
+        robot.getShooter().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
+        robot.getShooter().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());
