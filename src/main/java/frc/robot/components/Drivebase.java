@@ -185,4 +185,8 @@ public class Drivebase extends Component<Robot> {
         left.follow(right);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
     }
+
+    public double getHeading() {
+        return pidgey.getCompassHeading();
+    }
 }

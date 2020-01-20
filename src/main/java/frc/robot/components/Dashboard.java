@@ -37,6 +37,7 @@ public class Dashboard extends Component<Robot> {
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());
         putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
+        putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
     }
 
     @Override
