@@ -11,7 +11,6 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
-import frc.robot.util.MotionMagicCommands;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
@@ -62,13 +61,16 @@ public class Drivebase extends Component<Robot> {
 
         /* Tell motors which sensors it is reading from */
         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.DRIVEBASE_TIMEOUT_MS);
-        changeRemoteSensor(MotionMagicCommands.FOWARD);
         right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, 0, Constants.DRIVEBASE_TIMEOUT_MS);
+
+        right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+                Constants.DRIVEBASE_PIGEON_IMU_REMOTE_FILTER);
+
         right.configSelectedFeedbackCoefficient(0.5, 0, Constants.DRIVEBASE_TIMEOUT_MS);
 
         /* Set PID values for each slot */
-        setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
-        setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
+        setPID(Constants.DRIVEBASE_MOTIONMAGIC_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_GAINS);
+        // setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
 
         zeroGyro();
         zeroDistance();
@@ -155,40 +157,32 @@ public class Drivebase extends Component<Robot> {
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn);
     }
 
-    private void changeRemoteSensor(MotionMagicCommands command) {
-        switch (command) {
-        case FOWARD:
-            right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor, 0,
-                    Constants.DRIVEBASE_TIMEOUT_MS);
-            break;
-        case TURN:
-            right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
-                    Constants.DRIVEBASE_PIGEON_IMU_REMOTE_FILTER);
-            break;
-        }
-    }
+    // public void driveMotionMagic(MotionMagicCommands command, double target, double optionalSensor) {
+    public void driveMotionMagic(double distance, double angle) {
+        // case FOWARD:
+        // changeRemoteSensor(command);
+        // setSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT);
 
-    public void driveMotionMagic(MotionMagicCommands command, double target, double optionalSensor) {
-        switch (command) {
-        case FOWARD:
-            changeRemoteSensor(command);
-            setSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT);
-            right.set(ControlMode.MotionMagic, target);
-            left.follow(right);
-            break;
-        case TURN:
-            changeRemoteSensor(command);
-            double targetSensor = optionalSensor * 4096 * 6;
-            double targetTurn = target * 4096 * 6;
+        // left.follow(right);
+        // right.set(ControlMode.MotionMagic, target);
+        // break;
+        // case TURN:
+        // changeRemoteSensor(command);
+        // double targetSensor = optionalSensor * 4096 * 6;
+        // double targetTurn = target * 4096 * 6;
 
-            setSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT);
-            right.set(ControlMode.MotionMagic, targetSensor, DemandType.AuxPID, targetTurn);
-            left.follow(right);
-            break;
-        default:
-            right.set(0);
-            left.set(0);
-            break;
-        }
+        // setSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT);
+        // right.set(ControlMode.MotionMagic, targetSensor, DemandType.AuxPID,
+        // targetTurn);
+        // left.follow(right);
+        // break;
+        // default:
+        // right.set(0);
+        // left.set(0);
+        // break;
+        // }
+
+        left.follow(right);
+        right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
     }
 }

@@ -101,10 +101,12 @@ public final class Constants {
 
     // TODO: Set Proper PID Values
     // P, I, D, F, INTERGRAL, PEAKOUTPUT, CLOSEDLOOPTIME_MS
-    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
-    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_TURN_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
-    public static final int DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT = SLOT_0;
-    public static final int DRIVEBASE_MOTIONMAGIC_TURN_SLOT = SLOT_1;
+    public static final MotionMagic DRIVEBASE_MOTIONMAGIC_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
+    public static final int DRIVEBASE_MOTIONMAGIC_SLOT = SLOT_0;
+    // public static final MotionMagic DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
+    // public static final MotionMagic DRIVEBASE_MOTIONMAGIC_TURN_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
+    // public static final int DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT = SLOT_0;
+    // public static final int DRIVEBASE_MOTIONMAGIC_TURN_SLOT = SLOT_1;
 
     // ================================================================================
     // Control Panel Specific
