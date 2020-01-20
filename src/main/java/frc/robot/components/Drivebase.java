@@ -2,17 +2,22 @@ package frc.robot.components;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
+import frc.robot.util.MotionMagicCommands;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
 public class Drivebase extends Component<Robot> {
+
+    private PigeonIMU pidgey;
 
     private WPI_TalonFX left;
     private WPI_TalonFX right;
@@ -23,6 +28,9 @@ public class Drivebase extends Component<Robot> {
     private Toggle swappedDrive;
 
     public Drivebase() {
+
+        pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
+
         left = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_LEFT_ID);
         right = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_RIGHT_ID);
 
@@ -40,6 +48,7 @@ public class Drivebase extends Component<Robot> {
         /* Factory Default all hardware to prevent unexpected behavior */
         left.configFactoryDefault();
         right.configFactoryDefault();
+        pidgey.configFactoryDefault();
 
         /* Set what state the motors will be at when the speed is at zero */
         left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
@@ -53,8 +62,7 @@ public class Drivebase extends Component<Robot> {
 
         /* Tell motors which sensors it is reading from */
         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.DRIVEBASE_TIMEOUT_MS);
-        right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor, 0,
-                Constants.DRIVEBASE_TIMEOUT_MS);
+        changeRemoteSensor(MotionMagicCommands.FOWARD);
         right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, 0, Constants.DRIVEBASE_TIMEOUT_MS);
         right.configSelectedFeedbackCoefficient(0.5, 0, Constants.DRIVEBASE_TIMEOUT_MS);
 
@@ -62,7 +70,8 @@ public class Drivebase extends Component<Robot> {
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
 
-        zeroSensors();
+        zeroGyro();
+        zeroDistance();
 
         swappedDrive = new Toggle();
         swappedDrive.setState(false);
@@ -93,13 +102,19 @@ public class Drivebase extends Component<Robot> {
         assert (eCode == ErrorCode.OK);
     }
 
-    private void zeroSensors() {
+    private void zeroDistance() {
         ErrorCode eCode = ErrorCode.OK;
         eCode = left.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
         eCode = right.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
+    }
+
+    private void zeroGyro() {
+        zeroDistance();
+
+        pidgey.setYaw(0);
     }
 
     @Override
@@ -130,8 +145,40 @@ public class Drivebase extends Component<Robot> {
         right.set(ControlMode.PercentOutput, driveRight);
     }
 
-    public void driveMotionMagic(double target) {
-        right.set(ControlMode.MotionMagic, target);
-        left.follow(right);
+    private void changeRemoteSensor(MotionMagicCommands command) {
+        switch (command) {
+        case FOWARD:
+            right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor, 0,
+                    Constants.DRIVEBASE_TIMEOUT_MS);
+            break;
+        case TURN:
+            right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+                    Constants.DRIVEBASE_PIGEON_IMU_REMOTE_FILTER);
+            break;
+        }
+    }
+
+    public void driveMotionMagic(MotionMagicCommands command, double target, double optionalSensor) {
+        switch (command) {
+        case FOWARD:
+            changeRemoteSensor(command);
+            setSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT);
+            right.set(ControlMode.MotionMagic, target);
+            left.follow(right);
+            break;
+        case TURN:
+            changeRemoteSensor(command);
+            double targetSensor = optionalSensor * 4096 * 6;
+            double targetTurn = target * 4096 * 6;
+
+            setSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT);
+            right.set(ControlMode.MotionMagic, targetSensor, DemandType.AuxPID, targetTurn);
+            left.follow(right);
+            break;
+        default:
+            right.set(0);
+            left.set(0);
+            break;
+        }
     }
 }

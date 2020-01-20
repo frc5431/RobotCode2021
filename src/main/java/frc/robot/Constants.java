@@ -82,6 +82,13 @@ public final class Constants {
     public static final String VISION_FRONT_LIMELIGHT = "";
 
     // ================================================================================
+    // Vision Data
+    // ================================================================================
+
+    public static final int DRIVEBASE_PIGEON_IMU_ID = 1;
+    public static final int DRIVEBASE_PIGEON_IMU_REMOTE_FILTER = 0;
+
+    // ================================================================================
     // Drive Base Motion Magic
     // ================================================================================
 
