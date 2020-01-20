@@ -63,32 +63,32 @@ public class Teleop extends Component<Robot> {
              * there is a difference in preference.
              */
             switch (dashboard.getSelectedDriveType()) {
-            case ARCADE:
-                power = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1; // Set negative as xbox foward is negative
-                turn = driver.getRawAxis(Xbox.Axis.LEFT_X) * -1; // Set negative as right is negative
+                case ARCADE:
+                    power = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1; // Set negative as xbox foward is negative
+                    turn = driver.getRawAxis(Xbox.Axis.LEFT_X) * -1; // Set negative as right is negative
 
-                if (swapDrv.getState()) {
-                    power *= -1;
-                    turn *= -1;
-                }
+                    if (swapDrv.getState()) {
+                        power *= -1;
+                        turn *= -1;
+                    }
 
-                drivebase.drivePercentageArcade(power, turn);
-                break;
-            case TANK:
-                left = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1;
-                right = driver.getRawAxis(Xbox.Axis.RIGHT_Y) * -1;
+                    drivebase.drivePercentageArcade(power, turn);
+                    break;
+                case TANK:
+                    left = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1;
+                    right = driver.getRawAxis(Xbox.Axis.RIGHT_Y) * -1;
 
-                if (swapDrv.getState()) {
-                    double oldLeft = left;
+                    if (swapDrv.getState()) {
+                        double oldLeft = left;
 
-                    left = -right;
-                    right = -oldLeft;
-                }
+                        left = -right;
+                        right = -oldLeft;
+                    }
 
-                drivebase.drivePercentageTank(left, right);
-                break;
-            default:
-                break;
+                    drivebase.drivePercentageTank(left, right);
+                    break;
+                default:
+                    break;
             }
 
             robot.getIntake().getToggle().isToggled(driver.getRawButton(Xbox.Button.A));

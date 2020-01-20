@@ -1,5 +1,5 @@
 package frc.robot.util;
 
-public enum DriveType {
+public enum DriveTypeSelector {
     TANK, ARCADE
 }

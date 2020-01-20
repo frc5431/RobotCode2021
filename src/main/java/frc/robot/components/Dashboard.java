@@ -2,7 +2,7 @@ package frc.robot.components;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.util.DriveType;
+import frc.robot.util.DriveTypeSelector;
 import frc.team5431.titan.core.robot.Component;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Dashboard extends Component<Robot> {
 
-    private final SendableChooser<DriveType> driveType = new SendableChooser<>();
+    private final SendableChooser<DriveTypeSelector> driveType = new SendableChooser<>();
 
     public Dashboard() {
 
@@ -18,8 +18,8 @@ public class Dashboard extends Component<Robot> {
          * Add selection for which drive code to use as there are differences in
          * preference
          */
-        driveType.setDefaultOption("Tank Drive", DriveType.TANK);
-        driveType.addOption("Arcade Drive", DriveType.ARCADE);
+        driveType.setDefaultOption("Tank Drive", DriveTypeSelector.TANK);
+        driveType.addOption("Arcade Drive", DriveTypeSelector.ARCADE);
         SmartDashboard.putData("Drive Type", driveType);
         SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
         SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
@@ -49,7 +49,7 @@ public class Dashboard extends Component<Robot> {
     public void tick(Robot robot) {
     }
 
-    public DriveType getSelectedDriveType() {
+    public DriveTypeSelector getSelectedDriveType() {
         return driveType.getSelected();
     }
 

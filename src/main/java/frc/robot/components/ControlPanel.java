@@ -49,14 +49,14 @@ public class ControlPanel extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         switch (robot.getControlPanelStage()) {
-        case POSITIONAL:
-            positional(robot);
-            break;
-        case ROTATIONAL:
-            rotational(robot);
-            break;
-        default:
-            break;
+            case POSITIONAL:
+                positional(robot);
+                break;
+            case ROTATIONAL:
+                rotational(robot);
+                break;
+            default:
+                break;
         }
     }
 
@@ -92,85 +92,85 @@ public class ControlPanel extends Component<Robot> {
         // are moving not the robot wheel. Read the comments in the switch statement
         // with this knowlege
         switch (currentColor) {
-        case RED:
-            switch (gotoColor) {
             case RED:
-                return;
-            case YELLOW:
-                turnWheel(false);
+                switch (gotoColor) {
+                    case RED:
+                        return;
+                    case YELLOW:
+                        turnWheel(false);
+                        break;
+                    case BLUE:
+                        turnWheel(true);
+                        break;
+                    case GREEN:
+                        turnWheel(true);
+                        break;
+                }
+                    // Red to green cw
+                    // Red to yellow ccw
+                    // Red to blue cc or ccw
                 break;
-            case BLUE:
-                turnWheel(true);
-                break;
-            case GREEN:
-                turnWheel(true);
-                break;
-            }
-            // Red to green cw
-            // Red to yellow ccw
-            // Red to blue cc or ccw
-            break;
 
-        case YELLOW:
-            switch (gotoColor) {
-            case RED:
-                turnWheel(true);
-                break;
             case YELLOW:
-                return;
-            case BLUE:
-                turnWheel(false);
+                switch (gotoColor) {
+                    case RED:
+                        turnWheel(true);
+                        break;
+                    case YELLOW:
+                        return;
+                    case BLUE:
+                        turnWheel(false);
+                        break;
+                    case GREEN:
+                        turnWheel(true);
+                        break;
+                }
+                // Yellow to red cw
+                // Yellow to blue ccw
+                // Yellow to green cw or ccw
                 break;
-            case GREEN:
-                turnWheel(true);
-                break;
-            }
-            // Yellow to red cw
-            // Yellow to blue ccw
-            // Yellow to green cw or ccw
-            break;
 
-        case BLUE:
-            switch (gotoColor) {
-            case RED:
-                turnWheel(true);
-                break;
-            case YELLOW:
-                turnWheel(true);
-                break;
             case BLUE:
-                return;
-            case GREEN:
-                turnWheel(false);
+                switch (gotoColor) {
+                    case RED:
+                        turnWheel(true);
+                        break;
+                    case YELLOW:
+                        turnWheel(true);
+                        break;
+                    case BLUE:
+                        return;
+                    case GREEN:
+                        turnWheel(false);
+                        break;
+                }
+                // Blue to yellow cw
+                // Blue to green ccw
+                // Blue to red cw or ccw
                 break;
-            }
-            // Blue to yellow cw
-            // Blue to green ccw
-            // Blue to red cw or ccw
-            break;
 
-        case GREEN:
-            switch (gotoColor) {
-            case RED:
-                turnWheel(false);
-                break;
-            case YELLOW:
-                turnWheel(true);
-                break;
-            case BLUE:
-                turnWheel(true);
-                break;
             case GREEN:
+                switch (gotoColor) {
+                    case RED:
+                        turnWheel(false);
+                        break;
+                    case YELLOW:
+                        turnWheel(true);
+                        break;
+                    case BLUE:
+                        turnWheel(true);
+                        break;
+                    case GREEN:
+                        return;
+                }
+                // Green to blue cw
+                // Green to red ccw
+                // Green to yellow cw or ccw
+                break;
+
+            default:
                 return;
             }
-            // Green to blue cw
-            // Green to red ccw
-            // Green to yellow cw or ccw
-            break;
-
-        default:
-            return;
-        }
     }
 
     private ControlPanelColors getGameColor() {
@@ -183,21 +183,21 @@ public class ControlPanel extends Component<Robot> {
         String gameData = DriverStation.getInstance().getGameSpecificMessage();
         if (gameData.length() > 0) {
             switch (gameData.charAt(0)) {
-            case 'B':
-                data = ControlPanelColors.BLUE;
-                break;
-            case 'G':
-                data = ControlPanelColors.GREEN;
-                break;
-            case 'R':
-                data = ControlPanelColors.RED;
-                break;
-            case 'Y':
-                data = ControlPanelColors.YELLOW;
-                break;
-            default:
-                data = null;
-                break;
+                case 'B':
+                    data = ControlPanelColors.BLUE;
+                    break;
+                case 'G':
+                    data = ControlPanelColors.GREEN;
+                    break;
+                case 'R':
+                    data = ControlPanelColors.RED;
+                    break;
+                case 'Y':
+                    data = ControlPanelColors.YELLOW;
+                    break;
+                default:
+                    data = null;
+                    break;
             }
         } else {
             data = null;
@@ -209,21 +209,21 @@ public class ControlPanel extends Component<Robot> {
     private ControlPanelColors getSensorColor() {
         ControlPanelColors data;
         switch (colorSensor.findColorMatch()) {
-        case 0:
-            data = ControlPanelColors.RED;
-            break;
-        case 1:
-            data = ControlPanelColors.GREEN;
-            break;
-        case 2:
-            data = ControlPanelColors.BLUE;
-            break;
-        case 3:
-            data = ControlPanelColors.YELLOW;
-            break;
-        default:
-            data = null;
-            break;
+            case 0:
+                data = ControlPanelColors.RED;
+                break;
+            case 1:
+                data = ControlPanelColors.GREEN;
+                break;
+            case 2:
+                data = ControlPanelColors.BLUE;
+                break;
+            case 3:
+                data = ControlPanelColors.YELLOW;
+                break;
+            default:
+                data = null;
+                break;
         }
         return data;
     }
@@ -238,21 +238,21 @@ public class ControlPanel extends Component<Robot> {
         // Our sensor sees x but the field sensor see y
         // This calculates that.
         switch (color) {
-        case RED:
-            goal = ControlPanelColors.BLUE;
-            break;
-        case GREEN:
-            goal = ControlPanelColors.YELLOW;
-            break;
-        case BLUE:
-            goal = ControlPanelColors.RED;
-            break;
-        case YELLOW:
-            goal = ControlPanelColors.GREEN;
-            break;
-        default:
-            goal = null;
-            break;
+            case RED:
+                goal = ControlPanelColors.BLUE;
+                break;
+            case GREEN:
+                goal = ControlPanelColors.YELLOW;
+                break;
+            case BLUE:
+                goal = ControlPanelColors.RED;
+                break;
+            case YELLOW:
+                goal = ControlPanelColors.GREEN;
+                break;
+            default:
+                goal = null;
+                break;
         }
 
         if (goal != null)
