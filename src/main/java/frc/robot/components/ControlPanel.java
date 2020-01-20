@@ -83,7 +83,6 @@ public class ControlPanel extends Component<Robot> {
         if (currentColor == gotoColor) {
             // Stop Moving as we have reached the goal!
             talon.set(0);
-            // TODO: add ability to redo positional
             robot.setControlPanelStage(ControlPanelStages.OFF);
             // encoder.reset();
             Logger.l("Color Goal has been Reached! Positional Code Says Goodbye!");
