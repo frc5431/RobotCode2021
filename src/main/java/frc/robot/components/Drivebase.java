@@ -60,17 +60,28 @@ public class Drivebase extends Component<Robot> {
         right.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
 
         /* Tell motors which sensors it is reading from */
-        left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.DRIVEBASE_TIMEOUT_MS);
-        right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, 0, Constants.DRIVEBASE_TIMEOUT_MS);
+        left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
+                Constants.DRIVEBASE_TIMEOUT_MS);
 
+        right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
-                Constants.DRIVEBASE_PIGEON_IMU_REMOTE_FILTER);
+                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+
+        right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
+                Constants.DRIVEBASE_TIMEOUT_MS);
 
         right.configSelectedFeedbackCoefficient(0.5, 0, Constants.DRIVEBASE_TIMEOUT_MS);
 
+        right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
+                Constants.DRIVEBASE_TIMEOUT_MS);
+
+        right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
+                Constants.DRIVEBASE_TIMEOUT_MS);
+
         /* Set PID values for each slot */
-        setPID(Constants.DRIVEBASE_MOTIONMAGIC_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_GAINS);
-        // setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
+        setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
+        setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
 
         zeroGyro();
         zeroDistance();
@@ -157,7 +168,8 @@ public class Drivebase extends Component<Robot> {
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn);
     }
 
-    // public void driveMotionMagic(MotionMagicCommands command, double target, double optionalSensor) {
+    // public void driveMotionMagic(MotionMagicCommands command, double target,
+    // double optionalSensor) {
     public void driveMotionMagic(double distance, double angle) {
         // case FOWARD:
         // changeRemoteSensor(command);
@@ -181,6 +193,9 @@ public class Drivebase extends Component<Robot> {
         // left.set(0);
         // break;
         // }
+
+        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, 0);
+        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, 1);
 
         left.follow(right);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
