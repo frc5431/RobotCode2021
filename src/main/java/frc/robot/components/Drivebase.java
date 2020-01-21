@@ -15,6 +15,10 @@ import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
+/*
+ * a lot of asserts were added as there are many things that can go wrong in this code
+*/
+
 public class Drivebase extends Component<Robot> {
 
     private PigeonIMU pidgey;
@@ -26,6 +30,7 @@ public class Drivebase extends Component<Robot> {
     private WPI_TalonFX _rightFollow;
 
     private Toggle swappedDrive;
+    private ErrorCode eCode = ErrorCode.OK;
 
     public Drivebase() {
 
@@ -46,43 +51,60 @@ public class Drivebase extends Component<Robot> {
         _rightFollow.follow(right);
 
         /* Factory Default all hardware to prevent unexpected behavior */
-        left.configFactoryDefault();
-        right.configFactoryDefault();
-        pidgey.configFactoryDefault();
+        eCode = left.configFactoryDefault();
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configFactoryDefault();
+        assert (eCode == ErrorCode.OK);
+        eCode = pidgey.configFactoryDefault();
+        assert (eCode == ErrorCode.OK);
 
         /* Set what state the motors will be at when the speed is at zero */
         left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
         right.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
 
         /* Set the motor output ranges */
-        left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
-        left.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
-        right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
-        right.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
+        eCode = left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+        eCode = left.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
 
         /* Tell motors which sensors it is reading from */
-        left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
-                Constants.DRIVEBASE_TIMEOUT_MS);
-
-        right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
+        eCode = left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+        assert (eCode == ErrorCode.OK);
+
+        eCode = right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
                 Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
 
-        right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
+        eCode = right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1,
+                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
+
+        eCode = right.configSelectedFeedbackCoefficient(0.5, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
                 Constants.DRIVEBASE_TIMEOUT_MS);
-
-        right.configSelectedFeedbackCoefficient(0.5, 0, Constants.DRIVEBASE_TIMEOUT_MS);
-
-        right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
+        assert (eCode == ErrorCode.OK);
+        eCode = right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
                 Constants.DRIVEBASE_TIMEOUT_MS);
-
-        right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
-                Constants.DRIVEBASE_TIMEOUT_MS);
+        assert (eCode == ErrorCode.OK);
 
         /* Set PID values for each slot */
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
+
+        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
+        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
 
         zeroGyro();
         zeroDistance();
@@ -92,8 +114,6 @@ public class Drivebase extends Component<Robot> {
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
-        ErrorCode eCode = ErrorCode.OK;
-
         eCode = right.config_kP(slot, gain.kP);
         assert (eCode == ErrorCode.OK);
 
@@ -117,7 +137,6 @@ public class Drivebase extends Component<Robot> {
     }
 
     private void zeroDistance() {
-        ErrorCode eCode = ErrorCode.OK;
         eCode = left.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
@@ -194,9 +213,6 @@ public class Drivebase extends Component<Robot> {
         // left.set(0);
         // break;
         // }
-
-        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
-        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
 
         left.follow(right, FollowerType.AuxOutput1);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
