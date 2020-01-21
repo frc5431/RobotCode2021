@@ -189,32 +189,7 @@ public class Drivebase extends Component<Robot> {
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn);
     }
 
-    // public void driveMotionMagic(MotionMagicCommands command, double target,
-    // double optionalSensor) {
     public void driveMotionMagic(double distance, double angle) {
-        // case FOWARD:
-        // changeRemoteSensor(command);
-        // setSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT);
-
-        // left.follow(right);
-        // right.set(ControlMode.MotionMagic, target);
-        // break;
-        // case TURN:
-        // changeRemoteSensor(command);
-        // double targetSensor = optionalSensor * 4096 * 6;
-        // double targetTurn = target * 4096 * 6;
-
-        // setSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT);
-        // right.set(ControlMode.MotionMagic, targetSensor, DemandType.AuxPID,
-        // targetTurn);
-        // left.follow(right);
-        // break;
-        // default:
-        // right.set(0);
-        // left.set(0);
-        // break;
-        // }
-
         left.follow(right, FollowerType.AuxOutput1);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
     }
