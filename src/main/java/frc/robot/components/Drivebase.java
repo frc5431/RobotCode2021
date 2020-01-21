@@ -184,6 +184,7 @@ public class Drivebase extends Component<Robot> {
          * speed controller.
          */
 
+        // TODO: the turn may be backwards
         left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn);
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn);
     }
