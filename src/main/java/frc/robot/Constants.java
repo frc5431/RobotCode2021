@@ -63,8 +63,8 @@ public final class Constants {
     public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.75;
 
     // Shooter Feeder Related
-    public static final int SHOOTER_FEEDER_ID = 9;
-    public static final boolean SHOOTER_FEEDER_REVERSE = false;
+    public static final int SHOOTER_FEEDER_ID = 8;
+    public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
     public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.75;
 
