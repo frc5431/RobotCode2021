@@ -107,6 +107,11 @@ public class Teleop extends Component<Robot> {
 
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
             swapDrv.isToggled(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
+
+            double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
+
+            robot.getClimber().setSpeed(elevatorSpeed);
+
         } else {
             if (!warnOperator)
                 Logger.e("Operator Controller Not Connected");

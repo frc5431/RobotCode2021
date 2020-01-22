@@ -20,6 +20,7 @@ public class Robot extends TitanRobot<Robot> {
   private Teleop teleop;
   private Intake intake;
   private Shooter shooter;
+  private Climber climber;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -39,9 +40,10 @@ public class Robot extends TitanRobot<Robot> {
     teleop = new Teleop();
     intake = new Intake();
     shooter = new Shooter();
+    climber = new Climber();
 
     // Add Components to components Array
-    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter);
+    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter, climber);
   }
 
   @Override
@@ -157,5 +159,12 @@ public class Robot extends TitanRobot<Robot> {
    */
   public Shooter getShooter() {
     return shooter;
+  }
+  
+  /**
+   * @return the climber
+   */
+  public Climber getClimber() {
+    return climber;
   }
 }
