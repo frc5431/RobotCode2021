@@ -49,24 +49,24 @@ public final class Constants {
     public static final int CLIMBER_BALANCER_ID = 5;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
-    public static final int CLIMBER_ELEVATOR_ID = 6;
+    public static final int CLIMBER_ELEVATOR_ID = 7;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
     // Shooter Flywheel Related
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 6;
-    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = true;
+    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = false;
 
     public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 5;
-    public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = false;
+    public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
-    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.50;
+    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.750;
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 8;
-    public static final boolean SHOOTER_FEEDER_REVERSE = true;
+    public static final boolean SHOOTER_FEEDER_REVERSE = false;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.25;
+    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.750;
 
     // Intake Related
     public static final int INTAKE_ID = 10;

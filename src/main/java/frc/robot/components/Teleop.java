@@ -91,10 +91,12 @@ public class Teleop extends Component<Robot> {
                     break;
             }
 
-            robot.getIntake().getToggle().isToggled(driver.getRawButton(Xbox.Button.A));
-            robot.getShooter().getFeedToggle().isToggled(driver.getRawButton(Xbox.Button.A));
+            robot.getIntake().getToggle().setState(driver.getRawButton(Xbox.Button.A));
+            robot.getShooter().getFeedToggle().setState(driver.getRawButton(Xbox.Button.A));
 
             robot.getShooter().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
+
+            robot.getClimber().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
         } else {
             if (!warnDriver)
                 Logger.e("Driver Controller Not Connected");
