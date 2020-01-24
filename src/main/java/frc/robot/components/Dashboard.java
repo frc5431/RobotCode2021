@@ -23,6 +23,7 @@ public class Dashboard extends Component<Robot> {
         SmartDashboard.putData("Drive Type", driveType);
         SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
         SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
+        SmartDashboard.putNumber("Elevator Position", 0.0);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class Dashboard extends Component<Robot> {
         putString("Mode", robot.getMode().toString());
         putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
         putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
+        putNumber("Elevator Position", robot.getClimber().getRotations());
     }
 
     @Override

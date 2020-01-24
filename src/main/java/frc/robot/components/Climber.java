@@ -34,4 +34,8 @@ public class Climber extends Component<Robot> {
         motor.set(ControlMode.PercentOutput, speed);
     }
 
+    public double getRotations() {
+        return 0.0; // TODO: FIX
+    }
+
 }

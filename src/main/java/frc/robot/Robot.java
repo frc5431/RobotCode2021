@@ -43,7 +43,7 @@ public class Robot extends TitanRobot<Robot> {
     climber = new Climber();
 
     // Add Components to components Array
-    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter);
+    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter, climber);
   }
 
   @Override
@@ -160,7 +160,6 @@ public class Robot extends TitanRobot<Robot> {
   public Shooter getShooter() {
     return shooter;
   }
-
   /**
    * @return the climber
    */
