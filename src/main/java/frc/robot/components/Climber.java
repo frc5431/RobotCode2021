@@ -22,8 +22,6 @@ public class Climber extends Component<Robot> {
 
     @Override
     public void init(Robot arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -35,7 +33,7 @@ public class Climber extends Component<Robot> {
     }
 
     public double getRotations() {
-        return 0.0; // TODO: FIX
+        return motor.getSensorCollection().getIntegratedSensorPosition() * 8192;
     }
 
 }
