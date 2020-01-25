@@ -24,4 +24,8 @@ public class Vision extends Component<Robot> {
     public void disabled(Robot robot) {
     }
 
+    public Limelight getFrontLimelight() {
+        return front;
+    }
+
 }
