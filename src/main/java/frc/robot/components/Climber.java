@@ -5,15 +5,19 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.ClimberState;
 import frc.team5431.titan.core.robot.Component;
 
 public class Climber extends Component<Robot> {
 
-    WPI_TalonFX motor;
+    private WPI_TalonFX elevator, balancer;
 
     public Climber() {
-        motor = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
-        motor.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
+        elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
+        elevator.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
+
+        balancer = new WPI_TalonFX(Constants.CLIMBER_BALANCER_ID);
+        balancer.setInverted(Constants.CLIMBER_BALANCER_REVERSE);
     }
 
     @Override
@@ -28,12 +32,20 @@ public class Climber extends Component<Robot> {
     public void periodic(Robot arg0) {
     }
 
-    public void setSpeed(double speed) {
-        motor.set(ControlMode.PercentOutput, speed);
+    public void setElevatorPosition(ClimberState position) {
+        elevator.set(ControlMode.Position, position.getPosition());
+    }
+
+    public void setElevatorSpeed(double speed) {
+        elevator.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setBalancerSpeed(double speed) {
+        balancer.set(ControlMode.PercentOutput, speed);
     }
 
     public double getRotations() {
-        return motor.getSensorCollection().getIntegratedSensorPosition() * 8192;
+        return elevator.getSensorCollection().getIntegratedSensorPosition() / 2048;
     }
 
 }

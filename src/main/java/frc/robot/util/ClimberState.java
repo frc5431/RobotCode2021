@@ -6,7 +6,7 @@ public enum ClimberState {
 	private double position;
 
 	private ClimberState(double pos) {
-		position = pos;
+		position = pos 2048;
 	}
 
 	public double getPosition() {
