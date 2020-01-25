@@ -14,7 +14,6 @@ public class Robot extends TitanRobot<Robot> {
   }
 
   // Component Objects
-  // private ControlPanel colorWheel;
   private Dashboard dashboard;
   private Drivebase drivebase;
   private Teleop teleop;
@@ -34,7 +33,6 @@ public class Robot extends TitanRobot<Robot> {
     Logger.DEBUG = true;
 
     // Initialize Components
-    // colorWheel = new ControlPanel();
     dashboard = new Dashboard();
     drivebase = new Drivebase();
     teleop = new Teleop();
@@ -43,7 +41,7 @@ public class Robot extends TitanRobot<Robot> {
     climber = new Climber();
 
     // Add Components to components Array
-    components = List.of(/*colorWheel,*/ dashboard, drivebase, teleop, intake, shooter, climber);
+    components = List.of(dashboard, drivebase, teleop, intake, shooter, climber);
   }
 
   @Override
