@@ -53,11 +53,11 @@ public final class Constants {
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
     // Shooter Flywheel Related
-    public static final int SHOOTER_FLYWHEEL_LEFT_ID = 6;
-    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = false;
+    public static final int SHOOTER_FLYWHEEL_LEFT_ID = 5;
+    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = true;
 
-    public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 5;
-    public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = true;
+    public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 6;
+    public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = false;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
     public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.750;

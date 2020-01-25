@@ -11,7 +11,6 @@ import frc.team5431.titan.core.robot.Component;
 public class Shooter extends Component<Robot> {
 
     WPI_TalonFX flywheelLeft, flywheelRight, feed;
-    SpeedControllerGroup flywheel;
 
     Toggle feedToggle, flywheelToggle;
     double shooterSpeed = 0.50;
@@ -30,8 +29,6 @@ public class Shooter extends Component<Robot> {
         feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
         feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
-        flywheel = new SpeedControllerGroup(flywheelLeft, flywheelRight);
-
         feedToggle = new Toggle();
         flywheelToggle = new Toggle();
 
@@ -45,6 +42,7 @@ public class Shooter extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
+        flywheelLeft.follow(flywheelRight);
         if (feedToggle.getState()) {
             feed.set(feedSpeed);
         } else {
@@ -52,9 +50,11 @@ public class Shooter extends Component<Robot> {
         }
 
         if (flywheelToggle.getState()) {
-            flywheel.set(shooterSpeed);
+            flywheelLeft.set(shooterSpeed);
+            flywheelRight.set(shooterSpeed);
         } else {
-            flywheel.set(0);
+            flywheelLeft.set(0);
+            flywheelRight.set(0);
         }
     }
 
@@ -70,8 +70,12 @@ public class Shooter extends Component<Robot> {
         return flywheelToggle;
     }
 
+    public double getFlywheelVelocity() {
+        return (flywheelRight.getSensorCollection().getIntegratedSensorVelocity());
+    }
+
     public double getFlywheelSpeed() {
-        return flywheel.get();
+        return flywheelRight.get();
     }
 
     public void setShooterSpeed(double shooterSpeed) {

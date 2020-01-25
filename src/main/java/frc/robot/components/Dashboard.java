@@ -22,6 +22,8 @@ public class Dashboard extends Component<Robot> {
         driveType.addOption("Arcade Drive", DriveTypeSelector.ARCADE);
         SmartDashboard.putData("Drive Type", driveType);
         SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
+        SmartDashboard.putNumber("Shooter RPM", 0.0);
+        SmartDashboard.putNumber("Shooter Guessed Speed", 0.0);
         SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
         SmartDashboard.putNumber("Elevator Position", 0.0);
     }
@@ -41,6 +43,8 @@ public class Dashboard extends Component<Robot> {
         putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
         putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
         putNumber("Elevator Position", robot.getClimber().getRotations());
+        putNumber("Shooter RPM", robot.getShooter().getFlywheelVelocity());
+        putNumber("Shooter Guessed Speed", robot.getShooter().getFlywheelSpeed());
     }
 
     @Override

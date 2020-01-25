@@ -96,7 +96,7 @@ public class Teleop extends Component<Robot> {
 
             robot.getShooter().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
 
-            robot.getClimber().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
+            robot.getClimber().setElevatorSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
         } else {
             if (!warnDriver)
                 Logger.e("Driver Controller Not Connected");
@@ -112,7 +112,7 @@ public class Teleop extends Component<Robot> {
 
             double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
 
-            robot.getClimber().setSpeed(elevatorSpeed);
+            robot.getClimber().setElevatorSpeed(elevatorSpeed);
 
         } else {
             if (!warnOperator)
