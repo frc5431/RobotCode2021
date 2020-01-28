@@ -54,7 +54,7 @@ public final class Constants {
 
     // Shooter Flywheel Related
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 5;
-    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = true;
+    public static final boolean SHOOTER_FLYWHEEL_LEFT_REVERSE = false;
 
     public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 6;
     public static final boolean SHOOTER_FLYWHEEL_RIGHT_REVERSE = false;
@@ -109,4 +109,9 @@ public final class Constants {
     public static final int DRIVEBASE_MOTIONMAGIC_TURN_SLOT = SLOT_1;
     public static final int DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE = REMOTE_0;
     public static final int DRIVEBASE_MOTIONMAGIC_TURN_REMOTE = REMOTE_1;
+
+
+    // AUTON
+
+    public static final int ELEVATOR_POSITION_TOLARANCE = 300;
 }

@@ -50,8 +50,9 @@ public class Shooter extends Component<Robot> {
         }
 
         if (flywheelToggle.getState()) {
-            flywheelLeft.set(shooterSpeed);
-            flywheelRight.set(shooterSpeed);
+            // TODO: Something is wrong with the flywheel firmware so disable
+            // flywheelLeft.set(shooterSpeed);
+            // flywheelRight.set(shooterSpeed);
         } else {
             flywheelLeft.set(0);
             flywheelRight.set(0);
