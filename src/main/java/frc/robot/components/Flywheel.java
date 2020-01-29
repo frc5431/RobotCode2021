@@ -22,15 +22,6 @@ public class Flywheel extends Component<Robot> {
         flywheelLeft.setInverted(Constants.SHOOTER_FLYWHEEL_REVERSE);
         flywheelRight.setInverted(!Constants.SHOOTER_FLYWHEEL_REVERSE); // Inverted via "!"
 
-        // Print Inverted Status
-        System.out.println("Left Inverted Status: " + flywheelLeft.getInverted());
-        System.out.println("Right Inverted Status: " + flywheelRight.getInverted());
-
-        // Assert Inverted Status to Constant
-        // should never break
-        assert (Constants.SHOOTER_FLYWHEEL_REVERSE == flywheelLeft.getInverted());
-        assert (!Constants.SHOOTER_FLYWHEEL_REVERSE == flywheelRight.getInverted());
-
         // Set Neutral Mode
         flywheelLeft.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
         flywheelRight.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
