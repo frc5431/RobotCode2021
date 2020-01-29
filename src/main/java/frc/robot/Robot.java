@@ -18,8 +18,9 @@ public class Robot extends TitanRobot<Robot> {
   private Drivebase drivebase;
   private Teleop teleop;
   private Intake intake;
-  private Shooter shooter;
+  private Flywheel flywheel;
   private Climber climber;
+  private Feeder feeder;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -37,11 +38,12 @@ public class Robot extends TitanRobot<Robot> {
     drivebase = new Drivebase();
     teleop = new Teleop();
     intake = new Intake();
-    shooter = new Shooter();
+    flywheel = new Flywheel();
+    feeder = new Feeder();
     climber = new Climber();
 
     // Add Components to components Array
-    components = List.of(dashboard, drivebase, teleop, intake, shooter, climber);
+    components = List.of(dashboard, drivebase, teleop, intake, flywheel, climber, feeder);
   }
 
   @Override
@@ -130,7 +132,7 @@ public class Robot extends TitanRobot<Robot> {
   public Drivebase getDrivebase() {
     return drivebase;
   }
-  
+
   /**
    * @return the dashboard
    */
@@ -153,15 +155,24 @@ public class Robot extends TitanRobot<Robot> {
   }
 
   /**
-   * @return the shooter
+   * @return the flywheel
    */
-  public Shooter getShooter() {
-    return shooter;
+  public Flywheel getFlywheel() {
+    return flywheel;
   }
+
+  /**
+   * @return the feeder
+   */
+  public Feeder getFeeder() {
+    return feeder;
+  }
+
   /**
    * @return the climber
    */
   public Climber getClimber() {
     return climber;
   }
+
 }

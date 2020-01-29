@@ -35,16 +35,16 @@ public class Dashboard extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         // Setting Data from dashboard
-        robot.getShooter().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
-        robot.getShooter().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
+        robot.getFlywheel().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
+        robot.getFeeder().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());
         putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
         putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
         putNumber("Elevator Position", robot.getClimber().getRotations());
-        putNumber("Shooter RPM", robot.getShooter().getFlywheelVelocity());
-        putNumber("Shooter Guessed Speed", robot.getShooter().getFlywheelSpeed());
+        putNumber("Shooter RPM", robot.getFlywheel().getFlywheelVelocity());
+        putNumber("Shooter Guessed Speed", robot.getFlywheel().getFlywheelSpeed());
     }
 
     @Override
