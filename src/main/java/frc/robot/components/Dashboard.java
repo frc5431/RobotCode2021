@@ -5,7 +5,10 @@ import frc.robot.Robot;
 import frc.robot.util.*;
 import frc.team5431.titan.core.robot.Component;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putString;
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putData;
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Dashboard extends Component<Robot> {
@@ -20,13 +23,13 @@ public class Dashboard extends Component<Robot> {
          */
         driveType.setDefaultOption("Tank Drive", DriveTypeSelector.ARCADE);
         driveType.addOption("Arcade Drive", DriveTypeSelector.ARCADE);
-        SmartDashboard.putData("Drive Type", driveType);
-        SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
-        SmartDashboard.putNumber("Shooter RPM", 0.0);
-        SmartDashboard.putNumber("Shooter Guessed Speed", 0.0);
-        SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
-        SmartDashboard.putNumber("Elevator Position", 0.0);
-        SmartDashboard.putNumber("Drivebase Ramping", 0.5);
+        putData("Drive Type", driveType);
+        putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
+        putNumber("Shooter RPM", 0.0);
+        putNumber("Shooter Guessed Speed", 0.0);
+        putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
+        putNumber("Elevator Position", 0.0);
+        putNumber("Drivebase Ramping", 0.5);
     }
 
     @Override
@@ -59,21 +62,5 @@ public class Dashboard extends Component<Robot> {
 
     public DriveTypeSelector getSelectedDriveType() {
         return driveType.getSelected();
-    }
-
-    public void putString(String key, String value) {
-        SmartDashboard.putString(key, value);
-    }
-
-    public void putNumber(String key, double value) {
-        SmartDashboard.putNumber(key, value);
-    }
-
-    public String getString(String key, String defaultStr) {
-        return SmartDashboard.getString(key, defaultStr);
-    }
-
-    public double getNumber(String key, double defaultNum) {
-        return SmartDashboard.getNumber(key, defaultNum);
     }
 }
