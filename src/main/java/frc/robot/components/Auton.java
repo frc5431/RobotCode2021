@@ -6,14 +6,14 @@ import frc.team5431.titan.core.robot.Component;
 public class Auton extends Component<Robot> {
 
 	@Override
-	public void init(Robot robot) {
+	public void init(final Robot robot) {
 	}
 
 	@Override
-	public void periodic(Robot robot) {
+	public void periodic(final Robot robot) {
 	}
 
 	@Override
-	public void disabled(Robot robot) {
+	public void disabled(final Robot robot) {
 	}
 }
