@@ -10,7 +10,6 @@ import frc.team5431.titan.core.robot.Command;
 public class TurnCommand extends Command<Robot> {
 
     private final double angle;
-    private long hitTarget = -1;
 
     public TurnCommand(final double angle) {
         name = "TurnCommand";
