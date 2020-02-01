@@ -11,7 +11,7 @@ import frc.team5431.titan.core.robot.Component;
 public class Intake extends Component<Robot> {
 
     private WPI_TalonFX intakeMotor;
-    private Toggle toggle;
+    private Toggle toggle, reverse;
 
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
@@ -22,6 +22,9 @@ public class Intake extends Component<Robot> {
 
         toggle = new Toggle();
         toggle.setState(false);
+
+        reverse = new Toggle();
+        reverse.setState(false);
     }
 
     @Override
@@ -31,7 +34,11 @@ public class Intake extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (toggle.getState()) {
-            intakeMotor.set(Constants.INTAKE_SPEED);
+            if (reverse.getState()) {
+                intakeMotor.set(-1 * Constants.INTAKE_SPEED);
+            } else {
+                intakeMotor.set(Constants.INTAKE_SPEED);
+            }
         } else {
             intakeMotor.set(0);
         }
@@ -59,4 +66,10 @@ public class Intake extends Component<Robot> {
         this.controlMode = controlMode;
     }
 
+    /**
+     * @return the reverse
+     */
+    public Toggle getReverse() {
+        return reverse;
+    }
 }

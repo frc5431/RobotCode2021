@@ -1,6 +1,7 @@
 package frc.robot.components;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
@@ -17,6 +18,7 @@ public class Elevator extends Component<Robot> {
     public Elevator() {
         elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
         elevator.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
+        elevator.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Elevator extends Component<Robot> {
     }
 
     public void setSpeed(double speed) {
-        elevator.set(ControlMode.PercentOutput, speed);
+        elevator.set(ControlMode.PercentOutput, speed*.50);
     }
 
     public double getEncoderPosition() {

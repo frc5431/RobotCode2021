@@ -23,7 +23,7 @@ public final class Constants {
      */
 
     public static final int DRIVER_XBOX_ID = 0;
-    public static final double DRIVER_XBOX_DEADZONE = 0.10;
+    public static final double DRIVER_XBOX_DEADZONE = 0.15;
     public static final String DRIVER_XBOX_NAME = "xbox 360";
 
     public static final int OPERATOR_LOGITECH_ID = 1;
@@ -45,13 +45,13 @@ public final class Constants {
 
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
 
-    public static final double DRIVEBASE_DEFAULT_RAMPING = 0.5;
+    public static final double DRIVEBASE_DEFAULT_RAMPING = 1.5;
 
     // Climber Related
     public static final int CLIMBER_BALANCER_ID = 10;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
-    public static final int CLIMBER_ELEVATOR_ID = 9;
+    public static final int CLIMBER_ELEVATOR_ID = 7;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
     // Shooter Flywheel Related
@@ -66,15 +66,15 @@ public final class Constants {
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 8;
-    public static final boolean SHOOTER_FEEDER_REVERSE = true;
+    public static final boolean SHOOTER_FEEDER_REVERSE = false;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
     public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.5;
 
     // Intake Related
-    public static final int INTAKE_ID = 7;
+    public static final int INTAKE_ID = 9;
     public static final boolean INTAKE_REVERSE = true;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
-    public static final double INTAKE_SPEED = 0.8;
+    public static final double INTAKE_SPEED = 0.50;
     
     // ================================================================================
     // Vision Data

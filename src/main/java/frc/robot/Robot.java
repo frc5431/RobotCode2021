@@ -100,7 +100,7 @@ public class Robot extends TitanRobot<Robot> {
 
   @Override
   public void disabledPeriodic() {
-    // This Function Should Do Nothing
+    teleopPeriodic();
   }
 
   /**
