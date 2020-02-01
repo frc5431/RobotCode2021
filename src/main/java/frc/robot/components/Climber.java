@@ -19,6 +19,7 @@ public class Climber extends Component<Robot> {
     public Climber() {
         elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
         elevator.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
+        
 
         balancer = new WPI_TalonFX(Constants.CLIMBER_BALANCER_ID);
         balancer.setInverted(Constants.CLIMBER_BALANCER_REVERSE);

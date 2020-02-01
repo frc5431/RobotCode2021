@@ -12,7 +12,7 @@ public class Flywheel extends Component<Robot> {
     WPI_TalonFX flywheelLeft, flywheelRight;
 
     Toggle flywheelToggle;
-    double shooterSpeed = 0.50;
+    double shooterSpeed = 0.75;
 
     public Flywheel() {
         flywheelLeft = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
@@ -38,6 +38,7 @@ public class Flywheel extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (flywheelToggle.getState()) {
+            shooterSpeed = 0.1;
             flywheelLeft.set(shooterSpeed);
             flywheelRight.set(shooterSpeed);
         } else {

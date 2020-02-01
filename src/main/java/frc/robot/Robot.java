@@ -21,6 +21,7 @@ public class Robot extends TitanRobot<Robot> {
   private Flywheel flywheel;
   private Climber climber;
   private Feeder feeder;
+  private Vision vision;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -41,9 +42,10 @@ public class Robot extends TitanRobot<Robot> {
     flywheel = new Flywheel();
     feeder = new Feeder();
     climber = new Climber();
+    vision = new Vision();
 
     // Add Components to components Array
-    components = List.of(dashboard, drivebase, teleop, intake, flywheel, climber, feeder);
+    components = List.of(dashboard, drivebase, teleop, intake, flywheel, climber, feeder, vision);
   }
 
   @Override
@@ -173,6 +175,13 @@ public class Robot extends TitanRobot<Robot> {
    */
   public Climber getClimber() {
     return climber;
+  }
+
+  /**
+   * @return the vision
+   */
+  public Vision getVision() {
+    return vision;
   }
 
 }

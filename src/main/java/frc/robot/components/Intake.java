@@ -28,7 +28,7 @@ public class Intake extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (toggle.getState()) {
-            intakeMotor.set(Constants.INTAKE_SPEED);
+            intakeMotor.set(-.8);
         } else {
             intakeMotor.set(0);
         }

@@ -18,7 +18,7 @@ public class Dashboard extends Component<Robot> {
          * Add selection for which drive code to use as there are differences in
          * preference
          */
-        driveType.setDefaultOption("Tank Drive", DriveTypeSelector.TANK);
+        driveType.setDefaultOption("Tank Drive", DriveTypeSelector.ARCADE);
         driveType.addOption("Arcade Drive", DriveTypeSelector.ARCADE);
         SmartDashboard.putData("Drive Type", driveType);
         SmartDashboard.putNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED);
@@ -26,6 +26,7 @@ public class Dashboard extends Component<Robot> {
         SmartDashboard.putNumber("Shooter Guessed Speed", 0.0);
         SmartDashboard.putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
         SmartDashboard.putNumber("Elevator Position", 0.0);
+        SmartDashboard.putNumber("Drivebase Ramping", 0.5);
     }
 
     @Override
@@ -37,6 +38,7 @@ public class Dashboard extends Component<Robot> {
         // Setting Data from dashboard
         robot.getFlywheel().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
         robot.getFeeder().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
+        robot.getDrivebase().setRamping(getNumber("Drivebase Ramping", 0.5));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());

@@ -32,6 +32,8 @@ public class Drivebase extends Component<Robot> {
     private Toggle swappedDrive;
     private ErrorCode eCode = ErrorCode.OK;
 
+    private double ramping = 0.5;
+
     public Drivebase() {
 
         pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
@@ -156,6 +158,12 @@ public class Drivebase extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
+
+        left.configOpenloopRamp(ramping);
+        left.configClosedloopRamp(0);
+        right.configOpenloopRamp(ramping);
+        right.configClosedloopRamp(0);
+
         // Check if the the motors are working together
         assert (left.get() == _leftFollow.get());
         assert (right.get() == _rightFollow.get());
@@ -196,5 +204,9 @@ public class Drivebase extends Component<Robot> {
 
     public double getHeading() {
         return pidgey.getCompassHeading();
+    }
+
+    public void setRamping(double ramping) {
+        this.ramping = ramping;
     }
 }

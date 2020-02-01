@@ -21,7 +21,7 @@ public class Feeder extends Component<Robot> {
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
 
 
-        feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
+        feed.setInverted(!Constants.SHOOTER_FEEDER_REVERSE);
         feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
         feedToggle = new Toggle();
@@ -36,6 +36,7 @@ public class Feeder extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (feedToggle.getState()) {
+            feedSpeed = 0.5;
             feed.set(feedSpeed);
         } else {
             feed.set(0);
@@ -51,6 +52,6 @@ public class Feeder extends Component<Robot> {
     }
 
     public void setFeedSpeed(double feedSpeed) {
-        this.feedSpeed = feedSpeed;
+        //this.feedSpeed = feedSpeed;
     }
 }

@@ -65,19 +65,19 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 8;
     public static final boolean SHOOTER_FEEDER_REVERSE = false;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.750;
+    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = -0.750;
 
     // Intake Related
     public static final int INTAKE_ID = 7;
     public static final boolean INTAKE_REVERSE = false;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
-    public static final double INTAKE_SPEED = 0.75;
+    public static final double INTAKE_SPEED = 0.20;
     
     // ================================================================================
     // Vision Data
     // ================================================================================
 
-    public static final String VISION_FRONT_LIMELIGHT = "";
+    public static final String VISION_FRONT_LIMELIGHT = "10.54.31.11";
 
     // ================================================================================
     // Vision Data
