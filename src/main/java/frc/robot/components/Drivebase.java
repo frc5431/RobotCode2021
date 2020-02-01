@@ -218,6 +218,11 @@ public class Drivebase extends Component<Robot> {
         return ramping;
     }
 
+    public void resetSensors() {
+        zeroDistance();
+        zeroGyro();
+    }
+
     /**
      * @param controlMode the controlMode to set
      */

@@ -20,14 +20,14 @@ public class Auton extends Component<Robot> {
 	public void init(final Robot robot) {
 		switch (robot.getMode()) {
 		case AUTO:
-			robot.getDrivebase(); // TODO: Reset Sensors
+			robot.getDrivebase().resetSensors();
 			drivebaseCommands.clear();
 			drivebaseCommands.add(new WaitCommand<>(100));
 			drivebaseCommands.addAll(preloadedAutoCommands);
 			preloadedAutoCommands.clear();
 			break;
 		case TEST:
-			robot.getDrivebase(); // TODO: Reset Sensors
+			robot.getDrivebase().resetSensors();
 			break;
 		case TELEOP:
 			break;
