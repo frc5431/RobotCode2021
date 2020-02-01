@@ -22,9 +22,14 @@ public class Flywheel extends Component<Robot> {
         flywheelLeft.setInverted(Constants.SHOOTER_FLYWHEEL_REVERSE);
         flywheelRight.setInverted(!Constants.SHOOTER_FLYWHEEL_REVERSE); // Inverted via "!"
 
+        flywheelRight.follow(flywheelLeft);
+
         // Set Neutral Mode
         flywheelLeft.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
-        flywheelRight.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
+        // flywheelRight.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
+
+        flywheelLeft.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
+        // flywheelRight.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
 
         // Toggle Control
         flywheelToggle = new Toggle();

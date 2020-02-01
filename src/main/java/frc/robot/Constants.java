@@ -62,6 +62,7 @@ public final class Constants {
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
     public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.750;
+    public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 8;
