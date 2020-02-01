@@ -1,6 +1,5 @@
 package frc.robot.components;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
@@ -14,14 +13,14 @@ public class Feeder extends Component<Robot> {
 
     Toggle feedToggle;
     double shooterSpeed = 0.50;
-    double feedSpeed = 0.5;
+    double feedSpeed;
 
     public Feeder() {
     
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
 
 
-        feed.setInverted(!Constants.SHOOTER_FEEDER_REVERSE);
+        feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
         feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
         feedToggle = new Toggle();
@@ -36,7 +35,6 @@ public class Feeder extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (feedToggle.getState()) {
-            feedSpeed = 0.5;
             feed.set(feedSpeed);
         } else {
             feed.set(0);
@@ -52,6 +50,6 @@ public class Feeder extends Component<Robot> {
     }
 
     public void setFeedSpeed(double feedSpeed) {
-        //this.feedSpeed = feedSpeed;
+        this.feedSpeed = feedSpeed;
     }
 }
