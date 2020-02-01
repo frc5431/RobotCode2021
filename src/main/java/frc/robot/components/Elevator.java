@@ -12,8 +12,7 @@ import frc.team5431.titan.core.robot.Component;
 public class Elevator extends Component<Robot> {
 
     private WPI_TalonFX elevator;
-    private ComponentControlMode mode = ComponentControlMode.MANUAL;
-
+    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Elevator() {
         elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
@@ -31,14 +30,6 @@ public class Elevator extends Component<Robot> {
     @Override
     public void disabled(final Robot robot) {
     }
-
-    public ComponentControlMode getMode() {
-        return mode;
-    }
-
-    public void setMode(ComponentControlMode mode) {
-        this.mode = mode;
-    }
     
     public void setPosition(ClimberState position) {
         elevator.set(ControlMode.Position, position.getPosition());
@@ -48,7 +39,25 @@ public class Elevator extends Component<Robot> {
         elevator.set(ControlMode.PercentOutput, speed);
     }
 
+    public double getEncoderPosition() {
+        return elevator.getSensorCollection().getIntegratedSensorPosition();
+    }
+
     public double getRotations() {
-        return elevator.getSensorCollection().getIntegratedSensorPosition() / 2048;
+        return getEncoderPosition() / 2048;
+    }
+
+    /**
+     * @param controlMode the controlMode to set
+     */
+    public void setControlMode(ComponentControlMode controlMode) {
+        this.controlMode = controlMode;
+    }
+
+    /**
+     * @return the controlMode
+     */
+    public ComponentControlMode getControlMode() {
+        return controlMode;
     }
 }

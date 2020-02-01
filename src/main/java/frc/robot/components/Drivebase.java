@@ -11,6 +11,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.ComponentControlMode;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
@@ -33,6 +34,7 @@ public class Drivebase extends Component<Robot> {
     private ErrorCode eCode = ErrorCode.OK;
 
     private double ramping;
+    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Drivebase() {
 
@@ -214,5 +216,19 @@ public class Drivebase extends Component<Robot> {
 
     public double getRamping() {
         return ramping;
+    }
+
+    /**
+     * @param controlMode the controlMode to set
+     */
+    public void setControlMode(ComponentControlMode controlMode) {
+        this.controlMode = controlMode;
+    }
+
+    /**
+     * @return the controlMode
+     */
+    public ComponentControlMode getControlMode() {
+        return controlMode;
     }
 }

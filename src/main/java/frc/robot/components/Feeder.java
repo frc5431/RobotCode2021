@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
@@ -14,6 +15,8 @@ public class Feeder extends Component<Robot> {
     Toggle feedToggle;
     double shooterSpeed = 0.50;
     double feedSpeed;
+
+    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Feeder() {
     
@@ -51,5 +54,19 @@ public class Feeder extends Component<Robot> {
 
     public void setFeedSpeed(double feedSpeed) {
         this.feedSpeed = feedSpeed;
+    }
+
+    /**
+     * @return the controlMode
+     */
+    public ComponentControlMode getControlMode() {
+        return controlMode;
+    }
+
+    /**
+     * @param controlMode the controlMode to set
+     */
+    public void setControlMode(ComponentControlMode controlMode) {
+        this.controlMode = controlMode;
     }
 }

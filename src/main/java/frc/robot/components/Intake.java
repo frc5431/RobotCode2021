@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
@@ -11,6 +12,8 @@ public class Intake extends Component<Robot> {
 
     private WPI_TalonFX intakeMotor;
     private Toggle toggle;
+
+    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Intake() {
         intakeMotor = new WPI_TalonFX(Constants.INTAKE_ID);
@@ -40,6 +43,20 @@ public class Intake extends Component<Robot> {
 
     public Toggle getToggle() {
         return toggle;
+    }
+
+    /**
+     * @return the controlMode
+     */
+    public ComponentControlMode getControlMode() {
+        return controlMode;
+    }
+
+    /**
+     * @param controlMode the controlMode to set
+     */
+    public void setControlMode(ComponentControlMode controlMode) {
+        this.controlMode = controlMode;
     }
 
 }
