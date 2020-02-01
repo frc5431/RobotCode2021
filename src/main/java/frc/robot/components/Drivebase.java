@@ -32,7 +32,7 @@ public class Drivebase extends Component<Robot> {
     private Toggle swappedDrive;
     private ErrorCode eCode = ErrorCode.OK;
 
-    private double ramping = 0.5;
+    private double ramping;
 
     public Drivebase() {
 
@@ -113,6 +113,8 @@ public class Drivebase extends Component<Robot> {
 
         swappedDrive = new Toggle();
         swappedDrive.setState(false);
+
+        setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
@@ -159,11 +161,6 @@ public class Drivebase extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
 
-        left.configOpenloopRamp(ramping);
-        left.configClosedloopRamp(0);
-        right.configOpenloopRamp(ramping);
-        right.configClosedloopRamp(0);
-
         // Check if the the motors are working together
         assert (left.get() == _leftFollow.get());
         assert (right.get() == _rightFollow.get());
@@ -208,5 +205,14 @@ public class Drivebase extends Component<Robot> {
 
     public void setRamping(double ramping) {
         this.ramping = ramping;
+
+        left.configOpenloopRamp(ramping);
+        left.configClosedloopRamp(0);
+        right.configOpenloopRamp(ramping);
+        right.configClosedloopRamp(0);
+    }
+
+    public double getRamping() {
+        return ramping;
     }
 }
