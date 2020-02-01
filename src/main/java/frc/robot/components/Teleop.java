@@ -8,7 +8,6 @@ import frc.team5431.titan.core.joysticks.Xbox;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
-import frc.team5431.titan.core.vision.LEDState;
 
 public class Teleop extends Component<Robot> {
 
@@ -16,7 +15,6 @@ public class Teleop extends Component<Robot> {
     private LogitechExtreme3D operator;
 
     private Toggle swapDrv = new Toggle();
-    private Toggle visionLightToggle = new Toggle();
 
     private boolean warnDriver = false, warnOperator = false;
 
@@ -100,8 +98,7 @@ public class Teleop extends Component<Robot> {
 
             robot.getClimber().setElevatorSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
 
-            visionLightToggle.setState(driver.getRawButton(Xbox.Button.Y));
-            robot.getVision().getFrontLimelight().setLEDState(visionLightToggle.getState() ? LEDState.ON : LEDState.OFF);
+            robot.getVision().getVisionLightToggle().setState(driver.getRawButton(Xbox.Button.Y));
         } else {
             if (!warnDriver)
                 Logger.e("Driver Controller Not Connected");
