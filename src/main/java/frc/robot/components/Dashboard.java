@@ -47,7 +47,7 @@ public class Dashboard extends Component<Robot> {
         putString("Mode", robot.getMode().toString());
         putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
         putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
-        putNumber("Elevator Position", robot.getClimber().getRotations());
+        putNumber("Elevator Position", robot.getElevator().getRotations());
         putNumber("Shooter RPM", robot.getFlywheel().getFlywheelVelocity());
         putNumber("Shooter Guessed Speed", robot.getFlywheel().getFlywheelSpeed());
     }

@@ -96,7 +96,7 @@ public class Teleop extends Component<Robot> {
 
             robot.getFlywheel().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
 
-            robot.getClimber().setElevatorSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
+            robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
 
             robot.getVision().getVisionLightToggle().setState(driver.getRawButton(Xbox.Button.Y));
         } else {
@@ -114,7 +114,7 @@ public class Teleop extends Component<Robot> {
 
             double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
 
-            robot.getClimber().setElevatorSpeed(elevatorSpeed);
+            robot.getElevator().setSpeed(elevatorSpeed);
 
         } else {
             if (!warnOperator)

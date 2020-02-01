@@ -19,7 +19,8 @@ public class Robot extends TitanRobot<Robot> {
   private Teleop teleop;
   private Intake intake;
   private Flywheel flywheel;
-  private Climber climber;
+  private Balancer balancer;
+  private Elevator elevator;
   private Feeder feeder;
   private Vision vision;
 
@@ -41,11 +42,12 @@ public class Robot extends TitanRobot<Robot> {
     intake = new Intake();
     flywheel = new Flywheel();
     feeder = new Feeder();
-    climber = new Climber();
+    balancer = new Balancer();
+    elevator = new Elevator();
     vision = new Vision();
 
     // Add Components to components Array
-    components = List.of(dashboard, drivebase, teleop, intake, flywheel, climber, feeder, vision);
+    components = List.of(dashboard, drivebase, teleop, intake, flywheel, balancer, feeder, vision);
   }
 
   @Override
@@ -171,17 +173,23 @@ public class Robot extends TitanRobot<Robot> {
   }
 
   /**
-   * @return the climber
-   */
-  public Climber getClimber() {
-    return climber;
-  }
-
-  /**
    * @return the vision
    */
   public Vision getVision() {
     return vision;
   }
 
+  /**
+   * @return the elevator
+   */
+  public Elevator getElevator() {
+    return elevator;
+  }
+
+  /**
+   * @return the balancer
+   */
+  public Balancer getBalancer() {
+    return balancer;
+  }
 }
