@@ -5,14 +5,13 @@
 
 resources:
   containers:
-  - container: raspbian
-    image:  wpilib/raspbian-cross-ubuntu:18.04
+  - container: wpilib2020
+    image: wpilib/roborio-cross-ubuntu:2020-18.04
 
 jobs:
  - job: Linux_Arm
    pool:
      vmImage: 'Ubuntu 16.04'
-
    container: wpilib2020
 
    steps:
