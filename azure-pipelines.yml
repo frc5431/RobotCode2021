@@ -5,8 +5,6 @@
 
 resources:
   containers:
-  - container: wpilib2019
-    image: wpilib/roborio-cross-ubuntu:2019-18.04
   - container: raspbian
     image:  wpilib/raspbian-cross-ubuntu:18.04
 
@@ -15,7 +13,7 @@ jobs:
    pool:
      vmImage: 'Ubuntu 16.04'
 
-   container: wpilib2019
+   container: wpilib2020
 
    steps:
     - task: Gradle@2
@@ -34,7 +32,7 @@ jobs:
    pool:
      vmImage: 'Ubuntu 16.04'
 
-   container: wpilib2019
+   container: wpilib2020
 
    steps:
     - task: Gradle@2
@@ -62,7 +60,7 @@ jobs:
           git checkout -b master
         displayName: 'Install Dependencies'
       - script: |
-          wpiformat -y 2018 -clang 5.0
+          wpiformat -y 2020 -clang 5.0
         displayName: 'Run WPIFormat'
         failOnStderr: true
       - script: |
