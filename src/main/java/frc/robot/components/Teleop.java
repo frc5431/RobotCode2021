@@ -114,8 +114,10 @@ public class Teleop extends Component<Robot> {
             swapDrv.isToggled(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
 
             double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
+            double balancerSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.X);
 
             robot.getElevator().setSpeed(elevatorSpeed);
+            robot.getBalancer().setSpeed(balancerSpeed);
 
         } else {
             if (!warnOperator)
