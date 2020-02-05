@@ -11,6 +11,11 @@ import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putData;
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Daniel Brubaker
+ * @author Colin Wong
+ */
 public class Dashboard extends Component<Robot> {
 
     private final SendableChooser<DriveTypeSelector> driveType = new SendableChooser<>();

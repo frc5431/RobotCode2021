@@ -21,6 +21,10 @@ import frc.team5431.titan.core.robot.Component;
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ */
 public class Drivebase extends Component<Robot> {
 
     private PigeonIMU pidgey;

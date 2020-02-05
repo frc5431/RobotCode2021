@@ -1,19 +1,33 @@
 package frc.robot.components;
 
+import java.util.HashMap;
+import java.util.List;
+
 import frc.robot.Robot;
+import frc.robot.auto.Sequence;
 import frc.robot.util.ComponentControlMode;
+import frc.team5431.titan.core.robot.Command;
 import frc.team5431.titan.core.robot.CommandQueue;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.robot.WaitCommand;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ */
 public class Auton extends Component<Robot> {
 
 	private CommandQueue<Robot> sequenceCommands, drivebaseCommands, preloadedAutoCommands;
+	private HashMap<Integer, Sequence> sequences = new HashMap<>();
+
+	private Sequence runningSequence = null;
 
 	public Auton() {
 		sequenceCommands = new CommandQueue<>();
 		drivebaseCommands = new CommandQueue<>();
 		preloadedAutoCommands = new CommandQueue<>();
+
+
 	}
 
 	@Override
@@ -60,5 +74,21 @@ public class Auton extends Component<Robot> {
 		robot.getIntake().setControlMode(ComponentControlMode.MANUAL);
 		robot.getFeeder().setControlMode(ComponentControlMode.MANUAL);
 		robot.getFlywheel().setControlMode(ComponentControlMode.MANUAL);
+	}
+
+	public CommandQueue<Robot> getSequenceCommands() {
+		return sequenceCommands;
+	}
+
+	public CommandQueue<Robot> getDrivebaseCommands() {
+		return drivebaseCommands;
+	}
+
+	public CommandQueue<Robot> getPreloadedAutoCommands() {
+		return preloadedAutoCommands;
+	}
+
+	public List<Command<Robot>> goToPosition(Robot robot, final List<Command<Robot>> preCommands) {
+		return null;
 	}
 }

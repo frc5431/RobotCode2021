@@ -7,6 +7,9 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.team5431.titan.core.robot.Component;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class Balancer extends Component<Robot> {
 
     private WPI_VictorSPX balancer;
