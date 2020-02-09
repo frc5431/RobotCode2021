@@ -254,30 +254,37 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
         return controlMode;
     }
 
+    @Override
     public double getLeftSpeed() {
         return left.get();
     };
 
+    @Override
     public double getRightSpeed() {
         return right.get();
     };
 
+    @Override
     public double getLeftEncoderCount() {
         return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
+    @Override
     public double getRightEncoderCount() {
         return right.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
+    @Override
     public double getLeftDistance() {
         return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
     };
 
+    @Override
     public double getRightDistance() {
         return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
     };
 
+    @Override
     public void setHome() {
 
     };
