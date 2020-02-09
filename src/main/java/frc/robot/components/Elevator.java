@@ -42,7 +42,7 @@ public class Elevator extends Component<Robot> {
     }
 
     public double getEncoderPosition() {
-        return elevator.getSensorCollection().getIntegratedSensorPosition();
+        return elevator.getSelectedSensorPosition();
     }
 
     public double getRotations() {

@@ -3,31 +3,35 @@ package frc.robot.auto.commands;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.components.Elevator;
+import frc.robot.util.states.ClimberState;
 import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.robot.Command;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ */
 public class ElevateCommand extends Command<Robot> {
-    private final int targetPosition;
+    private final ClimberState targetPosition;
 
-    public ElevateCommand(final int position) {
+    public ElevateCommand(final ClimberState position) {
         this.targetPosition = position;
 
         name = "ElevateCommand";
-        properties = String.format("Position: %d", position);
+        properties = String.format("Position: %s", position.toString());
     }
 
     private boolean isComplete(final Elevator elevator) {
-        final boolean approxPosition = Calc.approxEquals(elevator.getEncoderPosition(), targetPosition,
+        final boolean approxPosition = Calc.approxEquals(elevator.getEncoderPosition(), targetPosition.getPosition(),
                 Constants.ELEVATOR_POSITION_TOLARANCE);
 
-        return (targetPosition > 0 && approxPosition);
+        return (targetPosition.getPosition() > 0 && approxPosition);
     }
 
     private void runElevator(final Elevator elevator) {
-        // TODO: Run Elevator code
         final double encoderPos = elevator.getEncoderPosition();
-        if (targetPosition <= 0 && encoderPos <= 1000) {
+        if (targetPosition.getPosition() <= 0 && encoderPos <= 1000) {
 
         } else {
 

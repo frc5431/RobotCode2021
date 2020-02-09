@@ -1,15 +1,19 @@
 package frc.robot.auto.commands;
 
 import frc.robot.Robot;
+import frc.robot.auto.vision.TargetType;
 import frc.team5431.titan.core.robot.Command;
 import frc.team5431.titan.core.vision.Limelight;
 
-public class TargetShieldGenerator extends Command<Robot> {
+public class Targetor extends Command<Robot> {
 
-    Limelight front;
+    private Limelight front;
+    private final TargetType target;
 
-    public TargetShieldGenerator() {
-        this.name = "TargetShieldGenerator";
+    public Targetor(TargetType target) {
+        this.target = target;
+
+        this.name = "Targetor";
     }
 
     @Override
@@ -17,6 +21,7 @@ public class TargetShieldGenerator extends Command<Robot> {
         front = robot.getVision().getFrontLimelight();
     }
 
+    // FIXME: Do Proper Targeting
     @Override
     public CommandResult update(Robot robot) {
         return null;
