@@ -88,6 +88,7 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
+        /* Tell the motors which sesnor specifically is being used */
         eCode = right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
@@ -207,16 +208,14 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
         left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * 0.35);
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * 0.35);
 
-        Logger.l("Power: %f", power);
-        Logger.l("Turn: %f", turn);
+        Logger.l("Power: %f, Turn: %f", power, turn);
     }
 
     public void driveMotionMagic(double distance, double angle) {
         left.follow(right, FollowerType.AuxOutput1);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
 
-        Logger.l("Distance: %f", distance);
-        Logger.l("Angle: %f", angle);
+        Logger.l("Distance: %f, Angle: %f", distance, angle);
     }
 
     public float getHeading() {
@@ -264,11 +263,11 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
     };
 
     public double getLeftEncoderCount() {
-        return left.getSelectedSensorPosition();
+        return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
     public double getRightEncoderCount() {
-        return right.getSelectedSensorPosition();
+        return right.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
     public double getLeftDistance() {
@@ -282,4 +281,8 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
     public void setHome() {
 
     };
+
+    public double getRPM() {
+        return ((getLeftEncoderCount() * 600) + (getRightEncoderCount() * 600)) / 2;
+    }
 }
