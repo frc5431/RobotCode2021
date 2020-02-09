@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.util.ClimberState;
+import frc.robot.util.states.ClimberState;
 import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.robot.Component;
 
