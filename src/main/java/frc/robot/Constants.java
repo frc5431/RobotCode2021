@@ -103,6 +103,14 @@ public final class Constants {
     public static final int REMOTE_0 = 0;
     public static final int REMOTE_1 = 1;
 
+    // ================================================================================
+    // Drive Base Numbers
+    // ================================================================================
+
+    public static final double COUNTS_PER_REVOLUTION = 2048;
+    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
+    public static final int GEAR_RATIO = 0; // TODO: Find Gear Ratio
+
     // TODO: Set Proper PID Values
     // P, I, D, F, INTERGRAL_ZONE, PEAKOUTPUT, CLOSEDLOOPTIME_MS
     public static final MotionMagic DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);

@@ -17,6 +17,8 @@ import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
+import frc.team5431.titan.mimic.DrivebaseAnalyzer;
+
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -25,7 +27,7 @@ import frc.team5431.titan.core.robot.Component;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends Component<Robot> {
+public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
 
     private PigeonIMU pidgey;
 
@@ -198,7 +200,7 @@ public class Drivebase extends Component<Robot> {
          * speed controller.
          */
 
-        if(Math.abs(power) == 0) {
+        if (Math.abs(power) == 0) {
             power = 0;
         }
 
@@ -217,8 +219,8 @@ public class Drivebase extends Component<Robot> {
         Logger.l("Angle: %f", angle);
     }
 
-    public double getHeading() {
-        return pidgey.getCompassHeading();
+    public float getHeading() {
+        return (float)pidgey.getCompassHeading();
     }
 
     public void setRamping(double ramping) {
@@ -252,4 +254,32 @@ public class Drivebase extends Component<Robot> {
     public ComponentControlMode getControlMode() {
         return controlMode;
     }
+
+    public double getLeftSpeed() {
+        return left.get();
+    };
+
+    public double getRightSpeed() {
+        return right.get();
+    };
+
+    public double getLeftEncoderCount() {
+        return left.getSelectedSensorPosition();
+    };
+
+    public double getRightEncoderCount() {
+        return right.getSelectedSensorPosition();
+    };
+
+    public double getLeftDistance() {
+        return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+    };
+
+    public double getRightDistance() {
+        return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+    };
+
+    public void setHome() {
+
+    };
 }

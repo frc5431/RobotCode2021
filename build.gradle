@@ -61,7 +61,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    implementation 'com.github.frc5431:TitanUtil:bd138516a4'
+    implementation 'com.github.frc5431:TitanUtil:2.1.3.1'
 
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging

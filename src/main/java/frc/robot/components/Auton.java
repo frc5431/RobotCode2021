@@ -17,17 +17,20 @@ import frc.team5431.titan.core.robot.WaitCommand;
  */
 public class Auton extends Component<Robot> {
 
-	private CommandQueue<Robot> sequenceCommands, drivebaseCommands, preloadedAutoCommands;
-	private HashMap<Integer, Sequence> sequences = new HashMap<>();
+	private CommandQueue<Robot> sequenceCommands, drivebaseCommands;
+
+	// Predefined Sequences via button presses on operator controller buttons
+	private HashMap<Integer, Sequence> operatorSequences = new HashMap<>();
 
 	private Sequence runningSequence = null;
 
 	public Auton() {
 		sequenceCommands = new CommandQueue<>();
 		drivebaseCommands = new CommandQueue<>();
-		preloadedAutoCommands = new CommandQueue<>();
 
-
+		// Climber Buttons
+		// operatorSequences.put(Xbox.Button.X, Sequence.STOW);
+		// operatorSequences.put(Xbox.Button.Y, Sequence.CLIMB);
 	}
 
 	@Override
@@ -36,9 +39,6 @@ public class Auton extends Component<Robot> {
 		case AUTO:
 			robot.getDrivebase().resetSensors();
 			drivebaseCommands.clear();
-			drivebaseCommands.add(new WaitCommand<>(100));
-			drivebaseCommands.addAll(preloadedAutoCommands);
-			preloadedAutoCommands.clear();
 			break;
 		case TEST:
 			robot.getDrivebase().resetSensors();
@@ -82,10 +82,6 @@ public class Auton extends Component<Robot> {
 
 	public CommandQueue<Robot> getDrivebaseCommands() {
 		return drivebaseCommands;
-	}
-
-	public CommandQueue<Robot> getPreloadedAutoCommands() {
-		return preloadedAutoCommands;
 	}
 
 	public List<Command<Robot>> goToPosition(Robot robot, final List<Command<Robot>> preCommands) {
