@@ -94,6 +94,7 @@ public class Auton extends Component<Robot> {
 			shooterSequences.put(Sequence.STOPINTAKE, stopEverythingIntake);
 			shooterSequences.put(Sequence.STARTINTAKE_NOFLYWHEEL, startIntakeNoFlywheel);
 			shooterSequences.put(Sequence.STARTINTAKE_FLYWHEEL, startIntakeAndFlywheel);
+			shooterSequences.put(Sequence.TARGET_SHIELDGENERATOR, targetShieldGenerator);
 		}
 
 		// Add Climber functions to Sequences
