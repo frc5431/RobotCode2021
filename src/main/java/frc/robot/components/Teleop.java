@@ -129,4 +129,8 @@ public class Teleop extends Component<Robot> {
     public boolean getSwappedDriverStatus() {
         return swapDrv.getState();
     }
+
+	public Xbox getDriver() {
+		return driver;
+	}
 }
