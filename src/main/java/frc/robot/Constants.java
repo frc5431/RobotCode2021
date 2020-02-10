@@ -125,4 +125,6 @@ public final class Constants {
 
     public static final int ELEVATOR_POSITION_TOLARANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
+
+	public static final double LIMELIGHT_ERROR_RATE = 0.005; //TODO: find good error rate
 }
