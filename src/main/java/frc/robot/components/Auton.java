@@ -92,7 +92,7 @@ public class Auton extends Component<Robot> {
 				throwawayCommands.add(new FlywheelCommand(FlywheelState.STOP));
 				throwawayCommands.add(new IntakeCommand(IntakeState.STOP));
 				throwawayCommands.add(new FeederCommand(FeederState.STOP));
-				throwawayCommands.add(new Targetor(TargetType.UPPERPORT));
+				throwawayCommands.add(new Targetor(TargetType.SHIELDGENERATOR));
 
 				return throwawayCommands;
 			};
