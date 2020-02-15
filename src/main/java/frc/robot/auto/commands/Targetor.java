@@ -1,4 +1,4 @@
-package frc.robot.components;
+package frc.robot.auto.commands;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -18,6 +18,12 @@ public class Targetor extends Command<Robot> {
         this.target = target;
 
         this.name = "Targetor";
+    }
+
+    public Targetor(TargetType target, Limelight front) {
+        this(target);
+
+        this.front = front;
     }
 
     @Override
