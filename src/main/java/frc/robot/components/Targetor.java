@@ -1,4 +1,4 @@
-package frc.robot.auto.commands;
+package frc.robot.components;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
