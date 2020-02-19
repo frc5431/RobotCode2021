@@ -34,7 +34,8 @@ public class Dashboard extends Component<Robot> {
         putNumber("Shooter Guessed Speed", 0.0);
         putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
         putNumber("Elevator Position", 0.0);
-        putNumber("Drivebase Ramping", 0.5);
+        putNumber("Drivebase Ramping", Constants.DRIVEBASE_DEFAULT_RAMPING);
+        putNumber("Hopper Speed", Constants.HOPPER_DEFAULT_SPEED);
     }
 
     @Override
@@ -46,7 +47,8 @@ public class Dashboard extends Component<Robot> {
         // Setting Data from dashboard
         robot.getFlywheel().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
         robot.getFeeder().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
-        robot.getDrivebase().setRamping(getNumber("Drivebase Ramping", 0.5));
+        robot.getHopper().setHopperSpeed(getNumber("Hopper Speed", Constants.HOPPER_DEFAULT_SPEED));
+        robot.getDrivebase().setRamping(getNumber("Drivebase Ramping", Constants.DRIVEBASE_DEFAULT_RAMPING));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());

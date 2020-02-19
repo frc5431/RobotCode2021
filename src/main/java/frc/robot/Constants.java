@@ -45,7 +45,7 @@ public final class Constants {
 
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
 
-    public static final double DRIVEBASE_DEFAULT_RAMPING = 1.5;
+    public static final double DRIVEBASE_DEFAULT_RAMPING = 0.6;
 
     // Climber Related
     public static final int CLIMBER_BALANCER_ID = 10;
@@ -81,6 +81,7 @@ public final class Constants {
     public static final int HOPPER_RIGHT_ID = 5431; // TODO: Find out ids
     public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
+    public static final double HOPPER_DEFAULT_SPEED = 0.5;
     
     // ================================================================================
     // Vision Data
