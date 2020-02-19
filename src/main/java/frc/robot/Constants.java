@@ -75,6 +75,12 @@ public final class Constants {
     public static final boolean INTAKE_REVERSE = true;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
     public static final double INTAKE_SPEED = 0.50;
+
+    // Hopper related
+    public static final int HOPPER_LEFT_ID = 1024; // TODO: Find out ids
+    public static final int HOPPER_RIGHT_ID = 5431; // TODO: Find out ids
+    public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
+    public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     
     // ================================================================================
     // Vision Data
@@ -83,7 +89,7 @@ public final class Constants {
     public static final String VISION_FRONT_LIMELIGHT = "10.54.31.11";
 
     // ================================================================================
-    // Vision Data
+    // IMU Data
     // ================================================================================
 
     public static final int DRIVEBASE_PIGEON_IMU_ID = 1;
@@ -115,6 +121,6 @@ public final class Constants {
 
     // AUTON
 
-    public static final int ELEVATOR_POSITION_TOLARANCE = 300;
+    public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 }
