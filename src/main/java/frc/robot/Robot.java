@@ -203,4 +203,11 @@ public class Robot extends TitanRobot<Robot> {
   public Auton getAuton() {
     return auton;
   }
+
+  /**
+   * @return the hopper
+   */
+  public Hopper getHopper() {
+    return hopper;
+  }
 }

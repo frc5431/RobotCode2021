@@ -96,7 +96,7 @@ public class Teleop extends Component<Robot> {
 
             robot.getFlywheel().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
 
-            robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
+            // robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
 
             robot.getIntake().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
             robot.getFeeder().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
@@ -118,6 +118,8 @@ public class Teleop extends Component<Robot> {
 
             robot.getElevator().setSpeed(elevatorSpeed);
             robot.getBalancer().setSpeed(balancerSpeed);
+
+            robot.getHopper().getHopperToggle().setState(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
 
         } else {
             if (!warnOperator)
