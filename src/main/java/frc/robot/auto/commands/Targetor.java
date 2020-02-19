@@ -30,7 +30,7 @@ public class Targetor extends Command<Robot> {
     public void init(Robot robot) {
         front = robot.getVision().getFrontLimelight();
 
-        front.setLEDState(LEDState.ON);
+        // front.setLEDState(LEDState.ON);
 
         // TODO: add get and set pipeline in TitanUtil
         front.getTable().getEntry("pipeline").setNumber(target.getPipeline());
@@ -68,6 +68,6 @@ public class Targetor extends Command<Robot> {
 
     @Override
     public void done(Robot robot) {
-        front.setLEDState(LEDState.OFF);
+        // front.setLEDState(LEDState.OFF);
     }
 }

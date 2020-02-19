@@ -34,7 +34,7 @@ public class Dashboard extends Component<Robot> {
         putNumber("Shooter Guessed Speed", 0.0);
         putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
         putNumber("Elevator Position", 0.0);
-        putNumber("Drivebase Ramping", 0.5);
+        putNumber("Drivebase Ramping", 0.75);
     }
 
     @Override
@@ -50,11 +50,12 @@ public class Dashboard extends Component<Robot> {
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());
-        putString("Driver Swapped", robot.getTeleop().getSwappedDriverStatus() ? "Swapped Drive" : "Regular Drive");
         putNumber("Drivebase Heading", robot.getDrivebase().getHeading());
         putNumber("Elevator Position", robot.getElevator().getRotations());
         putNumber("Shooter RPM", robot.getFlywheel().getEncoderPosition());
         putNumber("Shooter Guessed Speed", robot.getFlywheel().getFlywheelSpeed());
+        putNumber("Limelight X", robot.getVision().getFrontLimelight().getX());
+        putNumber("Limelight Y", robot.getVision().getFrontLimelight().getTable().getEntry("ty").getDouble(0.0));
     }
 
     @Override

@@ -14,8 +14,6 @@ public class Teleop extends Component<Robot> {
     private Xbox driver;
     private LogitechExtreme3D operator;
 
-    private Toggle swapDrv = new Toggle();
-
     private boolean warnDriver = false, warnOperator = false;
 
     public Teleop() {
@@ -59,31 +57,19 @@ public class Teleop extends Component<Robot> {
             double turn = 0;
 
             /*
-             * This code will allow the end user to chose which drive controls to use as
-             * there is a difference in preference.
+             * This code will allow the end user to chose which drive controls to use 
+             * from the smart dashboard as there is a difference in preference.
              */
             switch (dashboard.getSelectedDriveType()) {
                 case ARCADE:
-                    power = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1; // Set negative as xbox foward is negative
+                    power = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1; // Set negative as xbox                                                                                  // foward is negative
                     turn = driver.getRawAxis(Xbox.Axis.LEFT_X) * -1; // Set negative as right is negative
-
-                    if (swapDrv.getState()) {
-                        power *= -1;
-                        turn *= -1;
-                    }
 
                     drivebase.drivePercentageArcade(power, turn);
                     break;
                 case TANK:
                     left = driver.getRawAxis(Xbox.Axis.LEFT_Y) * -1;
                     right = driver.getRawAxis(Xbox.Axis.RIGHT_Y) * -1;
-
-                    if (swapDrv.getState()) {
-                        double oldLeft = left;
-
-                        left = -right;
-                        right = -oldLeft;
-                    }
 
                     drivebase.drivePercentageTank(left, right);
                     break;
@@ -114,7 +100,6 @@ public class Teleop extends Component<Robot> {
         final String operatorName = operator.getName().toLowerCase();
 
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
-            swapDrv.isToggled(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
 
             double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
             double balancerSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.X);
@@ -129,9 +114,6 @@ public class Teleop extends Component<Robot> {
         }
     }
 
-    public boolean getSwappedDriverStatus() {
-        return swapDrv.getState();
-    }
 
 	public Xbox getDriver() {
 		return driver;
