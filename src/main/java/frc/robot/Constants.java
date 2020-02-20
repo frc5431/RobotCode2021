@@ -36,10 +36,10 @@ public final class Constants {
 
     // Drivebase Related
     public static final int DRIVEBASE_FRONT_LEFT_ID = 1;
-    public static final int DRIVEBASE_BACK_LEFT_ID = 3;
+    public static final int DRIVEBASE_BACK_LEFT_ID = 2;
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
 
-    public static final int DRIVEBASE_FRONT_RIGHT_ID = 2;
+    public static final int DRIVEBASE_FRONT_RIGHT_ID = 3;
     public static final int DRIVEBASE_BACK_RIGHT_ID = 4;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
 
@@ -48,15 +48,15 @@ public final class Constants {
     public static final double DRIVEBASE_DEFAULT_RAMPING = 0.6;
 
     // Climber Related
-    public static final int CLIMBER_BALANCER_ID = 10;
+    public static final int CLIMBER_BALANCER_ID = 13;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
-    public static final int CLIMBER_ELEVATOR_ID = 7;
+    public static final int CLIMBER_ELEVATOR_ID = 12;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
     // Shooter Flywheel Related
-    public static final int SHOOTER_FLYWHEEL_LEFT_ID = 6;
-    public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 5;
+    public static final int SHOOTER_FLYWHEEL_LEFT_ID = 10;
+    public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 11;
 
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = false;
 
@@ -65,20 +65,20 @@ public final class Constants {
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
 
     // Shooter Feeder Related
-    public static final int SHOOTER_FEEDER_ID = 8;
+    public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = false;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
     public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.5;
 
     // Intake Related
-    public static final int INTAKE_ID = 9;
+    public static final int INTAKE_ID = 5;
     public static final boolean INTAKE_REVERSE = true;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
     public static final double INTAKE_SPEED = 0.50;
 
     // Hopper related
-    public static final int HOPPER_LEFT_ID = 1024; // TODO: Find out ids
-    public static final int HOPPER_RIGHT_ID = 5431; // TODO: Find out ids
+    public static final int HOPPER_LEFT_ID = 7;
+    public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     public static final double HOPPER_DEFAULT_SPEED = 0.5;
@@ -93,7 +93,7 @@ public final class Constants {
     // IMU Data
     // ================================================================================
 
-    public static final int DRIVEBASE_PIGEON_IMU_ID = 1;
+    public static final int DRIVEBASE_PIGEON_IMU_ID = 8;
     public static final int DRIVEBASE_PIGEON_IMU_REMOTE_FILTER = 0;
 
     // ================================================================================
