@@ -3,7 +3,6 @@ package frc.robot;
 import java.util.List;
 
 import frc.robot.components.*;
-import frc.robot.util.ControlPanelStages;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.robot.Component;
 import frc.team5431.titan.core.robot.TitanRobot;
@@ -28,7 +27,6 @@ public class Robot extends TitanRobot<Robot> {
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
-  private ControlPanelStages controlPanelStage = ControlPanelStages.ROTATIONAL;
   private List<Component<Robot>> components = List.of();
 
   // The Following is Initializer Functions
@@ -118,20 +116,6 @@ public class Robot extends TitanRobot<Robot> {
    */
   public Mode getMode() {
     return mode;
-  }
-
-  /**
-   * @return the controlPanelStage
-   */
-  public ControlPanelStages getControlPanelStage() {
-    return controlPanelStage;
-  }
-
-  /**
-   * @param controlPanelStage the controlPanelStage to set
-   */
-  public void setControlPanelStage(ControlPanelStages controlPanelStage) {
-    this.controlPanelStage = controlPanelStage;
   }
 
   /**

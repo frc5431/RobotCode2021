@@ -17,6 +17,8 @@ import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
+import frc.team5431.titan.mimic.DrivebaseAnalyzer;
+
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -25,7 +27,7 @@ import frc.team5431.titan.core.robot.Component;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends Component<Robot> {
+public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
 
     private PigeonIMU pidgey;
 
@@ -86,6 +88,7 @@ public class Drivebase extends Component<Robot> {
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
+        /* Tell the motors which sesnor specifically is being used */
         eCode = right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
@@ -198,27 +201,25 @@ public class Drivebase extends Component<Robot> {
          * speed controller.
          */
 
-        if(Math.abs(power) == 0) {
+        if (Math.abs(power) == 0) {
             power = 0;
         }
 
         left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * 0.35);
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * 0.35);
 
-        Logger.l("Power: %f", power);
-        Logger.l("Turn: %f", turn);
+        Logger.l("Power: %f, Turn: %f", power, turn);
     }
 
     public void driveMotionMagic(double distance, double angle) {
         left.follow(right, FollowerType.AuxOutput1);
         right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
 
-        Logger.l("Distance: %f", distance);
-        Logger.l("Angle: %f", angle);
+        Logger.l("Distance: %f, Angle: %f", distance, angle);
     }
 
-    public double getHeading() {
-        return pidgey.getCompassHeading();
+    public float getHeading() {
+        return (float)pidgey.getCompassHeading();
     }
 
     public void setRamping(double ramping) {
@@ -251,5 +252,44 @@ public class Drivebase extends Component<Robot> {
      */
     public ComponentControlMode getControlMode() {
         return controlMode;
+    }
+
+    @Override
+    public double getLeftSpeed() {
+        return left.get();
+    };
+
+    @Override
+    public double getRightSpeed() {
+        return right.get();
+    };
+
+    @Override
+    public double getLeftEncoderCount() {
+        return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
+    };
+
+    @Override
+    public double getRightEncoderCount() {
+        return right.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
+    };
+
+    @Override
+    public double getLeftDistance() {
+        return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+    };
+
+    @Override
+    public double getRightDistance() {
+        return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+    };
+
+    @Override
+    public void setHome() {
+
+    };
+
+    public double getRPM() {
+        return ((getLeftEncoderCount() * 600) + (getRightEncoderCount() * 600)) / 2;
     }
 }

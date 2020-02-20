@@ -24,7 +24,7 @@ public final class Constants {
 
     public static final int DRIVER_XBOX_ID = 0;
     public static final double DRIVER_XBOX_DEADZONE = 0.15;
-    public static final String DRIVER_XBOX_NAME = "xbox 360";
+    public static final String DRIVER_XBOX_NAME = "xbox";
 
     public static final int OPERATOR_LOGITECH_ID = 1;
     public static final double OPERATOR_LOGITECH_DEADZONE = 0.10;
@@ -87,7 +87,7 @@ public final class Constants {
     // Vision Data
     // ================================================================================
 
-    public static final String VISION_FRONT_LIMELIGHT = "10.54.31.11";
+    public static final String VISION_FRONT_LIMELIGHT = "limelight";
 
     // ================================================================================
     // IMU Data
@@ -110,6 +110,15 @@ public final class Constants {
     public static final int REMOTE_0 = 0;
     public static final int REMOTE_1 = 1;
 
+    // ================================================================================
+    // Drive Base Numbers
+    // ================================================================================
+
+    public static final double COUNTS_PER_REVOLUTION = 2048;
+    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
+    public static final int GEAR_RATIO = 0; // TODO: Find Gear Ratio
+    public static final double MAX_MOTOR_SPEED = 0.7;
+
     // TODO: Set Proper PID Values
     // P, I, D, F, INTERGRAL_ZONE, PEAKOUTPUT, CLOSEDLOOPTIME_MS
     public static final MotionMagic DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS = new MotionMagic(0.2, 0, 0, 0, 100, 1, 1);
@@ -124,4 +133,6 @@ public final class Constants {
 
     public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
+
+	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
 }

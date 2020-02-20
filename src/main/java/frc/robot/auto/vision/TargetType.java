@@ -2,9 +2,8 @@ package frc.robot.auto.vision;
 
 public enum TargetType {
     
-   UPPERPORT(0),
-   LOWERPORT(1),
-   LOADINGBAY(2);
+    SHIELDGENERATOR(0),
+    LOADINGBAY(1);
 
     private final int pipeline;
 
