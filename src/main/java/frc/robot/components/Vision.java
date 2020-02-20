@@ -12,6 +12,14 @@ import frc.team5431.titan.core.robot.Command.CommandResult;
 import frc.team5431.titan.core.vision.LEDState;
 import frc.team5431.titan.core.vision.Limelight;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Daniel Brubaker
+ * @author Colin Wong
+ * @author Rishmita Rao
+ */
+
+
 public class Vision extends Component<Robot> {
     private Limelight front;
     private Toggle visionLightToggle = new Toggle();
@@ -70,9 +78,10 @@ public class Vision extends Component<Robot> {
 
         double x = front.getX();
         
-        //MOVE TO CONSTANTS LATER YO
-        final double kP = 0.03;
+        //MOVE TO CONSTANTS 
+        final double kP = 0.025;
         final double MIN_COMMAND = 0.04;
+        //MOVE TO CONSTANTS
 
         double headingError = -x;
         double steeringAdjust = 0;
