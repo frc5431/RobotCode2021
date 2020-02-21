@@ -12,6 +12,7 @@ public class Intake extends Component<Robot> {
 
     private WPI_TalonFX intakeMotor;
     private Toggle toggle, reverse;
+    private double intakeSpeed = Constants.INTAKE_DEFAULT_SPEED;
 
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
@@ -34,11 +35,11 @@ public class Intake extends Component<Robot> {
     @Override
     public void periodic(Robot robot) {
         if (toggle.getState()) {
-            if (reverse.getState()) {
-                intakeMotor.set(-1 * Constants.INTAKE_SPEED);
-            } else {
-                intakeMotor.set(Constants.INTAKE_SPEED);
-            }
+            // if (reverse.getState()) {
+            //     intakeMotor.set(-1 * Constants.INTAKE_SPEED);
+            // } else {
+                intakeMotor.set(intakeSpeed);
+            // }
         } else {
             intakeMotor.set(0);
         }
@@ -64,6 +65,20 @@ public class Intake extends Component<Robot> {
      */
     public void setControlMode(ComponentControlMode controlMode) {
         this.controlMode = controlMode;
+    }
+
+    /**
+     * @return the intakeSpeed
+     */
+    public double getIntakeSpeed() {
+        return intakeSpeed;
+    }
+
+    /**
+     * @param intakeSpeed the intakeSpeed to set
+     */
+    public void setIntakeSpeed(double intakeSpeed) {
+        this.intakeSpeed = intakeSpeed;
     }
 
     /**

@@ -35,12 +35,12 @@ public final class Constants {
     // ================================================================================
 
     // Drivebase Related
-    public static final int DRIVEBASE_FRONT_LEFT_ID = 1;
-    public static final int DRIVEBASE_BACK_LEFT_ID = 2;
+    public static final int DRIVEBASE_FRONT_LEFT_ID = 3;
+    public static final int DRIVEBASE_BACK_LEFT_ID = 1;
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
 
-    public static final int DRIVEBASE_FRONT_RIGHT_ID = 3;
-    public static final int DRIVEBASE_BACK_RIGHT_ID = 4;
+    public static final int DRIVEBASE_FRONT_RIGHT_ID = 4;
+    public static final int DRIVEBASE_BACK_RIGHT_ID = 2;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
 
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
@@ -58,28 +58,28 @@ public final class Constants {
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 10;
     public static final int SHOOTER_FLYWHEEL_RIGHT_ID = 11;
 
-    public static final boolean SHOOTER_FLYWHEEL_REVERSE = false;
+    public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
-    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.750;
+    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 1.0;
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
-    public static final boolean SHOOTER_FEEDER_REVERSE = false;
+    public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.5;
+    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 1.0;
 
     // Intake Related
     public static final int INTAKE_ID = 5;
     public static final boolean INTAKE_REVERSE = true;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
-    public static final double INTAKE_SPEED = 0.50;
+    public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;
     public static final int HOPPER_RIGHT_ID = 8;
-    public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
+    public static final boolean HOPPER_REVERSE = true; // TODO: Find out reverse state
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     public static final double HOPPER_DEFAULT_SPEED = 0.5;
     
@@ -117,7 +117,7 @@ public final class Constants {
     public static final double COUNTS_PER_REVOLUTION = 2048;
     public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
     public static final int GEAR_RATIO = 0; // TODO: Find Gear Ratio
-    public static final double MAX_MOTOR_SPEED = 0.7;
+    public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
     // P, I, D, F, INTERGRAL_ZONE, PEAKOUTPUT, CLOSEDLOOPTIME_MS

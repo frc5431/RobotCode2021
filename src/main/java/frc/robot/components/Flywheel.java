@@ -24,7 +24,7 @@ public class Flywheel extends Component<Robot> {
         flywheel = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
         _flywheelFollow = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_RIGHT_ID);
 
-        _flywheelFollow.follow(_flywheelFollow);
+        _flywheelFollow.follow(flywheel);
 
         // Set Inverted Mode
         flywheel.setInverted(Constants.SHOOTER_FLYWHEEL_REVERSE);

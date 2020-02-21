@@ -14,7 +14,7 @@ public class Hopper extends Component<Robot> {
     WPI_TalonSRX hopperLeft, hopperRight;
 
     Toggle hopperToggle;
-    double hopperSpeed = 0.5; // TODO: Fine-tune hopper speed
+    double hopperSpeed = 1.0; // TODO: Fine-tune hopper speed
 
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 

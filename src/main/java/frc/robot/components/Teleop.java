@@ -91,7 +91,8 @@ public class Teleop extends Component<Robot> {
             //off until pressed, on until pressed again
             robot.getIntake().getToggle().setState(driver.getRawButton(Xbox.Button.X));
             robot.getFeeder().getFeedToggle().setState(driver.getRawButton(Xbox.Button.A));
-            robot.getFlywheel().getFlywheelToggle().setState(driver.getRawButton(Xbox.Button.B));
+            robot.getFeeder().getReverse().setState(driver.getPOV(0) == 0);
+            robot.getFlywheel().getFlywheelToggle().isToggled(driver.getRawButton(Xbox.Button.B));
             
             //set elevator speed to right trigger for up, left trigger for down
             //If right or left is zero it will be (Right - 0 = positive) or (0 - Left = negative)
@@ -99,12 +100,15 @@ public class Teleop extends Component<Robot> {
             // robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
 
             //the Y button toggles the input and feeder into reverse input mode, (up is down, left is right, etc.)
-            robot.getIntake().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
-            robot.getFeeder().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
+            robot.getIntake().getToggle().setState(driver.getRawButton(Xbox.Button.Y));
+            Logger.l("Xbox Y: %b", driver.getRawButton(Xbox.Button.Y));
+            // robot.getFeeder().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
 
             //Sets the vision toggles to the bumpers
             robot.getVision().getTargetToggle().isToggled(driver.getRawButton(Xbox.Button.BUMPER_R));
             robot.getVision().getVisionLightToggle().isToggled(driver.getRawButton(Xbox.Button.BUMPER_L));
+
+            // robot.getHopper().getHopperToggle().setState(driver.getPOV(0) == 180);
         } else {
             //warn driver if controller is not connected
             if (!warnDriver)
@@ -120,7 +124,7 @@ public class Teleop extends Component<Robot> {
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
 
             //get the X axis and the Slider
-            double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.SLIDER);
+            double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.Y);
             double balancerSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.X);
 
             //set elevator and balancer speeds
