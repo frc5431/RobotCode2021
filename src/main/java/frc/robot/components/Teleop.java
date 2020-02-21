@@ -124,13 +124,14 @@ public class Teleop extends Component<Robot> {
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
 
             //get the X axis and the Slider
-            double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.Y);
-            double balancerSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.X);
+           // double elevatorSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.Y);
+            //double balancerSpeed = operator.getRawAxis(LogitechExtreme3D.Axis.X);
 
             //set elevator and balancer speeds
-            robot.getElevator().setSpeed(elevatorSpeed);
-            robot.getBalancer().setSpeed(balancerSpeed);
-
+            //robot.getElevator().setSpeed(elevatorSpeed);
+            //robot.getBalancer().setSpeed(balancerSpeed);
+            
+            //set hopper run when joystick trigger toggled
             robot.getHopper().getHopperToggle().setState(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
 
         } else {
