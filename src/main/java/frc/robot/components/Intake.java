@@ -10,8 +10,10 @@ import frc.team5431.titan.core.robot.Component;
 
 public class Intake extends Component<Robot> {
 
-    private WPI_TalonFX intakeMotor;
-    private Toggle toggle, reverse;
+    private WPI_TalonFX intakeMotor, pivotMotor;
+    private Toggle intakeToggle, reverse, pivotToggle;
+    private double intakeSpeed = Constants.INTAKE_DEFAULT_SPEED;
+    private double pivotSpeed = Constants.PIVOT_DEFAULT_SPEED;
 
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
@@ -20,11 +22,18 @@ public class Intake extends Component<Robot> {
         intakeMotor.setInverted(Constants.INTAKE_REVERSE);
         intakeMotor.setNeutralMode(Constants.INTAKE_NEUTRALMODE);
 
-        toggle = new Toggle();
-        toggle.setState(false);
+        pivotMotor = new WPI_TalonFX(Constants.PIVOT_ID);
+        pivotMotor.setInverted(Constants.PIVOT_REVERSE);
+        pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
+
+        intakeToggle = new Toggle();
+        intakeToggle.setState(false);
+
+        pivotToggle = new Toggle();
+        pivotToggle.setState(false);
 
         reverse = new Toggle();
-        reverse.setState(false);
+        reverse.setState(true);
     }
 
     @Override
@@ -33,23 +42,36 @@ public class Intake extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
-        if (toggle.getState()) {
-            if (reverse.getState()) {
-                intakeMotor.set(-1 * Constants.INTAKE_SPEED);
-            } else {
-                intakeMotor.set(Constants.INTAKE_SPEED);
-            }
-        } else {
-            intakeMotor.set(0);
-        }
+        // if (intakeToggle.getState()) {
+            // if (reverse.getState()) {
+            //     intakeMotor.set(-1 * Constants.INTAKE_SPEED);
+            // } else {
+                intakeMotor.set(intakeSpeed);
+            // }
+        // } else {
+        //     intakeMotor.set(0);
+        // }
+
+        // if (pivotToggle.getState()) {
+        //     pivotMotor.set(pivotSpeed);
+        // } else {
+        //     pivotMotor.set(0);
+        // }
     }
 
     @Override
     public void disabled(Robot robot) {
     }
 
-    public Toggle getToggle() {
-        return toggle;
+    public Toggle getIntakeToggle() {
+        return intakeToggle;
+    }
+
+    /**
+     * @return the pivotToggle
+     */
+    public Toggle getPivotToggle() {
+        return pivotToggle;
     }
 
     /**
@@ -64,6 +86,34 @@ public class Intake extends Component<Robot> {
      */
     public void setControlMode(ComponentControlMode controlMode) {
         this.controlMode = controlMode;
+    }
+
+    /**
+     * @return the intakeSpeed
+     */
+    public double getIntakeSpeed() {
+        return intakeSpeed;
+    }
+
+    /**
+     * @param intakeSpeed the intakeSpeed to set
+     */
+    public void setIntakeSpeed(double intakeSpeed) {
+        this.intakeSpeed = intakeSpeed;
+    }
+
+    /**
+     * @return the pivotSpeed
+     */
+    public double getPivotSpeed() {
+        return pivotSpeed;
+    }
+
+    /**
+     * @param pivotSpeed the pivotSpeed to set
+     */
+    public void setPivotSpeed(double pivotSeed) {
+        pivotMotor.set(pivotSeed);
     }
 
     /**

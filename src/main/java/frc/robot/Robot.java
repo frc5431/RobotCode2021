@@ -23,6 +23,7 @@ public class Robot extends TitanRobot<Robot> {
   private Feeder feeder;
   private Vision vision;
   private Auton auton;
+  private Hopper hopper;
 
   // Objects for mostly internal Robot.java usage
   private Mode mode = Mode.DISABLED;
@@ -45,9 +46,10 @@ public class Robot extends TitanRobot<Robot> {
     elevator = new Elevator();
     vision = new Vision();
     auton = new Auton();
+    hopper = new Hopper();
 
     // Add Components to components Array
-    components = List.of(dashboard, drivebase, teleop, intake, flywheel, balancer, feeder, vision, auton);
+    components = List.of(dashboard, drivebase, teleop, intake, flywheel, balancer, feeder, vision, auton, hopper);
   }
 
   @Override
@@ -184,5 +186,12 @@ public class Robot extends TitanRobot<Robot> {
    */
   public Auton getAuton() {
     return auton;
+  }
+
+  /**
+   * @return the hopper
+   */
+  public Hopper getHopper() {
+    return hopper;
   }
 }

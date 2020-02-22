@@ -7,6 +7,9 @@ import frc.team5431.titan.core.robot.Component;
 
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putString;
+
+import edu.wpi.first.cameraserver.CameraServer;
+
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putData;
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,6 +29,9 @@ public class Dashboard extends Component<Robot> {
          * Add selection for which drive code to use as there are differences in
          * preference
          */
+
+        CameraServer.getInstance().startAutomaticCapture();
+
         driveType.setDefaultOption("Tank Drive", DriveTypeSelector.ARCADE);
         driveType.addOption("Arcade Drive", DriveTypeSelector.ARCADE);
         putData("Drive Type", driveType);
@@ -34,7 +40,9 @@ public class Dashboard extends Component<Robot> {
         putNumber("Shooter Guessed Speed", 0.0);
         putNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
         putNumber("Elevator Position", 0.0);
-        putNumber("Drivebase Ramping", 0.75);
+        putNumber("Drivebase Ramping", Constants.DRIVEBASE_DEFAULT_RAMPING);
+        putNumber("Hopper Speed", Constants.HOPPER_DEFAULT_SPEED);
+        putNumber("Intake Speed", Constants.INTAKE_DEFAULT_SPEED);
     }
 
     @Override
@@ -46,7 +54,9 @@ public class Dashboard extends Component<Robot> {
         // Setting Data from dashboard
         robot.getFlywheel().setShooterSpeed(getNumber("Shooter Speed", Constants.SHOOTER_FLYWHEEL_DEFAULT_SPEED));
         robot.getFeeder().setFeedSpeed(getNumber("Feeder Speed", Constants.SHOOTER_FEEDER_DEFAULT_SPEED));
-        robot.getDrivebase().setRamping(getNumber("Drivebase Ramping", 0.5));
+        robot.getHopper().setHopperSpeed(getNumber("Hopper Speed", Constants.HOPPER_DEFAULT_SPEED));
+        robot.getDrivebase().setRamping(getNumber("Drivebase Ramping", Constants.DRIVEBASE_DEFAULT_RAMPING));
+        robot.getIntake().setIntakeSpeed(getNumber("Intake Speed", Constants.INTAKE_DEFAULT_SPEED));
 
         // Push data to dashboard
         putString("Mode", robot.getMode().toString());

@@ -38,7 +38,7 @@ public class Elevator extends Component<Robot> {
     }
 
     public void setSpeed(double speed) {
-        elevator.set(ControlMode.PercentOutput, speed*.50);
+        elevator.set(ControlMode.PercentOutput, speed);
     }
 
     public double getEncoderPosition() {

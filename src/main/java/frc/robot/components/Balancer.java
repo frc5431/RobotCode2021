@@ -1,6 +1,7 @@
 package frc.robot.components;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import frc.robot.Constants;
@@ -12,10 +13,10 @@ import frc.team5431.titan.core.robot.Component;
  */
 public class Balancer extends Component<Robot> {
 
-    private WPI_VictorSPX balancer;
+    private WPI_TalonSRX balancer;
 
     public Balancer() {
-        balancer = new WPI_VictorSPX(Constants.CLIMBER_BALANCER_ID);
+        balancer = new WPI_TalonSRX(Constants.CLIMBER_BALANCER_ID);
         balancer.setInverted(Constants.CLIMBER_BALANCER_REVERSE);
     }
 

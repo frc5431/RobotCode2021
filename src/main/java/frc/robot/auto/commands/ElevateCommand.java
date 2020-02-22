@@ -24,7 +24,7 @@ public class ElevateCommand extends Command<Robot> {
 
     private boolean isComplete(final Elevator elevator) {
         final boolean approxPosition = Calc.approxEquals(elevator.getEncoderPosition(), targetPosition.getPosition(),
-                Constants.ELEVATOR_POSITION_TOLARANCE);
+                Constants.ELEVATOR_POSITION_TOLERANCE);
 
         return (targetPosition.getPosition() > 0 && approxPosition);
     }

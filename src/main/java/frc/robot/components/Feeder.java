@@ -12,7 +12,7 @@ public class Feeder extends Component<Robot> {
 
     WPI_TalonFX feed;
 
-    Toggle feedToggle, reverse;
+    // Toggle feedToggle, reverse;
     double shooterSpeed = 0.50;
     double feedSpeed;
 
@@ -26,11 +26,11 @@ public class Feeder extends Component<Robot> {
         feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
         feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
-        feedToggle = new Toggle();
-        feedToggle.setState(false);
+        // feedToggle = new Toggle();
+        // feedToggle.setState(false);
 
-        reverse = new Toggle();
-        reverse.setState(false);
+        // reverse = new Toggle();
+        // reverse.setState(false);
     }
 
     @Override
@@ -39,23 +39,16 @@ public class Feeder extends Component<Robot> {
 
     @Override
     public void periodic(Robot robot) {
-        if (feedToggle.getState()) {
-            if (reverse.getState())
-                feed.set(-1 * feedSpeed);
-            else
-                feed.set(feedSpeed);
-        } else {
-            feed.set(0);
-        }
+        feed.set(feedSpeed);
     }
 
     @Override
     public void disabled(Robot robot) {
     }
 
-    public Toggle getFeedToggle() {
-        return feedToggle;
-    }
+    // public Toggle getFeedToggle() {
+    //     return feedToggle;
+    // }
 
     public void setFeedSpeed(double feedSpeed) {
         this.feedSpeed = feedSpeed;
@@ -75,10 +68,10 @@ public class Feeder extends Component<Robot> {
         this.controlMode = controlMode;
     }
 
-    /**
-     * @return the reverse
-     */
-    public Toggle getReverse() {
-        return reverse;
-    }
+    // /**
+    //  * @return the reverse
+    //  */
+    // public Toggle getReverse() {
+    //     return reverse;
+    // }
 }
