@@ -61,7 +61,7 @@ public final class Constants {
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
-    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 1.0;
+    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.75;
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
 
     // Shooter Feeder Related
@@ -75,6 +75,12 @@ public final class Constants {
     public static final boolean INTAKE_REVERSE = true;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
+
+    // Pivot related
+    public static final int PIVOT_ID = 6;
+    public static final boolean PIVOT_REVERSE = false;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
+    public static final double PIVOT_DEFAULT_SPEED = 0.2;
 
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;

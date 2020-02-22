@@ -13,7 +13,7 @@ public class Hopper extends Component<Robot> {
 
     WPI_TalonSRX hopperLeft, hopperRight;
 
-    Toggle hopperToggle;
+    Toggle hopperToggle, reverseToggle;
     double hopperSpeed = 1.0; // TODO: Fine-tune hopper speed
 
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
@@ -31,6 +31,9 @@ public class Hopper extends Component<Robot> {
 
         hopperToggle = new Toggle();
         hopperToggle.setState(false);
+
+        reverseToggle = new Toggle();
+        reverseToggle.setState(false);
     }
 
     @Override
@@ -40,7 +43,10 @@ public class Hopper extends Component<Robot> {
     @Override
     public void periodic(final Robot robot) {
         if (hopperToggle.getState()) {
-            hopperLeft.set(hopperSpeed);
+            if (!reverseToggle.getState())
+                hopperLeft.set(hopperSpeed);
+            else
+                hopperLeft.set(-hopperSpeed);
         } else {
             hopperLeft.set(0);
         }
@@ -74,5 +80,12 @@ public class Hopper extends Component<Robot> {
      */
     public void setControlMode(ComponentControlMode controlMode) {
         this.controlMode = controlMode;
+    }
+
+    /**
+     * @return the reverseToggle
+     */
+    public Toggle getReverse() {
+        return reverseToggle;
     }
 }

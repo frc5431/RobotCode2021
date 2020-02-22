@@ -14,6 +14,8 @@ public class Teleop extends Component<Robot> {
     private Xbox driver;
     private LogitechExtreme3D operator;
 
+    private Toggle pivot = new Toggle();
+
     private boolean warnDriver = false, warnOperator = false;
 
     public Teleop() {
@@ -24,6 +26,8 @@ public class Teleop extends Component<Robot> {
         //Init operator controller
         operator = new LogitechExtreme3D(Constants.OPERATOR_LOGITECH_ID);
         operator.setDeadzone(Constants.OPERATOR_LOGITECH_DEADZONE);
+
+        pivot.setState(false);
     }
 
     @Override
@@ -55,8 +59,6 @@ public class Teleop extends Component<Robot> {
         final String driverName = driver.getName().toLowerCase();
 
         if (driverName.contains(Constants.DRIVER_XBOX_NAME.toLowerCase())) {
-            
-
 
             /*
              * This code will allow the end user to chose which drive controls to use 
@@ -89,26 +91,24 @@ public class Teleop extends Component<Robot> {
 
             //Set intake feeder & flywheel toggles to respective buttons (X, A, B)
             //off until pressed, on until pressed again
-            robot.getIntake().getToggle().setState(driver.getRawButton(Xbox.Button.X));
-            robot.getFeeder().getFeedToggle().setState(driver.getRawButton(Xbox.Button.A));
-            robot.getFeeder().getReverse().setState(driver.getPOV(0) == 0);
+           
             robot.getFlywheel().getFlywheelToggle().isToggled(driver.getRawButton(Xbox.Button.B));
             
             //set elevator speed to right trigger for up, left trigger for down
             //If right or left is zero it will be (Right - 0 = positive) or (0 - Left = negative)
             //This removes the need for if statements that check which is active, and simplifies up and down motion
-            // robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
-
+            robot.getBalancer().setSpeed((driver.getRawButton(Xbox.Button.BUMPER_R) ? 1 : 0) - (driver.getRawButton(Xbox.Button.BUMPER_L) ? 1 : 0));
+            robot.getElevator().setSpeed(driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT));
+            
             //the Y button toggles the input and feeder into reverse input mode, (up is down, left is right, etc.)
-            robot.getIntake().getToggle().setState(driver.getRawButton(Xbox.Button.Y));
+            //robot.getIntake().getIntakeToggle().isToggled(driver.getRawButton(Xbox.Button.Y));
             Logger.l("Xbox Y: %b", driver.getRawButton(Xbox.Button.Y));
             // robot.getFeeder().getReverse().isToggled(driver.getRawButton(Xbox.Button.Y));
 
             //Sets the vision toggles to the bumpers
-            robot.getVision().getTargetToggle().isToggled(driver.getRawButton(Xbox.Button.BUMPER_R));
-            robot.getVision().getVisionLightToggle().isToggled(driver.getRawButton(Xbox.Button.BUMPER_L));
+            robot.getVision().getTargetToggle().isToggled(operator.getRawButton(LogitechExtreme3D.Button.ELEVEN));
+            // robot.getVision().getVisionLightToggle().isToggled(driver.getRawButton(Xbox.Button.BUMPER_L));
 
-            // robot.getHopper().getHopperToggle().setState(driver.getPOV(0) == 180);
         } else {
             //warn driver if controller is not connected
             if (!warnDriver)
@@ -120,7 +120,7 @@ public class Teleop extends Component<Robot> {
     private void operator(Robot robot) { 
         final String operatorName = operator.getName().toLowerCase();
 
-        //extra check for correct operator and constants setup
+        //extra check for correct operator and co nstants setup
         if (operatorName.contains(Constants.OPERATOR_LOGITECH_NAME.toLowerCase())) {
 
             //get the X axis and the Slider
@@ -131,8 +131,31 @@ public class Teleop extends Component<Robot> {
             //robot.getElevator().setSpeed(elevatorSpeed);
             //robot.getBalancer().setSpeed(balancerSpeed);
             
-            //set hopper run when joystick trigger toggled
-            robot.getHopper().getHopperToggle().setState(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
+            //set flywheel run when joystick trigger
+            robot.getFlywheel().getFlywheelToggle().setState(operator.getRawButton(LogitechExtreme3D.Button.TRIGGER));
+            
+            robot.getIntake().setPivotSpeed((operator.getRawButton(8) ? 0.2 : 0) - (operator.getRawButton(7) ? 0.1 : 0));
+
+            robot.getFeeder().setFeedSpeed((operator.getPOV() == 0 ? 1.0 : 0) - (operator.getPOV() == 180 ? 1.0 : 0));
+
+            robot.getHopper().getHopperToggle().setState(operator.getRawButton(LogitechExtreme3D.Button.THREE));
+
+            robot.getHopper().getReverse().setState(operator.getRawButton(LogitechExtreme3D.Button.FIVE));
+
+            if (operator.getRawButton(LogitechExtreme3D.Button.TEN))
+            {
+                robot.getIntake().setIntakeSpeed(Constants.INTAKE_DEFAULT_SPEED);
+            } else {
+                robot.getIntake().setIntakeSpeed(0);
+            }
+            // if (driver.getRawButton(Xbox.Button.X))
+            // {
+            //     robot.getIntake().setIntakeSpeed(Constants.INTAKE_DEFAULT_SPEED);
+            // }
+
+           
+
+            // robot.getIntake().getReverse().setState(operator.getRawButton(LogitechExtreme3D.Button.TEN));
 
         } else {
             //warn operator if controller is not connected
