@@ -58,7 +58,7 @@ public class RobotMap {
             new JoystickButton(driver, Xbox.Button.BUMPER_R.ordinal() + 1)
                     .toggleWhenPressed(new FlywheelControl(flywheel, Flywheel.Speeds.FULL), true);
             new JoystickButton(driver, Xbox.Button.X.ordinal() + 1).whenPressed(new BalancerCommand(balancer, true));
-            new JoystickButton(driver, Xbox.Button.X.ordinal() + 1).whenPressed(new BalancerCommand(balancer, false));
+        //     new JoystickButton(driver, Xbox.Button.X.ordinal() + 1).whenPressed(new BalancerCommand(balancer, false));
         }
 
         {

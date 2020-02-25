@@ -2,17 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Balancer;
-import frc.robot.subsystems.Flywheel;
 
 public class BalancerCommand extends CommandBase {
     private final Balancer balancer;
     private final boolean direction;
 
-    public BalancerCommand(Balancer flywheel, boolean left) {
-        this.balancer = flywheel;
+    public BalancerCommand(Balancer balancer, boolean left) {
+        this.balancer = balancer;
         this.direction = left;
 
-        addRequirements(flywheel);
+        addRequirements(balancer);
     }
 
     @Override
