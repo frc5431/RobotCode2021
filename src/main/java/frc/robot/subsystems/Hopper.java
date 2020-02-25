@@ -1,15 +1,16 @@
-package frc.robot.components;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
-public class Hopper extends Component<Robot> {
+public class Hopper extends SubsystemBase {
 
     WPI_TalonSRX hopperLeft, hopperRight;
 
@@ -37,11 +38,7 @@ public class Hopper extends Component<Robot> {
     }
 
     @Override
-    public void init(final Robot robot) {
-    }
-
-    @Override
-    public void periodic(final Robot robot) {
+    public void periodic() {
         if (hopperToggle.getState()) {
             if (!reverseToggle.getState())
                 hopperLeft.set(hopperSpeed);
@@ -50,10 +47,6 @@ public class Hopper extends Component<Robot> {
         } else {
             hopperLeft.set(0);
         }
-    }
-
-    @Override
-    public void disabled(final Robot robot) {
     }
 
     public Toggle getHopperToggle() {

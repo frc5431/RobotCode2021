@@ -1,14 +1,15 @@
-package frc.robot.components;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
-public class Intake extends Component<Robot> {
+public class Intake extends SubsystemBase {
 
     private WPI_TalonFX intakeMotor, pivotMotor;
     private Toggle intakeToggle, reverse, pivotToggle;
@@ -35,32 +36,11 @@ public class Intake extends Component<Robot> {
         reverse = new Toggle();
         reverse.setState(true);
     }
-
+    
     @Override
-    public void init(Robot robot) {
-    }
-
-    @Override
-    public void periodic(Robot robot) {
-        // if (intakeToggle.getState()) {
-            // if (reverse.getState()) {
-            //     intakeMotor.set(-1 * Constants.INTAKE_SPEED);
-            // } else {
-                intakeMotor.set(intakeSpeed);
-            // }
-        // } else {
-        //     intakeMotor.set(0);
-        // }
-
-        // if (pivotToggle.getState()) {
-        //     pivotMotor.set(pivotSpeed);
-        // } else {
-        //     pivotMotor.set(0);
-        // }
-    }
-
-    @Override
-    public void disabled(Robot robot) {
+    public void periodic() {
+        intakeMotor.set(intakeSpeed);
+        super.periodic();
     }
 
     public Toggle getIntakeToggle() {

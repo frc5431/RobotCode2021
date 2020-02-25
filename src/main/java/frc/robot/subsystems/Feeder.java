@@ -1,14 +1,12 @@
-package frc.robot.components;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
-import frc.team5431.titan.core.misc.Toggle;
-import frc.team5431.titan.core.robot.Component;
 
-public class Feeder extends Component<Robot> {
+public class Feeder extends SubsystemBase {
 
     WPI_TalonFX feed;
 
@@ -34,16 +32,8 @@ public class Feeder extends Component<Robot> {
     }
 
     @Override
-    public void init(Robot robot) {
-    }
-
-    @Override
-    public void periodic(Robot robot) {
+    public void periodic() {
         feed.set(feedSpeed);
-    }
-
-    @Override
-    public void disabled(Robot robot) {
     }
 
     // public Toggle getFeedToggle() {

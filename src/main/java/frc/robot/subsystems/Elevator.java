@@ -1,16 +1,17 @@
-package frc.robot.components;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.states.ClimberState;
 import frc.robot.util.ComponentControlMode;
 import frc.team5431.titan.core.robot.Component;
 
-public class Elevator extends Component<Robot> {
+public class Elevator extends SubsystemBase {
 
     private WPI_TalonFX elevator;
     private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
@@ -21,18 +22,6 @@ public class Elevator extends Component<Robot> {
         elevator.setNeutralMode(NeutralMode.Brake);
     }
 
-    @Override
-    public void init(final Robot robot) {
-    }
-
-    @Override
-    public void periodic(final Robot robot) {
-    }
-
-    @Override
-    public void disabled(final Robot robot) {
-    }
-    
     public void setPosition(ClimberState position) {
         elevator.set(ControlMode.Position, position.getPosition());
     }

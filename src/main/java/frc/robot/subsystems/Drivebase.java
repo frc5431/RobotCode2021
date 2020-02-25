@@ -1,4 +1,4 @@
-package frc.robot.components;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
@@ -27,7 +28,7 @@ import frc.team5431.titan.mimic.DrivebaseAnalyzer;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
+public class Drivebase extends SubsystemBase {
 
     private PigeonIMU pidgey;
 
@@ -165,21 +166,13 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
     }
 
     @Override
-    public void init(Robot robot) {
-    }
-
-    @Override
-    public void periodic(Robot robot) {
+    public void periodic() {
 
         setRamping(ramping);
 
         // Check if the the motors are working together
         assert (left.get() == _leftFollow.get());
         assert (right.get() == _rightFollow.get());
-    }
-
-    @Override
-    public void disabled(Robot robot) {
     }
 
     public void setSlot(int slot) {
@@ -254,39 +247,28 @@ public class Drivebase extends Component<Robot> implements DrivebaseAnalyzer {
         return controlMode;
     }
 
-    @Override
     public double getLeftSpeed() {
         return left.get();
     };
 
-    @Override
     public double getRightSpeed() {
         return right.get();
     };
 
-    @Override
     public double getLeftEncoderCount() {
         return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
-    @Override
     public double getRightEncoderCount() {
         return right.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
     };
 
-    @Override
     public double getLeftDistance() {
         return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
     };
 
-    @Override
     public double getRightDistance() {
         return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
-    };
-
-    @Override
-    public void setHome() {
-
     };
 
     public double getRPM() {

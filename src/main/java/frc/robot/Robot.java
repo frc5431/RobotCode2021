@@ -2,196 +2,47 @@ package frc.robot;
 
 import java.util.List;
 
-import frc.robot.components.*;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.team5431.titan.core.misc.Logger;
-import frc.team5431.titan.core.robot.Component;
-import frc.team5431.titan.core.robot.TitanRobot;
-
-public class Robot extends TitanRobot<Robot> {
-  public static enum Mode {
-    DISABLED, AUTO, TELEOP, TEST
-  }
-
-  // Component Objects
-  private Dashboard dashboard;
-  private Drivebase drivebase;
-  private Teleop teleop;
-  private Intake intake;
-  private Flywheel flywheel;
-  private Balancer balancer;
-  private Elevator elevator;
-  private Feeder feeder;
-  private Vision vision;
-  private Auton auton;
-  private Hopper hopper;
+public class Robot extends TimedRobot {
 
   // Objects for mostly internal Robot.java usage
-  private Mode mode = Mode.DISABLED;
-  private List<Component<Robot>> components = List.of();
+  private RobotMap robotMap;
+  private Command autonCommand;
 
   // The Following is Initializer Functions
 
   @Override
   public void robotInit() {
     Logger.DEBUG = true;
-
-    // Initialize Components
-    dashboard = new Dashboard();
-    drivebase = new Drivebase();
-    teleop = new Teleop();
-    intake = new Intake();
-    flywheel = new Flywheel();
-    feeder = new Feeder();
-    balancer = new Balancer();
-    elevator = new Elevator();
-    vision = new Vision();
-    auton = new Auton();
-    hopper = new Hopper();
-
-    // Add Components to components Array
-    components = List.of(dashboard, drivebase, teleop, intake, flywheel, balancer, feeder, vision, auton, hopper);
+    robotMap = new RobotMap();
   }
 
-  @Override
-  public void teleopInit() {
-    mode = Mode.TELEOP;
-    components.forEach((com) -> com.init(this));
-  }
-
-  @Override
-  public void autonomousInit() {
-    mode = Mode.AUTO;
-    components.forEach((com) -> com.init(this));
-  }
-
-  @Override
-  public void testInit() {
-    mode = Mode.TEST;
-    components.forEach((com) -> com.init(this));
-  }
-
-  @Override
-  public void disabledInit() {
-    mode = Mode.DISABLED;
-    components.forEach((com) -> com.disabled(this));
-  }
-
-  // The Following is Periodic Functions
-
+  
   @Override
   public void robotPeriodic() {
-    components.forEach((com) -> com.tick(this));
+    CommandScheduler.getInstance().run();
   }
 
-  @Override
-  public void teleopPeriodic() {
-    components.forEach((com) -> com.periodic(this));
-  }
-
-  @Override
-  public void autonomousPeriodic() {
-    teleopPeriodic();
-  }
-
-  @Override
-  public void testPeriodic() {
-    teleopPeriodic();
-  }
-
-  @Override
-  public void disabledPeriodic() {
-    teleopPeriodic();
-  }
-
-  /**
-   * @return the components
+    /**
+   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
    */
   @Override
-  public List<Component<Robot>> getComponents() {
-    return components;
-  }
+  public void autonomousInit() {
+    autonCommand = robotMap.getAutonomousCommand();
 
-  /**
-   * @return the mode
-   */
-  public Mode getMode() {
-    return mode;
-  }
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
 
-  /**
-   * @return the drivebase
-   */
-  public Drivebase getDrivebase() {
-    return drivebase;
-  }
-
-  /**
-   * @return the dashboard
-   */
-  public Dashboard getDashboard() {
-    return dashboard;
-  }
-
-  /**
-   * @return the teleop
-   */
-  public Teleop getTeleop() {
-    return teleop;
-  }
-
-  /**
-   * @return the intake
-   */
-  public Intake getIntake() {
-    return intake;
-  }
-
-  /**
-   * @return the flywheel
-   */
-  public Flywheel getFlywheel() {
-    return flywheel;
-  }
-
-  /**
-   * @return the feeder
-   */
-  public Feeder getFeeder() {
-    return feeder;
-  }
-
-  /**
-   * @return the vision
-   */
-  public Vision getVision() {
-    return vision;
-  }
-
-  /**
-   * @return the elevator
-   */
-  public Elevator getElevator() {
-    return elevator;
-  }
-
-  /**
-   * @return the balancer
-   */
-  public Balancer getBalancer() {
-    return balancer;
-  }
-
-  /**
-   * @return the auton
-   */
-  public Auton getAuton() {
-    return auton;
-  }
-
-  /**
-   * @return the hopper
-   */
-  public Hopper getHopper() {
-    return hopper;
+    // schedule the autonomous command (example)
+    if (autonCommand != null) {
+      autonCommand.schedule();
+    }
   }
 }
