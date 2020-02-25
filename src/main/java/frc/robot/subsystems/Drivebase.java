@@ -9,16 +9,14 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
-import frc.team5431.titan.core.robot.Component;
-
-import frc.team5431.titan.mimic.DrivebaseAnalyzer;
 
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
@@ -212,7 +210,7 @@ public class Drivebase extends SubsystemBase {
     }
 
     public float getHeading() {
-        return (float)pidgey.getCompassHeading();
+        return (float) pidgey.getCompassHeading();
     }
 
     public void setRamping(double ramping) {
@@ -264,14 +262,32 @@ public class Drivebase extends SubsystemBase {
     };
 
     public double getLeftDistance() {
-        return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+        return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE
+                * Constants.GEAR_RATIO;
     };
 
     public double getRightDistance() {
-        return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE * Constants.GEAR_RATIO;
+        return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE
+                * Constants.GEAR_RATIO;
     };
 
     public double getRPM() {
         return ((getLeftEncoderCount() * 600) + (getRightEncoderCount() * 600)) / 2;
+    }
+
+    public Pose2d getPose() {
+        // return m_odometry.getPoseMeters();
+        return null;
+    }
+
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        left.setVoltage(leftVolts);
+        right.setVoltage(-rightVolts);
+        // m_drive.feed();
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+        return null;
     }
 }
