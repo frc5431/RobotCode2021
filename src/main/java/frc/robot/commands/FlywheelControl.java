@@ -20,6 +20,11 @@ public class FlywheelControl extends CommandBase {
     }
 
     @Override
+    public void execute() {
+        flywheel.set(speed);    
+    }
+
+    @Override
     public void end(boolean interrupted) {
         flywheel.set(Flywheel.Speeds.OFF);
     }

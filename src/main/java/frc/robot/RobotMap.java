@@ -49,8 +49,8 @@ public class RobotMap {
 
         bindKeys();
 
-        drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> driver.getRawAxis(Xbox.Axis.LEFT_Y),
-                () -> driver.getRawAxis(Xbox.Axis.LEFT_X)));
+        // drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> driver.getRawAxis(Xbox.Axis.LEFT_Y),
+        //         () -> driver.getRawAxis(Xbox.Axis.LEFT_X)));
     }
 
     private void bindKeys() {
@@ -62,8 +62,8 @@ public class RobotMap {
         }
 
         {
-            new JoystickButton(operator, LogitechExtreme3D.Button.ELEVEN.ordinal() + 1)
-                    .whenPressed(new Targetor(drivebase, limelight));
+        //     new JoystickButton(operator, LogitechExtreme3D.Button.ELEVEN.ordinal() + 1)
+        //             .whenPressed(new Targetor(drivebase, limelight));
         }
     }
 

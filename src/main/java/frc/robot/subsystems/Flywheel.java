@@ -9,12 +9,13 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.ComponentControlMode;
 import frc.robot.util.states.*;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
 import frc.team5431.titan.core.robot.Component;
 
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {
-        OFF(0), HALF(500), FULL(1000);
+        OFF(0), HALF(.25), FULL(0.5);
 
         private double speed;
         private Speeds(double speed) {
@@ -59,7 +60,7 @@ public class Flywheel extends SubsystemBase {
     }
 
     public void set(Speeds speed) {
-        setSpeed(ControlMode.Velocity, speed.getSpeed());
+        setSpeed(ControlMode.PercentOutput, speed.getSpeed());
     }
 
     public double getSpeed() {
