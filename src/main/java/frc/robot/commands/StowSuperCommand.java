@@ -6,7 +6,9 @@ import frc.robot.subsystems.*;
 public class StowSuperCommand extends SequentialCommandGroup {
 	public StowSuperCommand(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel) {
 		addCommands(
-
+			new PivotCommand(intake, Intake.POSITION.UP)
 		);
+
+		addRequirements(intake, hopper, feeder, flywheel);
 	}
 }
