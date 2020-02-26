@@ -5,11 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.util.ComponentControlMode;
-import frc.team5431.titan.core.misc.Calc;
-import frc.team5431.titan.core.misc.Toggle;
-import frc.team5431.titan.core.robot.Component;
+import frc.team5431.titan.core.misc.Calc;;
 
 public class Intake extends SubsystemBase {
     public static enum POSITION {
