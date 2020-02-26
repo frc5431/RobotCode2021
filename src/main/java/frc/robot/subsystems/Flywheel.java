@@ -6,12 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.util.ComponentControlMode;
-import frc.robot.util.states.*;
-import frc.team5431.titan.core.misc.Logger;
-import frc.team5431.titan.core.misc.Toggle;
-import frc.team5431.titan.core.robot.Component;
 
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {

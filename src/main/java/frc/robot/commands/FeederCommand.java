@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
-public class IndexerCommand extends CommandBase {
+public class FeederCommand extends CommandBase {
     private final Feeder feeder;
     private final boolean direction;
 
-    public IndexerCommand(Feeder feeder, boolean reverse) {
+    public FeederCommand(Feeder feeder, boolean reverse) {
         this.feeder = feeder;
         this.direction = reverse;
 

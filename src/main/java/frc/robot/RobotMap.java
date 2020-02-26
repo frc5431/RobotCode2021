@@ -16,12 +16,7 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.BalancerCommand;
-import frc.robot.commands.DefaultDrive;
-import frc.robot.commands.FlywheelControl;
-import frc.robot.commands.HopperCommand;
-import frc.robot.commands.IndexerCommand;
-import frc.robot.commands.Targetor;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
@@ -64,6 +59,11 @@ public class RobotMap {
             // Flywheel is toggleable
             new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
                     .toggleWhenPressed(new FlywheelControl(flywheel, Flywheel.Speeds.FULL), true);
+
+            // Run the Intake when pressed
+            // TODO: have a sequence to bring down the intake automatically.
+            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1)
+                    .whenPressed(new IntakeCommand(intake, false));
         }
 
         // Operator Controls
@@ -78,7 +78,7 @@ public class RobotMap {
 
             // Feeder while held
             new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
-                    .whenPressed(new IndexerCommand(feeder, false));
+                    .whenPressed(new FeederCommand(feeder, false));
         }
 
         // Default Commands

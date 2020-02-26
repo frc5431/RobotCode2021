@@ -141,4 +141,6 @@ public final class Constants {
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 
 	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
+
+	public static final double PIVOT_ERROR_RANGE = 0;
 }
