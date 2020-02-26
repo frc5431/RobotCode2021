@@ -35,7 +35,7 @@ public class IntakeCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.setIntakeFeedSpeed(direction ? speed : -speed);
+        intake.setSpeed(direction ? speed : -speed);
 	}
 
     @Override

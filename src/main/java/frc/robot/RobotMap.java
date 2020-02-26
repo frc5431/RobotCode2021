@@ -31,6 +31,7 @@ public class RobotMap {
     private final Flywheel flywheel = new Flywheel();
     private final Hopper hopper = new Hopper();
     private final Intake intake = new Intake();
+    private final Pivot pivot = new Pivot();
 
     private final Xbox driver = new Xbox(0);
     private final Joystick operator = new Joystick(1);
@@ -79,7 +80,7 @@ public class RobotMap {
             // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
             //         .whenPressed(new FeederCommand(feeder, false));
 
-            new JoystickButton(operator, 1).whileHeld(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer));
+            new JoystickButton(operator, 1).whileHeld(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
             new JoystickButton(operator, 2).whileHeld(new FloorIntakeSuperCommand(intake, hopper, flywheel));
             // new JoystickButton(operator, 2).whenPressed(new IntakeCommand(intake, false));
 
