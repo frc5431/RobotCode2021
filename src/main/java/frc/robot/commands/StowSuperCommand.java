@@ -11,6 +11,7 @@ public class StowSuperCommand extends SequentialCommandGroup {
 			new FlywheelControl(flywheel, Flywheel.Speeds.OFF, true)
 		);
 
-		addRequirements(intake, hopper, feeder, flywheel, balancer);
+		// Requirements are not needed
+		// addRequirements(intake, hopper, feeder, flywheel, balancer);
 	}
 }

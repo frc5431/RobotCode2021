@@ -11,6 +11,7 @@ public class FloorIntakeSuperCommand extends ParallelCommandGroup {
             new HopperCommand(hopper, false) // FIXME: NO EXIT CONDITION
         );
 
-        addRequirements(intake, hopper, flywheel);
+        // Requirements are not needed
+        // addRequirements(intake, hopper, flywheel);
     }
 }
