@@ -7,10 +7,16 @@ import frc.robot.util.states.FlywheelState;
 public class FlywheelControl extends CommandBase {
     private final Flywheel flywheel;
     private final Flywheel.Speeds speed;
+    private final boolean stopOnDone;
 
-    public FlywheelControl(Flywheel flywheel, FlywheelState stop) {
+    public FlywheelControl(Flywheel flywheel, Flywheel.Speeds speed) {
+        this(flywheel, speed, true);
+    }
+
+    public FlywheelControl(Flywheel flywheel, Flywheel.Speeds speed, boolean stopOnDone) {
         this.flywheel = flywheel;
-        this.speed = stop;
+        this.speed = speed;
+        this.stopOnDone = stopOnDone;
 
         addRequirements(flywheel);
     }
@@ -27,6 +33,7 @@ public class FlywheelControl extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        flywheel.set(Flywheel.Speeds.OFF);
+        if (stopOnDone)
+            flywheel.set(Flywheel.Speeds.OFF);
     }
 }

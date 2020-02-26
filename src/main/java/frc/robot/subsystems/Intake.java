@@ -5,11 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.util.ComponentControlMode;
-import frc.team5431.titan.core.misc.Calc;
-import frc.team5431.titan.core.misc.Toggle;
-import frc.team5431.titan.core.robot.Component;
+import frc.team5431.titan.core.misc.Calc;;
 
 public class Intake extends SubsystemBase {
     public static enum POSITION {
@@ -37,6 +33,9 @@ public class Intake extends SubsystemBase {
         pivotMotor = new WPI_TalonFX(Constants.PIVOT_ID);
         pivotMotor.setInverted(Constants.PIVOT_REVERSE);
         pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
+
+        intakeMotor.configFactoryDefault();
+        pivotMotor.configFactoryDefault();
     }
 
     public void setIntakeFeedSpeed(double speed) {
@@ -45,12 +44,11 @@ public class Intake extends SubsystemBase {
 
     public void setPivotLocation(POSITION pos) {
         position = pos;
-        // FIXME: Implement Motion Magic
+        pivotMotor.set(ControlMode.Position, pos.getValue());       
     }
 
     public boolean atLocation() {
-        double encoderValue = 0.0; // FIXME
+        int encoderValue = pivotMotor.getSelectedSensorPosition(); // FIXME
         return Calc.approxEquals(position.getValue(), encoderValue, Constants.PIVOT_ERROR_RANGE);
-
     }
 }
