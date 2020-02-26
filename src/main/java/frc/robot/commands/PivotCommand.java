@@ -25,4 +25,9 @@ public class PivotCommand extends CommandBase {
     public void end(boolean interrupted) {
         intake.setIntakeFeedSpeed(0);
     }
+
+    @Override
+    public boolean isFinished() {
+        return intake.atLocation();
+    }
 }

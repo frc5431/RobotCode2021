@@ -33,6 +33,9 @@ public class Intake extends SubsystemBase {
         pivotMotor = new WPI_TalonFX(Constants.PIVOT_ID);
         pivotMotor.setInverted(Constants.PIVOT_REVERSE);
         pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
+
+        intakeMotor.configFactoryDefault();
+        pivotMotor.configFactoryDefault();
     }
 
     public void setIntakeFeedSpeed(double speed) {
@@ -41,12 +44,11 @@ public class Intake extends SubsystemBase {
 
     public void setPivotLocation(POSITION pos) {
         position = pos;
-        // FIXME: Implement Motion Magic
+        pivotMotor.set(ControlMode.Position, pos.getValue());       
     }
 
     public boolean atLocation() {
-        double encoderValue = 0.0; // FIXME
+        int encoderValue = pivotMotor.getSelectedSensorPosition(); // FIXME
         return Calc.approxEquals(position.getValue(), encoderValue, Constants.PIVOT_ERROR_RANGE);
-
     }
 }
