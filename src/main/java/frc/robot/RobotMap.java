@@ -37,11 +37,11 @@ public class RobotMap {
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
-    private static enum Path {
-
+    private static enum StartPosition {
+        
     };
 
-    SendableChooser<Path> chooser = new SendableChooser<>();
+    SendableChooser<StartPosition> chooser = new SendableChooser<>();
 
     public RobotMap() {
 
