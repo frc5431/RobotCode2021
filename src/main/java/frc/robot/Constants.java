@@ -3,10 +3,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
-import frc.robot.util.RobotType;
 
 public final class Constants {
-    public static final RobotType ROBOT_TYPE = RobotType.PRACTICE;
 
     // ================================================================================
     // Teleop Controller Data
