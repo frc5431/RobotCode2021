@@ -8,12 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.states.ClimberState;
-import frc.robot.util.ComponentControlMode;
 
 public class Elevator extends SubsystemBase {
 
     private WPI_TalonFX elevator;
-    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Elevator() {
         elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
@@ -40,19 +38,5 @@ public class Elevator extends SubsystemBase {
 
     public double getRotations() {
         return getEncoderPosition() / 2048;
-    }
-
-    /**
-     * @param controlMode the controlMode to set
-     */
-    public void setControlMode(ComponentControlMode controlMode) {
-        this.controlMode = controlMode;
-    }
-
-    /**
-     * @return the controlMode
-     */
-    public ComponentControlMode getControlMode() {
-        return controlMode;
     }
 }

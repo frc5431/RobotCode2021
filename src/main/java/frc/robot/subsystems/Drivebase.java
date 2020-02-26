@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.util.ComponentControlMode;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.misc.Toggle;
@@ -36,11 +35,9 @@ public class Drivebase extends SubsystemBase {
     private WPI_TalonFX _leftFollow;
     private WPI_TalonFX _rightFollow;
 
-    private Toggle swappedDrive;
     private ErrorCode eCode = ErrorCode.OK;
 
     private double ramping;
-    private ComponentControlMode controlMode = ComponentControlMode.MANUAL;
 
     public Drivebase() {
 
@@ -119,9 +116,6 @@ public class Drivebase extends SubsystemBase {
 
         zeroGyro();
         zeroDistance();
-
-        swappedDrive = new Toggle();
-        swappedDrive.setState(false);
 
         setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
     }
@@ -229,20 +223,6 @@ public class Drivebase extends SubsystemBase {
     public void resetSensors() {
         zeroDistance();
         zeroGyro();
-    }
-
-    /**
-     * @param controlMode the controlMode to set
-     */
-    public void setControlMode(ComponentControlMode controlMode) {
-        this.controlMode = controlMode;
-    }
-
-    /**
-     * @return the controlMode
-     */
-    public ComponentControlMode getControlMode() {
-        return controlMode;
     }
 
     public double getLeftSpeed() {
