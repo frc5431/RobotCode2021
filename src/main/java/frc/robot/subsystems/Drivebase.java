@@ -199,7 +199,7 @@ public class Drivebase extends SubsystemBase {
         left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * 0.35);
         right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * 0.35);
 
-        Logger.l("Power: %f, Turn: %f", power, turn);
+        // Logger.l("Power: %f, Turn: %f", power, turn);
     }
 
     public void driveMotionMagic(double distance, double angle) {

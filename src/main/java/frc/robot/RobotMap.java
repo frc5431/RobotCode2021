@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.team5431.titan.core.joysticks.Joystick;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
 import frc.team5431.titan.core.vision.Limelight;
@@ -32,7 +33,7 @@ public class RobotMap {
     private final Intake intake = new Intake();
 
     private final Xbox driver = new Xbox(0);
-    private final LogitechExtreme3D operator = new LogitechExtreme3D(1);
+    private final Joystick operator = new Joystick(1);
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
@@ -62,23 +63,26 @@ public class RobotMap {
 
             // Run the Intake when pressed
             // TODO: have a sequence to bring down the intake automatically.
-            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1)
-                    .whenPressed(new IntakeCommand(intake, false));
+            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1).whenPressed(new IntakeCommand(intake, false));
         }
 
         // Operator Controls
         {
-            // When Pressed, will stop when complete
-            new JoystickButton(operator, LogitechExtreme3D.Button.ELEVEN.ordinal() + 1)
-                    .whenPressed(new Targetor(drivebase, limelight));
+            // // When Pressed, will stop when complete
+            // new JoystickButton(operator, 7).whenPressed(new Targetor(drivebase, limelight));
 
-            // Toggle Hopper
-            new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
-                    .toggleWhenPressed(new HopperCommand(hopper, false));
+            // // Toggle Hopper
+            // new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
+            //         .toggleWhenPressed(new HopperCommand(hopper, false));
 
-            // Feeder while held
-            new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
-                    .whenPressed(new FeederCommand(feeder, false));
+            // // Feeder while held
+            // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
+            //         .whenPressed(new FeederCommand(feeder, false));
+
+            new JoystickButton(operator, 1).whileHeld(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer));
+            new JoystickButton(operator, 2).whileHeld(new FloorIntakeSuperCommand(intake, hopper, flywheel));
+            // new JoystickButton(operator, 2).whenPressed(new IntakeCommand(intake, false));
+
         }
 
         // Default Commands

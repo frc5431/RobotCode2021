@@ -72,7 +72,7 @@ public final class Constants {
 
     // Intake Related
     public static final int INTAKE_ID = 5;
-    public static final boolean INTAKE_REVERSE = true;
+    public static final boolean INTAKE_REVERSE = false;
     public static final NeutralMode INTAKE_NEUTRALMODE = NeutralMode.Brake;
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
@@ -85,7 +85,7 @@ public final class Constants {
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;
     public static final int HOPPER_RIGHT_ID = 8;
-    public static final boolean HOPPER_REVERSE = true; // TODO: Find out reverse state
+    public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     public static final double HOPPER_DEFAULT_SPEED = 0.5;
     
@@ -142,5 +142,5 @@ public final class Constants {
 
 	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
 
-	public static final double PIVOT_ERROR_RANGE = 0;
+	public static final double PIVOT_ERROR_RANGE = 5;
 }
