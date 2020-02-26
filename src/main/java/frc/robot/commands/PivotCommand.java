@@ -11,23 +11,28 @@ public class PivotCommand extends CommandBase {
         this.intake = intake;
         this.position = pos;
 
-		assert (pos != null);
+        assert (pos != null);
 
         addRequirements(intake);
     }
 
     @Override
     public void initialize() {
-		intake.setPivotLocation(position);
-	}
-
-    @Override
-    public void end(boolean interrupted) {
-        intake.setIntakeFeedSpeed(0);
+        intake.setPivotLocation(position);
     }
+
+    // @Override
+    // public void end(boolean interrupted) {
+    // intake.setIntakeFeedSpeed(0);
+    // }
+
+    // @Override
+    // public boolean isFinished() {
+    // return intake.atLocation();
+    // }
 
     @Override
     public boolean isFinished() {
-        return intake.atLocation();
+        return true;
     }
 }
