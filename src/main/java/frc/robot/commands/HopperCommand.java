@@ -6,21 +6,31 @@ import frc.robot.subsystems.Hopper;
 public class HopperCommand extends CommandBase {
     private final Hopper hopper;
     private final boolean direction;
+    private final double speed;
 
     public HopperCommand(Hopper hopper, boolean reverse) {
+        this(hopper, 1, reverse);
+    }
+
+    public HopperCommand(Hopper hopper, double speed) {
+        this(hopper, speed, false);
+    }
+
+    public HopperCommand(Hopper hopper, double speed, boolean reverse) {
         this.hopper = hopper;
         this.direction = reverse;
+        this.speed = speed;
 
         addRequirements(hopper);
     }
 
     @Override
     public void initialize() {
-        hopper.set(direction ? 1 : -1);
+        hopper.set(direction ? speed : -speed);
 	}
 
     @Override
-    public void end(boolean interrupted) {
-        hopper.set(0);
+    public boolean isFinished() {
+        return true;
     }
 }
