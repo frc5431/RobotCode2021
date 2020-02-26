@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.team5431.titan.core.misc.Calc;;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class Pivot extends SubsystemBase {
     public static enum POSITION {
         UP(0), DOWN(1); // FIXME

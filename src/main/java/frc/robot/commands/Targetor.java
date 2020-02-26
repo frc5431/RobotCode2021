@@ -8,6 +8,9 @@ import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.LEDState;
 import frc.team5431.titan.core.vision.Limelight;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class Targetor extends CommandBase {
     
     private final Drivebase drivebase;
@@ -15,6 +18,10 @@ public class Targetor extends CommandBase {
 
     private final PIDController turnController, positionController;
 
+    /**
+     * @param drivebase
+     * @param limelight
+     */
     public Targetor(Drivebase drivebase, Limelight limelight) {
         this.drivebase = drivebase;
         this.limelight = limelight;

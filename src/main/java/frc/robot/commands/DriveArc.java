@@ -3,6 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class DriveArc extends CommandBase {
 
     private final Drivebase drivebase;

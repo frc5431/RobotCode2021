@@ -3,6 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Flywheel;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class FlywheelControl extends CommandBase {
     private final Flywheel flywheel;
     private final Flywheel.Speeds speed;    

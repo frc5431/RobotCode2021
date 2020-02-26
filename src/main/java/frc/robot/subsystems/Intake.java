@@ -5,6 +5,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class Intake extends SubsystemBase {
     private WPI_TalonFX intakeMotor;
 

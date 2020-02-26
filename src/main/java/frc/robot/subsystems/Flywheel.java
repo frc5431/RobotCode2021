@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {
         OFF(0), HALF(.25), FULL(0.5);

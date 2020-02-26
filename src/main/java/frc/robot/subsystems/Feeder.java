@@ -6,6 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * @author Colin Wong
+ * @author Ryan Hirasaki
+ */
 public class Feeder extends SubsystemBase {
     WPI_TalonFX feed;
 

@@ -3,6 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class FeederCommand extends CommandBase {
     private final Feeder feeder;
     private final boolean direction;

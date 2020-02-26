@@ -3,6 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class PivotCommand extends CommandBase {
     private final Pivot intake;
     private final Pivot.POSITION position;
