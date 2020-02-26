@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.team5431.titan.core.misc.Calc;;
@@ -36,6 +37,12 @@ public class Intake extends SubsystemBase {
 
         intakeMotor.configFactoryDefault();
         pivotMotor.configFactoryDefault();
+    }
+
+    @Override
+    public void periodic() {
+        // Publish Pivot Encoder Position To Add To States
+        SmartDashboard.putNumber("Pivot Position", pivotMotor.getSelectedSensorPosition());
     }
 
     public void setIntakeFeedSpeed(double speed) {

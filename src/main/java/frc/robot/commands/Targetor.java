@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.LEDState;
 import frc.team5431.titan.core.vision.Limelight;
 
@@ -46,10 +47,14 @@ public class Targetor extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        if (interrupted)
+            Logger.l("Targetor Command Interuppted");
         limelight.setLEDState(LEDState.OFF);
     }
     @Override
     public boolean isFinished() {
-        return turnController.atSetpoint() && positionController.atSetpoint();
+        boolean targetLocked = turnController.atSetpoint() && positionController.atSetpoint();
+
+        return targetLocked;
     }
 }

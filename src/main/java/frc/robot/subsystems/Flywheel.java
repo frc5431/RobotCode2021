@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -46,6 +47,9 @@ public class Flywheel extends SubsystemBase {
     @Override
     public void periodic() {
         assert (flywheel.get() == _flywheelFollow.get());
+
+        // Get Flywheel Velocity for state tuning
+        SmartDashboard.putNumber("Flywheel Velocity", flywheel.getSelectedSensorVelocity());
     }
 
     public void setSpeed(ControlMode mode, double speed) {
