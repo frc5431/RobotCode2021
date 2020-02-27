@@ -15,9 +15,4 @@ public class FloorIntakeSuperCommand extends ParallelCommandGroup {
             new HopperCommand(hopper, 1.0)  // Starts the Motor
         );
     }
-
-    @Override
-    public void execute() {
-        super.execute();
-    }
 }
