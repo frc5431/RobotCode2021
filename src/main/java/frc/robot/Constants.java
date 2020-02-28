@@ -50,7 +50,7 @@ public final class Constants {
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
     public static final int CLIMBER_ELEVATOR_ID = 6;
-    public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
+    public static final boolean CLIMBER_ELEVATOR_REVERSE = true;
 
     // Shooter Flywheel Related
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 10;

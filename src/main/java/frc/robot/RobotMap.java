@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.Joystick;
@@ -42,7 +43,7 @@ public class RobotMap {
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
     private static enum StartPosition {
-        
+
     };
 
     SendableChooser<StartPosition> chooser = new SendableChooser<>();
@@ -56,48 +57,101 @@ public class RobotMap {
     private void bindKeys() {
         // Driver Controls
         {
-            // new JoystickButton(driver, Xbox.Button.X.ordinal() + 1)
-            // .whenPressed(new BalancerCommand(balancer, true));
-            // new JoystickButton(driver, Xbox.Button.X.ordinal() + 1)
-            // .whenPressed(new BalancerCommand(balancer, false));
+            // Target the Upper Hatch
+            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1).whenPressed(new Targetor(drivebase, limelight));
 
-            // Flywheel is toggleable
-            // new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-            //         .toggleWhenPressed(new FlywheelControl(flywheel, Flywheel.Speeds.FULL), true);
-            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-            .whenPressed(new Targetor(drivebase, limelight));
+            // Calibrate the Limelight
+            new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
 
-            // Run the Intake when pressed
-            // TODO: have a sequence to bring down the intake automatically.
-            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1).toggleWhenPressed(new IntakeCommand(intake, false));
+            // Intake
+            new JoystickButton(driver, Xbox.Button.A.ordinal() + 1);
+
+            // // Run the Intake when pressed
+            // // TODO: have a sequence to bring down the intake automatically.
+            // new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1).toggleWhenPressed(new IntakeCommand(intake, false));
         }
 
         // Operator Controls
         {
             // // When Pressed, will stop when complete
-            // new JoystickButton(operator, 7).whenPressed(new Targetor(drivebase, limelight));
+            // new JoystickButton(operator, 7).whenPressed(new Targetor(drivebase,
+            // limelight));
 
             // // Toggle Hopper
             // new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
-            //         .toggleWhenPressed(new HopperCommand(hopper, false));
+            // .toggleWhenPressed(new HopperCommand(hopper, false));
 
             // // Feeder while held
             // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
-            //         .whenPressed(new FeederCommand(feeder, false));
+            // .whenPressed(new FeederCommand(feeder, false));
 
-            new JoystickButton(buttonBoard, 1)
-                .whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
-            new JoystickButton(buttonBoard, 2)
-                .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel))
-                .whenReleased(new ParallelCommandGroup(
-                    new IntakeCommand(intake, 0),
-                    new HopperCommand(hopper, 0),
-                    new FeederCommand(feeder, 0)
-                ));
-            // new JoystickButton(operator, 3)
-                // .whenPressed(null);
-            // new JoystickButton(operator, 2).whenPressed(new IntakeCommand(intake, false));
+            new JoystickButton(buttonBoard, 2).toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel));
 
+            // All Out
+            new JoystickButton(buttonBoard, 4);
+
+            // Pivot Down
+            new JoystickButton(buttonBoard, 6);
+
+            // Pivot Up
+            new JoystickButton(buttonBoard, 5);
+
+            // Vision
+            new JoystickButton(buttonBoard, 7);
+
+            // In
+            new JoystickButton(buttonBoard, 11);
+
+            // Shoot
+            new JoystickButton(buttonBoard, 1);
+
+            // Intake
+            new JoystickButton(buttonBoard, 14);
+
+            /*
+             * Not used as it is bound to triggers for the driver but here for historical
+             * purposes
+             * 
+             * // Climb
+             * new JoystickButton(buttonBoard, 8);
+             */
+
+            // Stuck On Side.
+            // Run Hopper and pivot up with intake on
+            new JoystickButton(buttonBoard, 13);
+
+            new JoystickButton(buttonBoard, 12)
+                    .whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
+
+            // Auto Switch
+            new JoystickButton(buttonBoard, 9);
+        }
+
+        // Operator Logitech
+        {
+            // Indexer Up
+            new POVButton(operator, 0);
+
+            // Indexer Down
+            new POVButton(operator, 180);
+
+            // Trigger Flywheel
+            new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1);
+
+            // Three Hopper Out
+            new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1);
+
+            // Five Hopper In
+            new JoystickButton(operator, LogitechExtreme3D.Button.FIVE.ordinal() + 1);
+
+            // Six Intake Pivot Down
+            new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1);
+
+            // Four Intake Pivot Up
+            new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1);
+
+            // Two Intake
+            new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1);
         }
 
         // Default Commands
@@ -106,6 +160,9 @@ public class RobotMap {
 
             drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),
                     () -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
+
+            elevator.setDefaultCommand(new DefaultElevator(elevator,
+                    () -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
         }
     }
 
