@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -81,8 +83,17 @@ public class RobotMap {
             // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
             //         .whenPressed(new FeederCommand(feeder, false));
 
-            new JoystickButton(operator, 1).whileHeld(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
-            new JoystickButton(operator, 2).whileHeld(new FloorIntakeSuperCommand(intake, hopper, flywheel));
+            new JoystickButton(operator, 1)
+                .whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
+            new JoystickButton(operator, 2)
+                .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel))
+                .whenReleased(new ParallelCommandGroup(
+                    new IntakeCommand(intake, 0),
+                    new HopperCommand(hopper, 0),
+                    new FeederCommand(feeder, 0)
+                ));
+            // new JoystickButton(operator, 3)
+                // .whenPressed(null);
             // new JoystickButton(operator, 2).whenPressed(new IntakeCommand(intake, false));
 
         }
@@ -91,8 +102,8 @@ public class RobotMap {
         {
             driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
-            drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> driver.getRawAxis(Xbox.Axis.LEFT_Y),
-                    () -> driver.getRawAxis(Xbox.Axis.LEFT_X)));
+            drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),
+                    () -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
         }
     }
 

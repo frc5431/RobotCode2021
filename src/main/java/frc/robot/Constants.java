@@ -33,11 +33,11 @@ public final class Constants {
     // ================================================================================
 
     // Drivebase Related
-    public static final int DRIVEBASE_FRONT_LEFT_ID = 3;
-    public static final int DRIVEBASE_BACK_LEFT_ID = 1;
+    public static final int DRIVEBASE_FRONT_LEFT_ID = 1;
+    public static final int DRIVEBASE_BACK_LEFT_ID = 4;
     public static final boolean DRIVEBASE_LEFT_REVERSE = false;
 
-    public static final int DRIVEBASE_FRONT_RIGHT_ID = 4;
+    public static final int DRIVEBASE_FRONT_RIGHT_ID = 3;
     public static final int DRIVEBASE_BACK_RIGHT_ID = 2;
     public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
 
@@ -141,4 +141,8 @@ public final class Constants {
 	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
 
 	public static final double PIVOT_ERROR_RANGE = 5;
+	public static final int DIGITAL_INPUT_START = 6;
+	public static final int DIGITAL_INPUT_ONE = 8;
+	public static final int DIGITAL_INPUT_TWO = 7;
+	public static final int DIGITAL_INPUT_THREE = 9;
 }
