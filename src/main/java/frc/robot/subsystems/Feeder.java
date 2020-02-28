@@ -16,7 +16,7 @@ import frc.robot.Constants;
  */
 public class Feeder extends SubsystemBase {
     WPI_TalonFX feed;
-    HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>();
+    HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
 
     public Feeder() {
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
