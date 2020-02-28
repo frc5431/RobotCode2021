@@ -45,6 +45,9 @@ public class Flywheel extends SubsystemBase {
 
         flywheel.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
         // flywheelRight.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
+
+        //reset encoder
+        flywheel.setSelectedSensorPosition(0); 
     }
 
     @Override

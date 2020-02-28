@@ -38,18 +38,21 @@ public class Targetor extends CommandBase {
 
     @Override
     public void initialize() {
+        limelight.getTable().getEntry("pipeline").setNumber(0);
         limelight.setLEDState(LEDState.ON);
+        Logger.l("Begin Targetor Command!");
     }
 
     // 20 ms loop
     @Override
     public void execute() {
+        Logger.l("Execute Targetor Command!");
         limelight.getTable().getEntry("pipeline").setNumber(0);
 
         double xError = turnController.calculate(limelight.getX());
-        double yError = positionController.calculate(limelight.getY());
+        // double yError = positionController.calculate(limelight.getY());
 
-        drivebase.drivePercentageArcade(yError, xError);
+        drivebase.drivePercentageArcade(0, xError);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Targetor extends CommandBase {
     }
     @Override
     public boolean isFinished() {
-        boolean targetLocked = turnController.atSetpoint() && positionController.atSetpoint();
+        boolean targetLocked = turnController.atSetpoint();
 
         return targetLocked;
     }

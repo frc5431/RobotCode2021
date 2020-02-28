@@ -40,6 +40,8 @@ public class IntakeCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        if (interrupted)
+            intake.setSpeed(0);
         // intake.setIntakeFeedSpeed(0); // FIXME: add a stop so the intake stops
     }
 

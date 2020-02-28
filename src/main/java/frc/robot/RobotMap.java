@@ -62,12 +62,14 @@ public class RobotMap {
             // .whenPressed(new BalancerCommand(balancer, false));
 
             // Flywheel is toggleable
+            // new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
+            //         .toggleWhenPressed(new FlywheelControl(flywheel, Flywheel.Speeds.FULL), true);
             new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-                    .toggleWhenPressed(new FlywheelControl(flywheel, Flywheel.Speeds.FULL), true);
+            .whenPressed(new Targetor(drivebase, limelight));
 
             // Run the Intake when pressed
             // TODO: have a sequence to bring down the intake automatically.
-            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1).whenPressed(new IntakeCommand(intake, false));
+            new JoystickButton(driver, Xbox.Button.Y.ordinal() + 1).toggleWhenPressed(new IntakeCommand(intake, false));
         }
 
         // Operator Controls
