@@ -89,6 +89,8 @@ public class RobotMap {
 
         // Default Commands
         {
+            driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
+
             drivebase.setDefaultCommand(new DefaultDrive(drivebase, () -> driver.getRawAxis(Xbox.Axis.LEFT_Y),
                     () -> driver.getRawAxis(Xbox.Axis.LEFT_X)));
         }
