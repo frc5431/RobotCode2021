@@ -140,7 +140,10 @@ public final class Constants {
 
 	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
 
-	public static final double PIVOT_ERROR_RANGE = 5;
+    public static final double PIVOT_ERROR_RANGE = 5;
+    
+    // Sensors
+    public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
 	public static final int DIGITAL_INPUT_START = 6;
 	public static final int DIGITAL_INPUT_ONE = 8;
 	public static final int DIGITAL_INPUT_TWO = 7;
