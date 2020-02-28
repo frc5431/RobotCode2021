@@ -49,7 +49,7 @@ public final class Constants {
     public static final int CLIMBER_BALANCER_ID = 13;
     public static final boolean CLIMBER_BALANCER_REVERSE = false;
 
-    public static final int CLIMBER_ELEVATOR_ID = 12;
+    public static final int CLIMBER_ELEVATOR_ID = 6;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = false;
 
     // Shooter Flywheel Related
@@ -75,7 +75,7 @@ public final class Constants {
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Pivot related
-    public static final int PIVOT_ID = 6;
+    public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
