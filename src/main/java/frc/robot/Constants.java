@@ -144,8 +144,4 @@ public final class Constants {
     
     // Sensors
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
-	public static final int DIGITAL_INPUT_START = 6;
-	public static final int DIGITAL_INPUT_ONE = 8;
-	public static final int DIGITAL_INPUT_TWO = 7;
-	public static final int DIGITAL_INPUT_THREE = 9;
 }

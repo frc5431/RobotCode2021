@@ -36,8 +36,8 @@ public class RobotMap {
     private final Pivot pivot = new Pivot();
 
     private final Xbox driver = new Xbox(0);
-    private final Joystick operatorButton = new Joystick(1);
-    private final LogitechExtreme3D operatorJoy = new LogitechExtreme3D(3);
+    private final Joystick buttonBoard = new Joystick(1);
+    private final LogitechExtreme3D operator = new LogitechExtreme3D(3);
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
@@ -83,9 +83,9 @@ public class RobotMap {
             // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
             //         .whenPressed(new FeederCommand(feeder, false));
 
-            new JoystickButton(operatorButton, 1)
+            new JoystickButton(buttonBoard, 1)
                 .whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
-            new JoystickButton(operatorButton, 2)
+            new JoystickButton(buttonBoard, 2)
                 .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel))
                 .whenReleased(new ParallelCommandGroup(
                     new IntakeCommand(intake, 0),
