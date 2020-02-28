@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hopper;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
@@ -33,7 +34,14 @@ public class HopperCommand extends CommandBase {
 	}
 
     @Override
+    public void end(boolean interrupted) {
+        Logger.l("Hopper Command Done");
+        hopper.set(0);
+
+    }
+
+    @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

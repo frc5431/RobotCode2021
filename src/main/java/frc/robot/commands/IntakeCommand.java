@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * IntakeCommand.
@@ -40,13 +41,18 @@ public class IntakeCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+<<<<<<< HEAD
         if (interrupted)
             intake.setSpeed(0);
         // intake.setIntakeFeedSpeed(0); // FIXME: add a stop so the intake stops
+=======
+        Logger.l("Intake Command Done");
+        intake.setSpeed(0);
+>>>>>>> f3588ea49ebf1bff288ae2be29845e3709c83ddd
     }
 
     @Override
     public boolean isFinished() {
-        return true; // FIXME: wut, ok so intake is not running as the end function appears to have the priority
+        return false;
     }
 }

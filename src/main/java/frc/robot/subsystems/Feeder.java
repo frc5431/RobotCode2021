@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.HashMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -14,7 +16,7 @@ import frc.robot.Constants;
  */
 public class Feeder extends SubsystemBase {
     WPI_TalonFX feed;
-    DigitalInput zero, one, two, three;
+    HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
 
     public Feeder() {
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
@@ -22,22 +24,27 @@ public class Feeder extends SubsystemBase {
         feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
         feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
-        zero  = new DigitalInput(Constants.DIGITAL_INPUT_START);
-        one   = new DigitalInput(Constants.DIGITAL_INPUT_ONE);
-        two   = new DigitalInput(Constants.DIGITAL_INPUT_TWO);
-        three = new DigitalInput(Constants.DIGITAL_INPUT_THREE);
-        
+        dioSensors.forEach((num, sensor) -> {
+            sensor = new DigitalInput(Constants.DIGITAL_INPUT_IDS[num]);
+        });
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("DIO 0", zero.get());
-        SmartDashboard.putBoolean("DIO 1", one.get());
-        SmartDashboard.putBoolean("DIO 2", two.get());
-        SmartDashboard.putBoolean("DIO 3", three.get());
+        dioSensors.forEach((num, sensor) -> {
+            SmartDashboard.putBoolean("DIO Sensor " + num, sensor.get());
+        });
     }
 
     public void set(double speed) {
         feed.set(ControlMode.PercentOutput, speed);
+    }
+
+    public HashMap<Integer, DigitalInput> getDIOSensors() {
+        return dioSensors;
+    }
+
+    public boolean getValueOfDIOSensor(int num) {
+        return dioSensors.get(num).get();
     }
 }
