@@ -21,6 +21,7 @@ import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.Joystick;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
+import frc.team5431.titan.core.vision.LEDState;
 import frc.team5431.titan.core.vision.Limelight;
 
 public class RobotMap {
@@ -45,7 +46,7 @@ public class RobotMap {
     SendableChooser<StartPosition> chooser = new SendableChooser<>();
 
     public RobotMap() {
-
+        limelight.setLEDState(LEDState.OFF);
         bindKeys();
 
     }
