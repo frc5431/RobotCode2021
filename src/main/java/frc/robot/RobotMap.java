@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -37,7 +36,8 @@ public class RobotMap {
     private final Pivot pivot = new Pivot();
 
     private final Xbox driver = new Xbox(0);
-    private final Joystick operator = new Joystick(1);
+    private final Joystick operatorButton = new Joystick(1);
+    private final LogitechExtreme3D operatorJoy = new LogitechExtreme3D(3);
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
@@ -83,9 +83,9 @@ public class RobotMap {
             // new JoystickButton(operator, LogitechExtreme3D.Button.TEN.ordinal() + 1)
             //         .whenPressed(new FeederCommand(feeder, false));
 
-            new JoystickButton(operator, 1)
+            new JoystickButton(operatorButton, 1)
                 .whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
-            new JoystickButton(operator, 2)
+            new JoystickButton(operatorButton, 2)
                 .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel))
                 .whenReleased(new ParallelCommandGroup(
                     new IntakeCommand(intake, 0),
