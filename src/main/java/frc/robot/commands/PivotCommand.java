@@ -7,21 +7,21 @@ import frc.robot.subsystems.Pivot;
  * @author Ryan Hirasaki
  */
 public class PivotCommand extends CommandBase {
-    private final Pivot intake;
+    private final Pivot pivot;
     private final Pivot.POSITION position;
 
-    public PivotCommand(Pivot intake, Pivot.POSITION pos) {
-        this.intake = intake;
+    public PivotCommand(Pivot pivot, Pivot.POSITION pos) {
+        this.pivot = pivot;
         this.position = pos;
 
         assert (pos != null);
 
-        addRequirements(intake);
+        addRequirements(pivot);
     }
 
     @Override
     public void initialize() {
-        intake.setPivotLocation(position);
+        pivot.setPivotLocation(position);
     }
 
     // @Override
