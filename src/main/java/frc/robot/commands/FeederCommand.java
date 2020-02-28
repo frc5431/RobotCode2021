@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
@@ -31,9 +32,15 @@ public class FeederCommand extends CommandBase {
     public void initialize() {
         feeder.set(direction ? speed : -speed);
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        Logger.l("Feeder Command Done");
+        feeder.set(0);
+    }
     
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

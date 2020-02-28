@@ -16,8 +16,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
-import frc.team5431.titan.core.misc.Toggle;
-
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
