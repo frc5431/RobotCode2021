@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -15,8 +14,28 @@ import frc.robot.Constants;
  * @author Ryan Hirasaki
  */
 public class Feeder extends SubsystemBase {
+    public enum FeederStateTeleop {
+        LOAD, COMPRESS, AUTO_REVERSE, READY
+    }
+
     WPI_TalonFX feed;
     HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
+
+    double feedSpeed;
+    int stopCount;
+    boolean ballSeen, shootSeen;
+
+    /**
+     * Ball stop time = time for when the feeder should stop moving after it sees a
+     * ball Up stop time = time for when the feeder should stop moving three balls
+     * up Final stop time = time for when the feeder should
+     */
+    long finalStopTime, upStopTime, ballStopTime;
+
+    FeederStateTeleop _state = FeederStateTeleop.LOAD;
+
+    int ballCount = 0;
+    boolean shooting = false;
 
     public Feeder() {
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
@@ -34,10 +53,20 @@ public class Feeder extends SubsystemBase {
         dioSensors.forEach((num, sensor) -> {
             SmartDashboard.putBoolean("DIO Sensor " + num, sensor.get());
         });
+
+        ballUpdate();
+
+        feederLoadAndShoot();
+
+        feed.set(feedSpeed);
+
+        SmartDashboard.putNumber("Ball Count", ballCount);
+        SmartDashboard.putString("Feeder State", _state.name());
+        SmartDashboard.putNumber("Feed Speed", feedSpeed);
     }
 
     public void set(double speed) {
-        feed.set(ControlMode.PercentOutput, speed);
+        feedSpeed = speed;
     }
 
     public HashMap<Integer, DigitalInput> getDIOSensors() {
@@ -46,5 +75,102 @@ public class Feeder extends SubsystemBase {
 
     public boolean getValueOfDIOSensor(int num) {
         return dioSensors.get(num).get();
+    }
+
+    /**
+     * @author Colin Wong
+     *         God
+     */
+    public void ballUpdate() {
+        // ballCount incrementer - only increment if you see the ball after not seeing it.
+        if (!ballSeen && !getValueOfDIOSensor(0)) {
+            ballCount++;
+            ballSeen = true;
+        }
+
+        if (ballSeen && getValueOfDIOSensor(0)) {
+            ballSeen = false;
+        }
+
+        // ballCount decrementer - only decrement if you see the ball after not seeing it.
+        if (!shootSeen && shooting && !getValueOfDIOSensor(3)) {
+            ballCount--;
+            shootSeen = true;
+            // Quick ballCount fixer - ballCount should never be negative.
+            if (ballCount < 0) ballCount = 0;
+        }
+
+        if (shootSeen && shooting && getValueOfDIOSensor(3)) {
+            shootSeen = false;
+        }
+    }
+
+    public int getBallCount() {
+        return ballCount;
+    }
+
+    public FeederStateTeleop getState() {
+        return _state;
+    }
+
+    public double feederLoadAndShoot() {
+        double speed = feedSpeed;
+        switch (_state) {
+            case LOAD:
+                // Run the feeder for a certain amount of time after it detects a ball entering.
+                if (System.currentTimeMillis() < ballStopTime) { 
+                    if (ballCount < 3) {
+                        speed = Constants.SHOOTER_FEEDER_DEFAULT_SPEED;
+                    } else {
+                        // Runs if there are three balls.
+                        speed = feedSpeed;
+                    }
+                } else {
+                    // Waits for another ball to load.
+                    speed = feedSpeed;
+                }
+                // After it loads three balls, it will continue to the next stage.
+                if (ballCount >= 3) {
+                    _state = FeederStateTeleop.COMPRESS;
+                    upStopTime = System.currentTimeMillis() + Constants.SHOOTER_FEEDER_UP_DELAY;
+                }
+                break;
+            case COMPRESS:
+                // Move on after UP_DELAY ms.
+                if (System.currentTimeMillis() < upStopTime) {
+                    // Move the feeder up.
+                    speed = Constants.SHOOTER_FEEDER_DEFAULT_SPEED;
+                } else {
+                    _state = FeederStateTeleop.AUTO_REVERSE;
+                    finalStopTime = System.currentTimeMillis() + Constants.SHOOTER_FEEDER_DOWN_DELAY;
+                }
+                break;
+            case AUTO_REVERSE:
+                // Move on after DOWN_DELAY ms OR the balls clear the shoot sensor.
+                if (System.currentTimeMillis() < finalStopTime && !getValueOfDIOSensor(3)) {
+                    // Reverse the feeder.
+                    speed = -Constants.SHOOTER_FEEDER_DEFAULT_SPEED;
+                } else {
+                    _state = FeederStateTeleop.READY;
+                }
+                break;
+            case READY:
+                // Ready to shoot.
+                // Will not load until all balls have been emptied.
+                shooting = true;
+
+                if (ballCount > 0) {
+                    speed = feedSpeed;
+                } else {
+                    _state = FeederStateTeleop.LOAD;
+                    shooting = false;
+                }
+                break;
+            default:
+                speed = feedSpeed;
+                break;
+        }
+
+        return speed;
     }
 }

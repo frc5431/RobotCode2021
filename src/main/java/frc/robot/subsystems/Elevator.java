@@ -18,7 +18,7 @@ public class Elevator extends SubsystemBase {
         elevator.setNeutralMode(Constants.CLIMBER_ELEVATOR_NEUTRALMODE);
 
         // reset encoder
-        elevator.setSelectedSensorPosition(0);
+        this.resetEncoder();
     }
 
     @Override
@@ -33,13 +33,21 @@ public class Elevator extends SubsystemBase {
     public void setSpeed(double speed) {
         // Encoder Clicks
         int encoder = getEncoderPosition();
+        boolean limitReached = false;
 
         // If Going down set a lower limit of a encoder value of the constant lower limit
-        if (speed < 0 && encoder < Constants.CLIMBER_ELEVATOR_LOWER_LIMIT)
+        if (speed <= 0 && encoder < Constants.CLIMBER_ELEVATOR_LOWER_LIMIT) {
             speed = 0;
+            limitReached = true;
+        }
+
         // If Going up set a upper limit of a encoder value of the constant upper limit
-        else if (speed > 0 && encoder > Constants.CLIMBER_ELEVATOR_UPPER_LIMIT)
+        else if (speed >= 0 && encoder > Constants.CLIMBER_ELEVATOR_UPPER_LIMIT) {
             speed = 0;
+            limitReached = true;
+        }
+
+        SmartDashboard.putBoolean("Elevator Limit Reached", limitReached);
         elevator.set(ControlMode.PercentOutput, speed);
     }
 
@@ -49,5 +57,9 @@ public class Elevator extends SubsystemBase {
 
     public double getRotations() {
         return getEncoderPosition() / 2048;
+    }
+
+    public void resetEncoder() {
+        elevator.setSelectedSensorPosition(0);
     }
 }
