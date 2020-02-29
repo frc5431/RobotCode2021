@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
     if (autonCommand != null) {
       autonCommand.schedule();
     }
+
+    robotMap.resetBallCount();
   }
 
   @Override
@@ -51,5 +53,7 @@ public class Robot extends TimedRobot {
     if (autonCommand != null) {
       autonCommand.cancel();
     }
+
+    robotMap.resetBallCount();
   }
 }

@@ -53,7 +53,7 @@ public final class Constants {
     public static final boolean CLIMBER_ELEVATOR_REVERSE = true;
     public static final NeutralMode CLIMBER_ELEVATOR_NEUTRALMODE = NeutralMode.Brake;
     
-	public static final int CLIMBER_ELEVATOR_UPPER_LIMIT = 370000;
+	public static final int CLIMBER_ELEVATOR_UPPER_LIMIT = 740000;
 	public static final int CLIMBER_ELEVATOR_LOWER_LIMIT = 1000;
 
     // Shooter Flywheel Related
@@ -70,8 +70,9 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 1.0;
+    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.6;
 
+    public static final long SHOOTER_FEEDER_BALL_DELAY = 1500;
 	public static final long SHOOTER_FEEDER_UP_DELAY = 1000;
 	public static final long SHOOTER_FEEDER_DOWN_DELAY = 500;
 
@@ -86,6 +87,8 @@ public final class Constants {
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
+    public static final int PIVOT_DOWN_LIMIT = -56000; 
+    public static final int PIVOT_UP_LIMIT = 0; 
 
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;

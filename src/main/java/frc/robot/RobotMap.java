@@ -81,8 +81,9 @@ public class RobotMap {
         //     new JoystickButton(buttonBoard, 8)
         //             .toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
-            // All Out (??)
-            new JoystickButton(buttonBoard, 4);
+            // // All Out (??)
+            // new JoystickButton(buttonBoard, 4)
+            //         .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
             // Pivot Down
             new JoystickButton(buttonBoard, 6)
@@ -153,11 +154,13 @@ public class RobotMap {
 
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
+                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN))
+                    .whenReleased(new PivotCommand(pivot, Pivot.POSITION.ZERO));
 
             // Four Intake Pivot Up
             new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
+                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP))
+                    .whenReleased(new PivotCommand(pivot, Pivot.POSITION.ZERO));
 
             // Two Intake
             new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)
@@ -174,6 +177,10 @@ public class RobotMap {
             elevator.setDefaultCommand(new DefaultElevator(elevator,
                     () -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
         }
+    }
+
+    public void resetBallCount() {
+        feeder.resetVars();
     }
 
     public Command getAutonomousCommand() {
