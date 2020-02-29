@@ -91,7 +91,7 @@ public final class Constants {
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = -56000; 
+    public static final int PIVOT_DOWN_LIMIT = -54000; 
     public static final int PIVOT_UP_LIMIT = -250; 
 
     public static final int PIVOT_PID_SLOT = 1;
