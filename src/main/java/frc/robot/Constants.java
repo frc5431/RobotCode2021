@@ -51,6 +51,10 @@ public final class Constants {
 
     public static final int CLIMBER_ELEVATOR_ID = 6;
     public static final boolean CLIMBER_ELEVATOR_REVERSE = true;
+    public static final NeutralMode CLIMBER_ELEVATOR_NEUTRALMODE = NeutralMode.Brake;
+    
+	public static final int CLIMBER_ELEVATOR_UPPER_LIMIT = 691700;
+	public static final int CLIMBER_ELEVATOR_LOWER_LIMIT = 1000;
 
     // Shooter Flywheel Related
     public static final int SHOOTER_FLYWHEEL_LEFT_ID = 10;
@@ -58,7 +62,7 @@ public final class Constants {
 
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
-    public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Coast;
+    public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
     public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.75;
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
 
@@ -140,7 +144,7 @@ public final class Constants {
 
 	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
 
-    public static final double PIVOT_ERROR_RANGE = 5;
+    public static final double PIVOT_ERROR_RANGE = 100;
     
     // Sensors
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};

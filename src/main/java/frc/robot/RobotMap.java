@@ -37,7 +37,7 @@ public class RobotMap {
 
     private final Xbox driver = new Xbox(0);
     private final Joystick buttonBoard = new Joystick(1);
-    private final LogitechExtreme3D operator = new LogitechExtreme3D(3);
+    private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
@@ -65,13 +65,21 @@ public class RobotMap {
             // Intake
             new JoystickButton(driver, Xbox.Button.A.ordinal() + 1)
                     .whileHeld(new IntakeCommand(intake, 1));
+
+            // Balancer Left
+            new JoystickButton(driver, Xbox.Button.BUMPER_L.ordinal() + 1)
+                    .whenHeld(new BalancerCommand(balancer, true));
+
+            // Balancer Right
+            new JoystickButton(driver, Xbox.Button.BUMPER_R.ordinal() + 1)
+                    .whenHeld(new BalancerCommand(balancer, false));
         }
 
         // Operator Controls
         {
-            // Floor Intake
-            new JoystickButton(buttonBoard, 8)
-                    .toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel));
+            // Human Player Intake
+        //     new JoystickButton(buttonBoard, 8)
+        //             .toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
             // All Out (??)
             new JoystickButton(buttonBoard, 4);
@@ -90,7 +98,7 @@ public class RobotMap {
 
             // Intake Super Command (labeled "in")
             new JoystickButton(buttonBoard, 11)
-                    .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel));
+                    .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
             // Shoot
             new JoystickButton(buttonBoard, 1)
@@ -122,10 +130,14 @@ public class RobotMap {
         // Operator Logitech
         {
             // Indexer Up
-            new POVButton(operator, 0);
+            new POVButton(operator, 0)
+                    .whenPressed(new FeederCommand(feeder, -0.4))
+                    .whenReleased(new FeederCommand(feeder, 0));
 
             // Indexer Down
-            new POVButton(operator, 180);
+            new POVButton(operator, 180)
+                    .whenPressed(new FeederCommand(feeder, 0.4))
+                    .whenReleased(new FeederCommand(feeder, 0));
 
             // Trigger Flywheel
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)

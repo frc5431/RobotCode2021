@@ -8,9 +8,9 @@ import frc.robot.subsystems.*;
  * @author Ryan Hirasaki
  */
 public class FloorIntakeSuperCommand extends ParallelCommandGroup {
-    public FloorIntakeSuperCommand(Intake intake, Hopper hopper, Flywheel flywheel) {
+    public FloorIntakeSuperCommand(Intake intake, Hopper hopper, Flywheel flywheel, Pivot pivot) {
         addCommands(
-            // new PivotCommand(intake, Intake.POSITION.DOWN), // Puts the Intake Down
+            new PivotCommand(pivot, Pivot.POSITION.DOWN), // Puts the Intake Down
             new IntakeCommand(intake, 1.0), // Starts the Motor
             new HopperCommand(hopper, 1.0)  // Starts the Motor
         );

@@ -13,7 +13,7 @@ public class HopperCommand extends CommandBase {
     private final double speed;
 
     public HopperCommand(Hopper hopper, boolean reverse) {
-        this(hopper, 1, reverse);
+        this(hopper, 0.75, reverse);
     }
 
     public HopperCommand(Hopper hopper, double speed) {
