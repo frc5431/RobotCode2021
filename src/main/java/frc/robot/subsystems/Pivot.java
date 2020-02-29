@@ -16,7 +16,7 @@ import frc.team5431.titan.core.misc.Calc;;
  */
 public class Pivot extends SubsystemBase {
     public static enum POSITION {
-        UP(.60), DOWN(-.60);
+        UP(.60), DOWN(-.60), ZERO(0);
 
         private final double value;
 
