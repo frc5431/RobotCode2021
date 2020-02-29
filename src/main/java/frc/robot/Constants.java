@@ -63,8 +63,12 @@ public final class Constants {
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FLYWHEEL_DEFAULT_SPEED = 0.75;
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
+    public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0.1, 0, 0, 0);
+
+    // FIXME: Put proper flywheel values
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 4000;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 2000;
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;

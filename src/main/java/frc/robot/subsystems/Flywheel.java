@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,9 +18,24 @@ public class Flywheel extends SubsystemBase {
         OFF(0), HALF(0.40), FULL(0.80);
 
         private double speed;
+
         private Speeds(double speed) {
             this.speed = speed;
-        } 
+        }
+
+        public double getSpeed() {
+            return speed;
+        }
+    }
+
+    public static enum Velocity {
+        OFF(0), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW), FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH);
+
+        private double speed;
+
+        private Velocity(double speed) {
+            this.speed = speed;
+        }
 
         public double getSpeed() {
             return speed;
@@ -37,7 +54,7 @@ public class Flywheel extends SubsystemBase {
         flywheel.setInverted(Constants.SHOOTER_FLYWHEEL_REVERSE);
         _flywheelFollow.setInverted(InvertType.OpposeMaster); // Inverted via "!"
 
-        assert (flywheel.getInverted() == !_flywheelFollow.getInverted());
+        assert (flywheel.getInverted() != _flywheelFollow.getInverted());
 
         // Set Neutral Mode
         flywheel.setNeutralMode(Constants.SHOOTER_FLYWHEEL_NEUTRALMODE);
@@ -46,16 +63,32 @@ public class Flywheel extends SubsystemBase {
         flywheel.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
         // flywheelRight.configClosedloopRamp(Constants.SHOOTER_FLYWHEEL_RAMPING_SPEED);
 
-        //reset encoder
-        flywheel.setSelectedSensorPosition(0); 
+        // reset encoder
+        flywheel.setSelectedSensorPosition(0);
+
+        flywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.SLOT_0,
+                Constants.DRIVEBASE_TIMEOUT_MS);
+
+        // flywheel.setSensorPhase(true);
+
+        flywheel.config_kF(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kP(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kI(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kD(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
     }
 
     @Override
     public void periodic() {
+        // Some asserts to make sure the follow command is working as we do not want to
+        // break the gears or the falcons
         assert (flywheel.get() == _flywheelFollow.get());
+        assert (flywheel.getInverted() != _flywheelFollow.getInverted());
 
         // Get Flywheel Velocity for state tuning
-        SmartDashboard.putNumber("Flywheel Velocity", flywheel.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Flywheel Velocity", flywheel.getSelectedSensorVelocity(Constants.SLOT_0));
+
+        // Get Flywheel PID error rate for analysis
+        SmartDashboard.putNumber("Flywheel Error Rate", flywheel.getClosedLoopError(Constants.SLOT_0));
     }
 
     public void setSpeed(ControlMode mode, double speed) {
@@ -65,6 +98,10 @@ public class Flywheel extends SubsystemBase {
 
     public void set(Speeds speed) {
         setSpeed(ControlMode.PercentOutput, speed.getSpeed());
+    }
+
+    public void set(Velocity speed) {
+        setSpeed(ControlMode.Velocity, speed.getSpeed());
     }
 
     public double getSpeed() {
