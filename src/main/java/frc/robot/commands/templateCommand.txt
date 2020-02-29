@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class CommandName extends CommandBase {
-    public class CommandName(subsystems) {
+    public CommandName(subsystems) {
         addCommands(
 
         );
@@ -20,5 +20,6 @@ public class CommandName extends CommandBase {
     
     @Override
     public boolean isFinished() {
+        return true;
     }
 }
