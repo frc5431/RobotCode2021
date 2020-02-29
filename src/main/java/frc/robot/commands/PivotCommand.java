@@ -9,7 +9,8 @@ import frc.team5431.titan.core.misc.Logger;
  */
 public class PivotCommand extends CommandBase {
     private final Pivot pivot;
-    private final Pivot.POSITION position;
+    private Pivot.POSITION position;
+    private double speed;
 
     public PivotCommand(Pivot pivot, Pivot.POSITION pos) {
         this.pivot = pivot;
@@ -20,10 +21,19 @@ public class PivotCommand extends CommandBase {
         addRequirements(pivot);
     }
 
+    public PivotCommand(Pivot pivot, double speed) {
+        this.pivot = pivot;
+        this.speed = speed;
+
+        addRequirements(pivot);
+    }
+
     @Override
     public void initialize() {
         Logger.l("Running Pivot Command!");
-        pivot.setPivotLocation(position);
+        if (position != null)
+            pivot.setPivotLocation(position);
+        pivot.setSpeed(speed);
     }
 
     @Override

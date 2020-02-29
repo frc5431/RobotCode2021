@@ -154,13 +154,13 @@ public class RobotMap {
 
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN))
-                    .whenReleased(new PivotCommand(pivot, Pivot.POSITION.ZERO));
+                    .whenPressed(new PivotCommand(pivot, -0.3))
+                    .whenReleased(new PivotCommand(pivot, 0));
 
             // Four Intake Pivot Up
             new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP))
-                    .whenReleased(new PivotCommand(pivot, Pivot.POSITION.ZERO));
+                    .whenPressed(new PivotCommand(pivot, 0.3))
+                    .whenReleased(new PivotCommand(pivot, 0));
 
             // Two Intake
             new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)

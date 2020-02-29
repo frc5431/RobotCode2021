@@ -19,7 +19,6 @@ public class BalancerCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        // TODO May be backwards, check
         balancer.set(direction ? 1 : -1);
     }
 

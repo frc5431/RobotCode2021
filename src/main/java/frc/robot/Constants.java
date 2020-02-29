@@ -92,12 +92,15 @@ public final class Constants {
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
     public static final int PIVOT_DOWN_LIMIT = -56000; 
-    public static final int PIVOT_UP_LIMIT = 0; 
+    public static final int PIVOT_UP_LIMIT = -250; 
+
+    public static final int PIVOT_PID_SLOT = 1;
+    public static final double[] PIVOT_PID_VALUES = {0.1, 0, 0, 0};
 
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;
     public static final int HOPPER_RIGHT_ID = 8;
-    public static final boolean HOPPER_REVERSE = false; // TODO: Find out reverse state
+    public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     public static final double HOPPER_DEFAULT_SPEED = 0.5;
     
