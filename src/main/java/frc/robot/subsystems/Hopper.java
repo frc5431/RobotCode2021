@@ -18,10 +18,8 @@ public class Hopper extends SubsystemBase {
         hopperLeft = new WPI_TalonSRX(Constants.HOPPER_LEFT_ID);
         hopperRight = new WPI_TalonSRX(Constants.HOPPER_RIGHT_ID);
 
-        hopperRight.follow(hopperLeft);
-
         hopperLeft.setInverted(Constants.HOPPER_REVERSE);
-        hopperRight.setInverted(InvertType.OpposeMaster);
+        hopperRight.setInverted(!Constants.HOPPER_REVERSE);
 
         hopperLeft.setNeutralMode(Constants.HOPPER_NEUTRALMODE);
     }
@@ -29,11 +27,12 @@ public class Hopper extends SubsystemBase {
     @Override
     public void periodic() {
         // Double Check if follow is working
-        assert (hopperLeft.get() == hopperRight.get());
+        // assert (hopperLeft.get() == hopperRight.get());
     }
 
-    public void set(double hopperSpeed) {
+    public void set(double hopperSpeedLeft, double hopperSpeedRight) {
         // Hopper Right is following hopper left
-        hopperLeft.set(ControlMode.PercentOutput, hopperSpeed);
+        hopperLeft.set(ControlMode.PercentOutput, hopperSpeedLeft);
+        hopperRight.set(ControlMode.PercentOutput, hopperSpeedRight);
     }
 }

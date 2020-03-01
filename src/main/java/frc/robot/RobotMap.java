@@ -143,15 +143,15 @@ public class RobotMap {
 
             // Trigger Flywheel
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-                    .whenHeld(new FlywheelControl(flywheel, Flywheel.Speeds.FULL));
+                    .whenHeld(new FlywheelControl(flywheel, Flywheel.Velocity.HALF));
 
             // Three Hopper Out
             new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
-                    .whenHeld(new HopperCommand(hopper, -1));
+                    .whenHeld(new HopperCommand(hopper, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
 
             // Five Hopper In
             new JoystickButton(operator, LogitechExtreme3D.Button.FIVE.ordinal() + 1)
-                    .whileHeld(new HopperCommand(hopper, 1));
+                    .whileHeld(new HopperCommand(hopper, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
 
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1)

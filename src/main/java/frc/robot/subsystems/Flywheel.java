@@ -14,7 +14,7 @@ import frc.robot.Constants;
  */
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {
-        OFF(0), HALF(0.4), FULL(0.8);
+        OFF(0), HALF(0.5), FULL(0.8);
 
         private double speed;
 
@@ -70,10 +70,15 @@ public class Flywheel extends SubsystemBase {
 
         // flywheel.setSensorPhase(true);
 
-        flywheel.config_kF(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kP(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kI(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kD(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kF(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kP(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kI(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kD(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
+
+        flywheel.config_kF(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kP(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kI(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        flywheel.config_kD(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
     }
 
     @Override
@@ -100,7 +105,10 @@ public class Flywheel extends SubsystemBase {
     }
 
     public void set(Velocity speed) {
-        setSpeed(ControlMode.Velocity, speed.getSpeed());
+        if (Velocity.OFF == speed)
+            setSpeed(ControlMode.PercentOutput, 0);
+        else
+            setSpeed(ControlMode.Velocity, speed.getSpeed());
     }
 
     public double getSpeed() {

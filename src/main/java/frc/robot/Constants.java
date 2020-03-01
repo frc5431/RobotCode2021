@@ -28,6 +28,16 @@ public final class Constants {
     public static final double OPERATOR_LOGITECH_DEADZONE = 0.10;
     public static final String OPERATOR_LOGITECH_NAME = "logitech";
 
+    public static final int DRIVEBASE_TIMEOUT_MS = 30;
+
+    public static final int SLOT_0 = 0;
+    public static final int SLOT_1 = 1;
+    public static final int SLOT_2 = 2;
+    public static final int SLOT_3 = 3;
+
+    public static final int REMOTE_0 = 0;
+    public static final int REMOTE_1 = 1;
+
     // ================================================================================
     // Motor ID`s and Reverse State
     // ================================================================================
@@ -63,12 +73,18 @@ public final class Constants {
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.500;
-    public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0.1, 0, 0, 0);
-
+    public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
+    
     // FIXME: Put proper flywheel values
     public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 4000;
+    public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.8;
+
     public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
+    public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.5;
+
+    // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
+    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic(0.01, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
+    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.01, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
@@ -76,7 +92,7 @@ public final class Constants {
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
     public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.6;
 
-    public static final long SHOOTER_FEEDER_BALL_DELAY = 1500;
+    public static final long SHOOTER_FEEDER_BALL_DELAY = 1300;
 	public static final long SHOOTER_FEEDER_UP_DELAY = 1000;
 	public static final long SHOOTER_FEEDER_DOWN_DELAY = 500;
 
@@ -94,15 +110,17 @@ public final class Constants {
     public static final int PIVOT_DOWN_LIMIT = -35000; // 45000
     public static final int PIVOT_UP_LIMIT = -5000; // 5000 
 
-    public static final int PIVOT_PID_SLOT = 1;
+    public static final int PIVOT_PID_SLOT = SLOT_0;
     public static final double[] PIVOT_PID_VALUES = {0.1, 0, 0, 0};
+    public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1, 0, 0, 0);
 
     // Hopper related
     public static final int HOPPER_LEFT_ID = 7;
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
-    public static final double HOPPER_DEFAULT_SPEED = 0.5;
+    public static final double HOPPER_LEFT_SPEED = 1.0;
+    public static final double HOPPER_RIGHT_SPEED = 0.8;
     
     // ================================================================================
     // Vision Data
@@ -120,16 +138,6 @@ public final class Constants {
     // ================================================================================
     // Drive Base Motion Magic
     // ================================================================================
-
-    public static final int DRIVEBASE_TIMEOUT_MS = 30;
-
-    public static final int SLOT_0 = 0;
-    public static final int SLOT_1 = 1;
-    public static final int SLOT_2 = 2;
-    public static final int SLOT_3 = 3;
-
-    public static final int REMOTE_0 = 0;
-    public static final int REMOTE_1 = 1;
 
     // ================================================================================
     // Drive Base Numbers
