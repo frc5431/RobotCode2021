@@ -133,12 +133,12 @@ public class RobotMap {
         {
             // Indexer Up
             new POVButton(operator, 0)
-                    .whenPressed(new FeederCommand(feeder, -1))
+                    .whenPressed(new FeederCommand(feeder, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Indexer Down
             new POVButton(operator, 180)
-                    .whenPressed(new FeederCommand(feeder, 1))
+                    .whenPressed(new FeederCommand(feeder, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Trigger Flywheel

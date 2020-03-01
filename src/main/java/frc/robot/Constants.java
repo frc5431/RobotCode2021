@@ -68,7 +68,7 @@ public final class Constants {
 
     // FIXME: Put proper flywheel values
     public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 4000;
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 2000;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
