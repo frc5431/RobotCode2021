@@ -89,10 +89,10 @@ public final class Constants {
     // Pivot related
     public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
-    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = -54000; 
-    public static final int PIVOT_UP_LIMIT = -250; 
+    public static final int PIVOT_DOWN_LIMIT = -35000; // 45000
+    public static final int PIVOT_UP_LIMIT = -5000; // 5000 
 
     public static final int PIVOT_PID_SLOT = 1;
     public static final double[] PIVOT_PID_VALUES = {0.1, 0, 0, 0};

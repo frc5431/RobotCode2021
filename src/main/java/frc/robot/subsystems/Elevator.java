@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.util.states.ClimberState;
 
 public class Elevator extends SubsystemBase {
 
@@ -26,9 +25,7 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Position", elevator.getSelectedSensorPosition());
     }
 
-    public void setPosition(ClimberState position) {
-        elevator.set(ControlMode.Position, position.getPosition());
-    }
+   
 
     public void setSpeed(double speed) {
         // Encoder Clicks

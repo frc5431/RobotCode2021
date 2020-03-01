@@ -14,7 +14,7 @@ import frc.robot.Constants;
  */
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {
-        OFF(0), HALF(0.40), FULL(0.80);
+        OFF(0), HALF(0.4), FULL(0.8);
 
         private double speed;
 

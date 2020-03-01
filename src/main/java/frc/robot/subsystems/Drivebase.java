@@ -56,6 +56,7 @@ public class Drivebase extends SubsystemBase {
         _leftFollow.follow(left);
         _rightFollow.follow(right);
 
+
         /* Factory Default all hardware to prevent unexpected behavior */
         eCode = left.configFactoryDefault();
         assert (eCode == ErrorCode.OK);
@@ -161,6 +162,8 @@ public class Drivebase extends SubsystemBase {
 
         SmartDashboard.putNumber("Drivebase Left", left.get());
         SmartDashboard.putNumber("Drivebase Right", right.get());
+        SmartDashboard.putNumber("Drivebase Right Encoder", right.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Drivebase Left Encoder", left.getSelectedSensorPosition());
         setRamping(ramping);
 
         // Check if the the motors are working together

@@ -38,16 +38,17 @@ public class Targetor extends CommandBase {
 
     @Override
     public void initialize() {
-        limelight.getTable().getEntry("pipeline").setNumber(0);
-        limelight.setLEDState(LEDState.ON);
         Logger.l("Begin Targetor Command!");
+        limelight.setPipeline(0);     
+        limelight.setLEDState(LEDState.DEFAULT);   
     }
 
     // 20 ms loop
     @Override
     public void execute() {
         Logger.l("Execute Targetor Command!");
-        limelight.getTable().getEntry("pipeline").setNumber(0);
+
+        limelight.setPipeline(0);
 
         double xError = turnController.calculate(limelight.getX());
         // double yError = positionController.calculate(limelight.getY());
@@ -59,12 +60,14 @@ public class Targetor extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted)
             Logger.l("Targetor Command Interuppted");
-        limelight.setLEDState(LEDState.OFF);
+        limelight.setLEDState(LEDState.DEFAULT);
+        limelight.setPipeline(9);
     }
     @Override
     public boolean isFinished() {
         boolean targetLocked = turnController.atSetpoint();
+        boolean limelightCanSee = limelight.getValid();
 
-        return targetLocked;
+        return targetLocked && limelightCanSee;
     }
 }

@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
       autonCommand.cancel();
     }
 
+    robotMap.resetEncoders();
     robotMap.resetBallCount();
   }
 }

@@ -48,7 +48,8 @@ public class RobotMap {
     SendableChooser<StartPosition> chooser = new SendableChooser<>();
 
     public RobotMap() {
-        limelight.setLEDState(LEDState.OFF);
+        limelight.setLEDState(LEDState.DEFAULT);
+        limelight.setPipeline(9);
         bindKeys();
     }
 
@@ -57,7 +58,7 @@ public class RobotMap {
         {
             // Target the Upper Hatch
             new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-                    .whenPressed(new Targetor(drivebase, limelight));
+                    .whenHeld(new Targetor(drivebase, limelight));
 
             // Calibrate the Limelight
             new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
@@ -95,7 +96,7 @@ public class RobotMap {
 
             // Vision
             new JoystickButton(buttonBoard, 7)
-                    .whenPressed(new Targetor(drivebase, limelight));
+                    .whenHeld(new Targetor(drivebase, limelight));
 
             // Intake Super Command (labeled "in")
             new JoystickButton(buttonBoard, 11)
@@ -132,12 +133,12 @@ public class RobotMap {
         {
             // Indexer Up
             new POVButton(operator, 0)
-                    .whenPressed(new FeederCommand(feeder, -0.4))
+                    .whenPressed(new FeederCommand(feeder, -1))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Indexer Down
             new POVButton(operator, 180)
-                    .whenPressed(new FeederCommand(feeder, 0.4))
+                    .whenPressed(new FeederCommand(feeder, 1))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Trigger Flywheel
@@ -227,4 +228,8 @@ public class RobotMap {
 
         // return chooser.getSelected();
     }
+
+	public void resetEncoders() {
+        pivot.reset();
+	}
 }
