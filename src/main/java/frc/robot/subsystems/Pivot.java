@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -9,7 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
-import frc.team5431.titan.core.misc.Calc;;
+import frc.team5431.titan.core.misc.Calc;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 
 /**
  * @author Colin Wong
@@ -19,7 +21,7 @@ import frc.team5431.titan.core.misc.Calc;;
  */
 public class Pivot extends SubsystemBase {
     public static enum POSITION {
-        UP(.1), DOWN(-.1), ZERO(0);
+        UP(Constants.PIVOT_UP_LIMIT), DOWN(Constants.PIVOT_DOWN_LIMIT), ZERO(0);
 
         private final double value;
 
@@ -32,15 +34,12 @@ public class Pivot extends SubsystemBase {
         }
     }
 
-    private static enum PIDF {
-        P(Constants.PIVOT_PID_VALUES[0]), 
-        I(Constants.PIVOT_PID_VALUES[1]), 
-        D(Constants.PIVOT_PID_VALUES[2]), 
-        F(Constants.PIVOT_PID_VALUES[3]);
+    public static enum SPEED {
+        SPEED_UP(Constants.PIVOT_DEFAULT_SPEED), SPEED_DOWN(-Constants.PIVOT_DEFAULT_SPEED), ZERO(0);
 
         private final double value;
 
-        private PIDF(double value) {
+        private SPEED(double value) {
             this.value = value;
         }
 
@@ -48,6 +47,7 @@ public class Pivot extends SubsystemBase {
             return value;
         }
     }
+
 
     private WPI_TalonFX pivotMotor;
     private POSITION position = POSITION.UP;
@@ -63,44 +63,23 @@ public class Pivot extends SubsystemBase {
 
         // reset encoder
         pivotMotor.setSelectedSensorPosition(0);
+        
+        pivotMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.SLOT_0,
+                Constants.DRIVEBASE_TIMEOUT_MS);
 
-        // pivotMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
-        //         Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        // flywheel.setSensorPhase(true);
 
-        // setPID(0, new MotionMagic(0.05, 0, 0, 0, 0, 0, Constants.DRIVEBASE_TIMEOUT_MS));
+        pivotMotor.configPeakOutputForward(Constants.PIVOT_DEFAULT_SPEED);
+        pivotMotor.configPeakOutputReverse(-Constants.PIVOT_DEFAULT_SPEED);
 
-        // pidController = new PIDController(0.1, 0, 0);
-        // pivotMotor.config_kP(Constants.PIVOT_PID_SLOT, PIDF.P.getValue());
-        // pivotMotor.config_kI(Constants.PIVOT_PID_SLOT, PIDF.I.getValue());
-        // pivotMotor.config_kD(Constants.PIVOT_PID_SLOT, PIDF.D.getValue());
-        // pivotMotor.config_kF(Constants.PIVOT_PID_SLOT, PIDF.F.getValue());
-        // pivotMotor.selectProfileSlot(Constants.PIVOT_PID_SLOT, 0);
+
+        pivotMotor.config_kF(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        pivotMotor.config_kP(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        pivotMotor.config_kI(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        pivotMotor.config_kD(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kD, Constants.DRIVEBASE_TIMEOUT_MS);
     }
 
-    private void setPID(final int slot, final MotionMagic gain) {
-        ErrorCode eCode;
-
-        eCode = pivotMotor.config_kP(slot, gain.kP);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.config_kI(slot, gain.kI);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.config_kD(slot, gain.kD);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.config_kF(slot, gain.kF);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.config_IntegralZone(slot, gain.kIntegralZone, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.configClosedLoopPeakOutput(slot, gain.kPeakOutput, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = pivotMotor.configClosedLoopPeriod(slot, gain.kClosedLoopTime, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-    }
+    
 
     // return the angle of the arm based on the current encoder value
     // public double getAngle() {
@@ -144,33 +123,24 @@ public class Pivot extends SubsystemBase {
 
         SmartDashboard.putNumber("Pivot Sensor Velocity", pivotMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Pivot Speed", pivotMotor.get());
+        SmartDashboard.putNumber("Pivot Error Rate", pivotMotor.getClosedLoopError(Constants.SLOT_0));
     }
 
     public void setPivotLocation(POSITION pos) {
-        setSpeed(pos.getValue());
+        // setSpeed(pos.getValue());
+        int horizontal = Constants.PIVOT_DOWN_LIMIT;
+        double ticksToDegrees = (2048 / 360) / 100;
+        int curentPosition = getEncoderPosition();
+        double degrees = (curentPosition - horizontal) / ticksToDegrees;
+        double radians = java.lang.Math.toRadians(degrees);
+        double CosineScalar = Math.cos(radians);
+        double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
+
+        pivotMotor.set(ControlMode.Position, pos.getValue(), DemandType.ArbitraryFeedForward ,CosineScalar * maxGravity);
     }
 
-    public void setSpeed(double speed) {
-        // Encoder and Speed made inverted as working with negative numbers are hard
-        int encoder = Math.abs(getEncoderPosition());
-        boolean limitReached = false;
-
-        // If Going down set a lower limit of a encoder value of the constant lower limit, encoder value negative
-        if (/*speed <= 0 && */encoder <= Math.abs(Constants.PIVOT_DOWN_LIMIT)) {
-            speed = 0;
-            limitReached = true;
-        }
-
-        // If Going up set a upper limit of a encoder value of the constant upper limit, encoder value negative
-        else if (speed >= 0 && encoder >= Math.abs(Constants.PIVOT_UP_LIMIT)) {
-            speed = 0;
-            limitReached = true;
-        }
-
-        speed *= -1;
-
-        SmartDashboard.putBoolean("Pivot Limit Reached", limitReached);
-        pivotMotor.set(ControlMode.PercentOutput, speed);
+    public void setSpeed(Pivot.SPEED speed) {
+        pivotMotor.set(ControlMode.PercentOutput, speed.getValue());
     }
 
     private int getEncoderPosition() {

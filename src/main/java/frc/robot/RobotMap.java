@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Pivot.SPEED;
 import frc.team5431.titan.core.joysticks.Joystick;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
 import frc.team5431.titan.core.joysticks.Xbox;
@@ -155,13 +156,13 @@ public class RobotMap {
 
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, -0.3))
-                    .whenReleased(new PivotCommand(pivot, 0));
+                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
+                //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Four Intake Pivot Up
             new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot, 0.3))
-                    .whenReleased(new PivotCommand(pivot, 0));
+                    .whenPressed(new PivotCommand(pivot,Pivot.POSITION.UP));
+                //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Two Intake
             new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)

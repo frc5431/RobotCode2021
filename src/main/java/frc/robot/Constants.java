@@ -105,16 +105,18 @@ public final class Constants {
     // Pivot related
     public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
-    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = -35000; // 45000
-    public static final int PIVOT_UP_LIMIT = -5000; // 5000 
+    public static final int PIVOT_DOWN_LIMIT = -38000; // 45000
+    public static final int PIVOT_UP_LIMIT = -800; // 5000 
+    public static final int PIVOT_VELOCITY = 5000;
+    public static final double PIVOT_AFFECT_GRAVITY = 0.02;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
-    public static final double[] PIVOT_PID_VALUES = {0.1, 0, 0, 0};
-    public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1, 0, 0, 0);
+    public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(((PIVOT_DEFAULT_SPEED * 1023) / 20000), 0.0, 1.023, 0);
+    // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.0, 0.0, 0.0, 0.0);
 
-    // Hopper related
+    // Hopper   
     public static final int HOPPER_LEFT_ID = 7;
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
