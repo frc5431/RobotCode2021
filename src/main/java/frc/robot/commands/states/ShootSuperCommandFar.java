@@ -12,7 +12,7 @@ import frc.robot.commands.*;
 /**
  * @author Colin Wong
  * @author Ryan Hirasaki
- * @author Rishmita
+ * @author Rishmita Rao
  */
 public class ShootSuperCommandFar extends SequentialCommandGroup {
     public ShootSuperCommandFar(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel, Drivebase drivebase, Limelight limelight) {
