@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team5431.titan.core.vision.LEDState;
+import frc.team5431.titan.core.vision.Limelight;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -13,5 +11,28 @@ import frc.robot.Constants;
  * @author Rishmita Rao
  */
 public class LimelightSubsystem extends SubsystemBase {
+
+    public static enum Positions{
+        OFF(Constants.LIMELIGHT_PIPELINE_OFF, Constants.LIMELIGHT_PID_OFF),
+        HALF(Constants.LIMELIGHT_PIPELINE_HALF, Constants.LIMELIGHT_PID_HALF),
+        FULL(Constants.LIMELIGHT_PIPELINE_FULL, Constants.LIMELIGHT_PID_FULL);
+
+        private int pipeline; 
+        private PIDController turn;
+        
+        private Positions(int pipeline, PIDController turn){
+            this.pipeline = pipeline; 
+            this.turn = turn;
+        }
+        public int getPipeline()
+        {
+            return pipeline;
+        }
+
+        public PIDController getPIDControllerTurn()
+        {
+            return turn; 
+        }
+    }
 
 }
