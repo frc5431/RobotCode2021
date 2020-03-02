@@ -11,6 +11,7 @@ import frc.robot.commands.*;
 /**
  * @author Colin Wong
  * @author Ryan Hirasaki
+ * @author Rishmita Rao
  */
 public class ShootSuperCommandClose extends SequentialCommandGroup {
     public ShootSuperCommandClose(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel, Drivebase drivebase, Limelight limelight) {
