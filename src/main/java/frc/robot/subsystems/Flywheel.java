@@ -11,6 +11,7 @@ import frc.robot.Constants;
 
 /**
  * @author Ryan Hirasaki
+ * @author Rishmita Rao
  */
 public class Flywheel extends SubsystemBase {
     public static enum Speeds {
@@ -121,15 +122,13 @@ public class Flywheel extends SubsystemBase {
             setSpeed(ControlMode.PercentOutput, 0);
         else
             setSpeed(ControlMode.Velocity, velocity.getSpeed());
-
-
     }
 
     public double getSpeed() {
         return flywheel.getMotorOutputPercent();
     }
 
-    public double getError() {
-        return flywheel.get() == 0 ? 0 : flywheel.getClosedLoopError(Constants.SLOT_1);
+    public double getError(Velocity velocity) {
+        return flywheel.get() == 0 ? 0 : flywheel.getClosedLoopError(velocity.getSlot());
     }
 }

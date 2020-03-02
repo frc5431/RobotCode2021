@@ -100,11 +100,15 @@ public class RobotMap {
             new JoystickButton(buttonBoard, 11)
                     .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
-            // Shoot
+            // Shoot Close
             new JoystickButton(buttonBoard, 1)
-                    .whenPressed(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight));
+                    .whenPressed(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));
 
-            // Intake
+            // Shoot Far
+            new JoystickButton(buttonBoard, 6) // not the real button value
+                    .whenPressed(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));    
+
+          // Intake
             new JoystickButton(buttonBoard, 14).whenPressed(new IntakeCommand(intake, 1));
 
             /*
@@ -135,10 +139,15 @@ public class RobotMap {
             new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
                     .whenReleased(new FeederCommand(feeder, 0));
 
-            // Trigger Flywheel
+            // Trigger Flywheel (Shoot Far)
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-                    .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL))
-                    .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF));
+                    .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL, Flywheel.Velocity.FULL))
+                    .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF,Flywheel.Velocity.FULL));
+
+           // Arbitrary Flywheel control (Shoot Close)
+           new JoystickButton(operator, LogitechExtreme3D.Button.TWELVE.ordinal() + 1)
+           .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL, Flywheel.Velocity.HALF))
+           .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF,Flywheel.Velocity.HALF));
 
             // Three Hopper Out
             new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
