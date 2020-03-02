@@ -16,7 +16,7 @@ public class ShootSuperCommandFar extends SequentialCommandGroup {
             // Target
             new Targetor(drivebase, limelight),
              // Bring up to speed
-            new FlywheelCommand(flywheel, Velocity.FULL,Velocity.FULL), // Waits till up to speed
+            new FlywheelCommand(flywheel, Velocity.FULL), // Waits till up to speed
             // Push Balls. Keep running until current command is interuppted
             new PushBallsUpSubCommand(intake, hopper, feeder) 
         );

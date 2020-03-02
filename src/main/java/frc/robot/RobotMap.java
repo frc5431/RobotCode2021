@@ -141,13 +141,13 @@ public class RobotMap {
 
             // Trigger Flywheel (Shoot Far)
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-                    .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL, Flywheel.Velocity.FULL))
-                    .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF,Flywheel.Velocity.FULL));
+                    .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL))
+                    .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF));
 
            // Arbitrary Flywheel control (Shoot Close)
            new JoystickButton(operator, LogitechExtreme3D.Button.TWELVE.ordinal() + 1)
-           .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL, Flywheel.Velocity.HALF))
-           .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF,Flywheel.Velocity.HALF));
+                        .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL))
+                        .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF));
 
             // Three Hopper Out
             new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)

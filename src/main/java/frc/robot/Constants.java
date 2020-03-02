@@ -76,7 +76,7 @@ public final class Constants {
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
     
     // FIXME: Put proper flywheel values
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 4000;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 16700;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.8;
 
     public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
@@ -84,9 +84,9 @@ public final class Constants {
 
     // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
     //public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/10600, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
-    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic (0,0,0,0);
+    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_HIGH,0,0,( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
    // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.05, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
-    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/10600, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
+    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_LOW, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
