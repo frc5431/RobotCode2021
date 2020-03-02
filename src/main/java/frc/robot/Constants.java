@@ -3,6 +3,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
+import edu.wpi.first.wpilibj.controller.PIDController;
+
 
 public final class Constants {
 
@@ -132,6 +134,15 @@ public final class Constants {
     // ================================================================================
 
     public static final String VISION_FRONT_LIMELIGHT = "limelight";
+    public static final int LIMELIGHT_PIPELINE_OFF = 9;
+    public static final int LIMELIGHT_PIPELINE_HALF = 0;
+    public static final int LIMELIGHT_PIPELINE_FULL = 1;
+    public static final PIDController LIMELIGHT_PID_OFF =  new PIDController(0, 0, 0); 
+    public static final PIDController LIMELIGHT_PID_HALF =  new PIDController(0.05, 0, 0);
+    public static final PIDController LIMELIGHT_PID_FULL =  new PIDController(0.05, 0, 0); 
+    // public static final PIDController LIMELIGHT_PID_POSITION_OFF =  new PIDController(0, 0, 0); 
+    // public static final PIDController LIMELIGHT_PID_POSITION_HALF =  new PIDController(0.05, 0, 0);
+    // public static final PIDController LIMELIGHT_PID_POSITION_FULL =  new PIDController(0.05, 0, 0); 
 
     // ================================================================================
     // IMU Data
@@ -173,5 +184,6 @@ public final class Constants {
     public static final double PIVOT_ERROR_RANGE = 100;
     
     // Sensors
+
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
 }

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.LimelightSubsystem.Positions;
 import frc.robot.subsystems.Pivot.SPEED;
 import frc.team5431.titan.core.joysticks.Joystick;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D;
@@ -57,8 +58,8 @@ public class RobotMap {
     private void bindKeys() {
         // Driver Controls
         {
-            // Targetor
-            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1).whenHeld(new Targetor(drivebase, limelight));
+            // Targetor REMINDER: SET TO FAR FOR TEST
+            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
 
             // Calibrate the Limelight
             new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
@@ -93,8 +94,12 @@ public class RobotMap {
             // Pivot Up
             new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
 
-            // Vision
-            new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight));
+            // Vision Far
+            new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
+
+            // Arbitrary button for Vision Close
+            //new JoystickButton(buttonBoard, 0).whenHeld(new Targetor(drivebase, limelight, Positions.HALF));
+
 
             // Intake Super Command (labeled "in")
             new JoystickButton(buttonBoard, 11)
