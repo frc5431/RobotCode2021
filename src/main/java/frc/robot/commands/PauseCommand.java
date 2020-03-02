@@ -30,7 +30,7 @@ public class PauseCommand extends CommandBase {
                     new FeederCommand((Feeder) system, 0);
                     break;
                 case "Flywheel":
-                    new FlywheelControl((Flywheel) system, Flywheel.Speeds.OFF);
+                    new FlywheelCommand((Flywheel) system, Flywheel.Speeds.OFF);
                     break;
                 case "Hopper":
                     new HopperCommand((Hopper) system, 0, 0);

@@ -57,16 +57,14 @@ public class RobotMap {
     private void bindKeys() {
         // Driver Controls
         {
-            // Target the Upper Hatch
-            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-                    .whenHeld(new Targetor(drivebase, limelight));
+            // Targetor
+            new JoystickButton(driver, Xbox.Button.B.ordinal() + 1).whenHeld(new Targetor(drivebase, limelight));
 
             // Calibrate the Limelight
             new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
 
             // Intake
-            new JoystickButton(driver, Xbox.Button.A.ordinal() + 1)
-                    .whileHeld(new IntakeCommand(intake, 1));
+            new JoystickButton(driver, Xbox.Button.A.ordinal() + 1).whileHeld(new IntakeCommand(intake, 1));
 
             // Balancer Left
             new JoystickButton(driver, Xbox.Button.BUMPER_L.ordinal() + 1)
@@ -75,29 +73,28 @@ public class RobotMap {
             // Balancer Right
             new JoystickButton(driver, Xbox.Button.BUMPER_R.ordinal() + 1)
                     .whenHeld(new BalancerCommand(balancer, false));
+
         }
 
         // Operator Controls
         {
             // Human Player Intake
-        //     new JoystickButton(buttonBoard, 8)
-        //             .toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
+            // new JoystickButton(buttonBoard, 8)
+            // .toggleWhenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel,
+            // pivot));
 
             // // All Out (??)
             // new JoystickButton(buttonBoard, 4)
-            //         .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
+            // .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot));
 
             // Pivot Down
-            new JoystickButton(buttonBoard, 6)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
+            new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
 
             // Pivot Up
-            new JoystickButton(buttonBoard, 5)
-                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
+            new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
 
             // Vision
-            new JoystickButton(buttonBoard, 7)
-                    .whenHeld(new Targetor(drivebase, limelight));
+            new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight));
 
             // Intake Super Command (labeled "in")
             new JoystickButton(buttonBoard, 11)
@@ -105,18 +102,16 @@ public class RobotMap {
 
             // Shoot
             new JoystickButton(buttonBoard, 1)
-                    .whenPressed(new ShootSuperCommand(intake, hopper, feeder, flywheel));
+                    .whenPressed(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight));
 
             // Intake
-            new JoystickButton(buttonBoard, 14)
-                    .whenPressed(new IntakeCommand(intake, 1));
+            new JoystickButton(buttonBoard, 14).whenPressed(new IntakeCommand(intake, 1));
 
             /*
              * Not used as it is bound to triggers for the driver but here for historical
              * purposes
              * 
-             * // Climb
-             * new JoystickButton(buttonBoard, 8);
+             * // Climb new JoystickButton(buttonBoard, 8);
              */
 
             // Stuck On Side.
@@ -133,18 +128,17 @@ public class RobotMap {
         // Operator Logitech
         {
             // Indexer Up
-            new POVButton(operator, 0)
-                    .whenPressed(new FeederCommand(feeder, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
+            new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Indexer Down
-            new POVButton(operator, 180)
-                    .whenPressed(new FeederCommand(feeder, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
+            new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
                     .whenReleased(new FeederCommand(feeder, 0));
 
             // Trigger Flywheel
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-                    .whenHeld(new FlywheelControl(flywheel, Flywheel.Velocity.HALF));
+                    .whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.FULL))
+                    .whenReleased(new FlywheelCommand(flywheel, Flywheel.Velocity.OFF));
 
             // Three Hopper Out
             new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
@@ -157,12 +151,12 @@ public class RobotMap {
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SIX.ordinal() + 1)
                     .whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
-                //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
+            // .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Four Intake Pivot Up
             new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1)
-                    .whenPressed(new PivotCommand(pivot,Pivot.POSITION.UP));
-                //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
+                    .whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
+            // .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Two Intake
             new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)
@@ -230,7 +224,7 @@ public class RobotMap {
         // return chooser.getSelected();
     }
 
-	public void resetEncoders() {
+    public void resetEncoders() {
         pivot.reset();
-	}
+    }
 }

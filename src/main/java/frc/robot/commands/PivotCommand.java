@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Pivot;
+import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
 
 /**
@@ -34,7 +35,7 @@ public class PivotCommand extends CommandBase {
         if (position != null)
             pivot.setPivotLocation(position);
         else 
-        pivot.setSpeed(speed);
+            pivot.setSpeed(speed);
     }
 
     @Override
@@ -44,6 +45,6 @@ public class PivotCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return pivot.atLocation();
+        return Calc.approxEquals(pivot.error(), position.getValue(), 500);
     }
 }

@@ -28,12 +28,18 @@ public class Flywheel extends SubsystemBase {
     }
 
     public static enum Velocity {
-        OFF(0), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW), FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH);
+        OFF(0, -1), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW, Constants.SLOT_0), FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH, Constants.SLOT_1);
 
         private double speed;
+        private int PIDSlot; 
 
-        private Velocity(double speed) {
+        private Velocity(double speed, int PIDSlot) {
             this.speed = speed;
+            this.PIDSlot = PIDSlot; 
+
+        }
+        public int getSlot() {
+            return PIDSlot;
         }
 
         public double getSpeed() {
@@ -65,15 +71,13 @@ public class Flywheel extends SubsystemBase {
         // reset encoder
         flywheel.setSelectedSensorPosition(0);
 
-        flywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.SLOT_0,
-                Constants.DRIVEBASE_TIMEOUT_MS);
-
+        
         // flywheel.setSensorPhase(true);
 
-        flywheel.config_kF(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kP(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kI(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
-        flywheel.config_kD(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
+        // flywheel.config_kF(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        // flywheel.config_kP(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        // flywheel.config_kI(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        // flywheel.config_kD(Constants.SLOT_0, Constants.SHOOTER_FLYWHEEL_LOW_GAINS.kD, Constants.DRIVEBASE_TIMEOUT_MS);
 
         flywheel.config_kF(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kF, Constants.DRIVEBASE_TIMEOUT_MS);
         flywheel.config_kP(Constants.SLOT_1, Constants.SHOOTER_FLYWHEEL_HIGH_GAINS.kP, Constants.DRIVEBASE_TIMEOUT_MS);
@@ -88,11 +92,17 @@ public class Flywheel extends SubsystemBase {
         assert (flywheel.get() == _flywheelFollow.get());
         assert (flywheel.getInverted() != _flywheelFollow.getInverted());
 
-        // Get Flywheel Velocity for state tuning
-        SmartDashboard.putNumber("Flywheel Velocity", flywheel.getSelectedSensorVelocity(Constants.SLOT_0));
+        // Get Flywheel Velocity for state tuning: Close
+        SmartDashboard.putNumber("Flywheel Velocity Close", flywheel.getSelectedSensorVelocity(Constants.SLOT_0));
 
-        // Get Flywheel PID error rate for analysis
-        SmartDashboard.putNumber("Flywheel Error Rate", flywheel.getClosedLoopError(Constants.SLOT_0));
+        // Get Flywheel PID error rate for analysis: Close
+        SmartDashboard.putNumber("Flywheel Error Rate Close", flywheel.getClosedLoopError(Constants.SLOT_0));
+
+         // Get Flywheel Velocity for state tuning: Far
+         SmartDashboard.putNumber("Flywheel Velocity Far", flywheel.getSelectedSensorVelocity(Constants.SLOT_1));
+
+         // Get Flywheel PID error rate for analysis: Far
+         SmartDashboard.putNumber("Flywheel Error Rate Far", flywheel.getClosedLoopError(Constants.SLOT_1));
     }
 
     public void setSpeed(ControlMode mode, double speed) {
@@ -104,14 +114,22 @@ public class Flywheel extends SubsystemBase {
         setSpeed(ControlMode.PercentOutput, speed.getSpeed());
     }
 
-    public void set(Velocity speed) {
-        if (Velocity.OFF == speed)
+    public void set(Velocity velocity) {
+        flywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,velocity.getSlot(),
+                Constants.DRIVEBASE_TIMEOUT_MS);
+        if (Velocity.OFF == velocity)
             setSpeed(ControlMode.PercentOutput, 0);
         else
-            setSpeed(ControlMode.Velocity, speed.getSpeed());
+            setSpeed(ControlMode.Velocity, velocity.getSpeed());
+
+
     }
 
     public double getSpeed() {
         return flywheel.getMotorOutputPercent();
+    }
+
+    public double getError() {
+        return flywheel.get() == 0 ? 0 : flywheel.getClosedLoopError(Constants.SLOT_1);
     }
 }

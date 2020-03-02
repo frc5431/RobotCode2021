@@ -159,4 +159,8 @@ public class Pivot extends SubsystemBase {
 	public void reset() {
         pivotMotor.setSelectedSensorPosition(0);
 	}
+
+	public double error() {
+		return pivotMotor.getClosedLoopError();
+	}
 }

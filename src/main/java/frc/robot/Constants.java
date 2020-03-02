@@ -83,8 +83,10 @@ public final class Constants {
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.5;
 
     // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
-    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic(0.01, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
-    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.01, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
+    //public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/10600, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
+    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic (0,0,0,0);
+   // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.05, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
+    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/10600, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
@@ -103,17 +105,18 @@ public final class Constants {
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Pivot related
-    public static final int PIVOT_ID = 12;
+    public static final int PIVOT_ID = 0; // REMINDER: CHANGE TO 12 LATER
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = -38000; // 45000
+    public static final int PIVOT_DOWN_LIMIT = -50200; // 45000
     public static final int PIVOT_UP_LIMIT = -800; // 5000 
     public static final int PIVOT_VELOCITY = 5000;
-    public static final double PIVOT_AFFECT_GRAVITY = 0.02;
+    public static final double PIVOT_AFFECT_GRAVITY = -0.02;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
-    public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(((PIVOT_DEFAULT_SPEED * 1023) / 20000), 0.0, 1.023, 0);
+    // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
+    public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.0, 0.0, 0.0, 0.0);
 
     // Hopper   
