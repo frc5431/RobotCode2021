@@ -111,13 +111,13 @@ public class Feeder extends SubsystemBase {
      */
     public void ballUpdate() {
         // ballCount incrementer - only increment if you see the ball after not seeing it.
-        if (!ballSeen && !getValueOfDIOSensor(0) && _state != FeederStateTeleop.AUTO_REVERSE) {
+        if (!ballSeen && !getValueOfDIOSensor(0) && _state != FeederStateTeleop.AUTO_REVERSE && !shooting) {
             ballCount++;
             ballSeen = true;
             ballStopTime = System.currentTimeMillis() + Constants.SHOOTER_FEEDER_BALL_DELAY;
         }
 
-        if (ballSeen && getValueOfDIOSensor(0) && _state != FeederStateTeleop.AUTO_REVERSE) {
+        if (ballSeen && getValueOfDIOSensor(0) && _state != FeederStateTeleop.AUTO_REVERSE && !shooting) {
             ballSeen = false;
         }
 

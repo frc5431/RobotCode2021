@@ -137,9 +137,9 @@ public final class Constants {
     public static final int LIMELIGHT_PIPELINE_OFF = 9;
     public static final int LIMELIGHT_PIPELINE_HALF = 0;
     public static final int LIMELIGHT_PIPELINE_FULL = 1;
-    public static final PIDController LIMELIGHT_PID_OFF =  new PIDController(0, 0, 0); 
-    public static final PIDController LIMELIGHT_PID_HALF =  new PIDController(0.05, 0, 0);
-    public static final PIDController LIMELIGHT_PID_FULL =  new PIDController(0.05, 0, 0); 
+    public static final PIDController LIMELIGHT_PID_OFF = new PIDController(0, 0, 0); 
+	public static final PIDController LIMELIGHT_PID_HALF = new PIDController(0.049, 0, 0.0057);
+    public static final PIDController LIMELIGHT_PID_FULL = new PIDController(0.05, 0, 0); 
     // public static final PIDController LIMELIGHT_PID_POSITION_OFF =  new PIDController(0, 0, 0); 
     // public static final PIDController LIMELIGHT_PID_POSITION_HALF =  new PIDController(0.05, 0, 0);
     // public static final PIDController LIMELIGHT_PID_POSITION_FULL =  new PIDController(0.05, 0, 0); 
@@ -179,7 +179,7 @@ public final class Constants {
     public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 
-	public static final double LIMELIGHT_ERROR_RATE = 0.2; //TODO: find good error rate
+	public static final double LIMELIGHT_ERROR_RATE = 0.06; //TODO: find good error rate
 
     public static final double PIVOT_ERROR_RANGE = 100;
     

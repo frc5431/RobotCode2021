@@ -11,14 +11,13 @@ import frc.robot.Constants;
  * @author Rishmita Rao
  */
 public class LimelightSubsystem extends SubsystemBase {
-
     public static enum Positions{
         OFF(Constants.LIMELIGHT_PIPELINE_OFF, Constants.LIMELIGHT_PID_OFF),
         HALF(Constants.LIMELIGHT_PIPELINE_HALF, Constants.LIMELIGHT_PID_HALF),
         FULL(Constants.LIMELIGHT_PIPELINE_FULL, Constants.LIMELIGHT_PID_FULL);
 
-        private int pipeline; 
-        private PIDController turn;
+        private final int pipeline; 
+        private final PIDController turn;
         
         private Positions(int pipeline, PIDController turn){
             this.pipeline = pipeline; 
@@ -34,5 +33,4 @@ public class LimelightSubsystem extends SubsystemBase {
             return turn; 
         }
     }
-
 }

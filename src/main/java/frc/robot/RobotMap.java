@@ -94,11 +94,10 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
 
 			// Vision Far
-			new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
+			new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
 
 			// Arbitrary button for Vision Close
-			// new JoystickButton(buttonBoard, 0).whenHeld(new Targetor(drivebase,
-			// limelight, Positions.HALF));
+			new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight, Positions.HALF));
 
 			// // Human player Intake Super Command (labeled "in") TODO
 			// new JoystickButton(buttonBoard, 11)
@@ -110,8 +109,8 @@ public class RobotMap {
 					.whenHeld(new ShootSuperCommandClose(intake, hopper, feeder, flywheel, drivebase, limelight));
 
 			// Shoot Far
-			new JoystickButton(buttonBoard, 14) // not the real button value
-					.whenPressed(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));
+			new JoystickButton(buttonBoard, 14)
+					.whenHeld(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));
 
 			// Intake (By itself)
 			new JoystickButton(buttonBoard, 2)

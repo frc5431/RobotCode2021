@@ -37,6 +37,7 @@ public class Targetor extends CommandBase {
 
 		position.getPIDControllerTurn().setSetpoint(0);
 		position.getPIDControllerTurn().setTolerance(Constants.LIMELIGHT_ERROR_RATE);
+		// position.getPIDControllerTurn().setTolerance(0);
 
 		addRequirements(drivebase);
 		// addRequirements(limelightSubsytem);
@@ -57,6 +58,7 @@ public class Targetor extends CommandBase {
 
 		double xError = position.getPIDControllerTurn().calculate(limelight.getX());
 		SmartDashboard.putNumber("Limelight Error X", xError);
+		SmartDashboard.putNumber("Limelight Pipeline", position.getPipeline()); 
 		// double yError = positionController.calculate(limelight.getY());
 
 		drivebase.drivePercentageArcade(0, xError);
@@ -77,6 +79,7 @@ public class Targetor extends CommandBase {
         boolean targetLocked = Calc.approxEquals(xError, 0, Constants.LIMELIGHT_ERROR_RATE);
         boolean limelightCanSee = limelight.getValid();
 
-        return targetLocked && limelightCanSee;
+		return targetLocked && limelightCanSee;
+		// return false;
     }
 }
