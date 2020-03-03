@@ -23,7 +23,7 @@ public class ShootSuperCommandFar extends SequentialCommandGroup {
             // Push Balls. Keep running until current command is interuppted
 			new PushBallsUpSubCommand(intake, hopper, feeder),
 
-			new SuperStopShoot(feeder, intake, hopper)
+			new SuperStopShoot(feeder, intake, hopper, flywheel)
         );
     }
 }

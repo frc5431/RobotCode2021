@@ -11,6 +11,7 @@ import frc.robot.subsystems.*;
 public class PushBallsUpSubCommand extends ParallelCommandGroup {
     private final Feeder feeder;
 	long startTime;
+	private boolean ballAtThree = false;
 	
     public PushBallsUpSubCommand(Intake intake, Hopper hopper, Feeder feeder) {
 		this.feeder = feeder;
@@ -23,14 +24,17 @@ public class PushBallsUpSubCommand extends ParallelCommandGroup {
 
 	@Override
 	public void initialize() {
+		ballAtThree = false;
 		startTime = System.currentTimeMillis();
 		super.initialize();
 	}
 
     @Override
     public boolean isFinished() {
-		
-		return 0 == feeder.getBallCount() || System.currentTimeMillis() >= 2000 + startTime;
+		ballAtThree =  0 == feeder.getBallCount(); 
+		if (ballAtThree)
+			return System.currentTimeMillis() >= 1500 + startTime;
+		return false;
 	
     }
 }

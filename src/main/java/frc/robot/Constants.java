@@ -98,7 +98,7 @@ public final class Constants {
 
     public static final long SHOOTER_FEEDER_BALL_DELAY = 1300;
 	public static final long SHOOTER_FEEDER_UP_DELAY = 1000;
-	public static final long SHOOTER_FEEDER_DOWN_DELAY = 500;
+	public static final long SHOOTER_FEEDER_DOWN_DELAY = 200;
 
     // Intake Related
     public static final int INTAKE_ID = 5;

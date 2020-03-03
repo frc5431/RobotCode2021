@@ -53,8 +53,6 @@ public class Targetor extends CommandBase {
 	// 20 ms loop
 	@Override
 	public void execute() {
-		Logger.l("Execute Targetor Command!");
-
 		limelight.setPipeline(position.getPipeline());
 
 		double xError = position.getPIDControllerTurn().calculate(limelight.getX());
@@ -68,6 +66,8 @@ public class Targetor extends CommandBase {
 	public void end(boolean interrupted) {
 		if (interrupted)
 			Logger.l("Targetor Command Interuppted");
+		else
+			Logger.l("Targetor Command Finished");
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(Positions.OFF.getPipeline());
     }

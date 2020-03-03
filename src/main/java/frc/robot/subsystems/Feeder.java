@@ -175,7 +175,7 @@ public class Feeder extends SubsystemBase {
                 break;
             case AUTO_REVERSE:
                 // Move on after DOWN_DELAY ms OR the balls clear the shoot sensor.
-                if (System.currentTimeMillis() < finalStopTime && !getValueOfDIOSensor(3)) {
+                if (System.currentTimeMillis() < finalStopTime || !getValueOfDIOSensor(3)) {
                     // Reverse the feeder.
                     feed.set(-Constants.SHOOTER_FEEDER_DEFAULT_SPEED - feedSpeedOffset);
                 } else {
