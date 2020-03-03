@@ -12,5 +12,7 @@ public class SuperStopShoot extends ParallelCommandGroup {
 			new IntakeCommand(intake, 0),
 			new HopperCommand(hopper, 0, 0)
 		);
+
+		feeder.resetVars();
 	}
 }
