@@ -129,7 +129,7 @@ public class Pivot extends SubsystemBase {
     public void setPivotLocation(POSITION pos) {
         // setSpeed(pos.getValue());
         int horizontal = Constants.PIVOT_DOWN_LIMIT;
-        double ticksToDegrees = (2048 / 360) / 100;
+        double ticksToDegrees = (2048 / 360) / 81;
         int curentPosition = getEncoderPosition();
         double degrees = (curentPosition - horizontal) / ticksToDegrees;
         double radians = java.lang.Math.toRadians(degrees);

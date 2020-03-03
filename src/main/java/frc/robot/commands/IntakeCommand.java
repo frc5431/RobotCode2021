@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.team5431.titan.core.misc.Logger;
 
@@ -19,7 +20,7 @@ public class IntakeCommand extends CommandBase {
     private final double speed;
 
     public IntakeCommand(Intake intake, boolean reverse) {
-        this(intake, 0.1, reverse);
+        this(intake, Constants.INTAKE_DEFAULT_SPEED, reverse);
     }
 
     public IntakeCommand(Intake intake, double speed) {

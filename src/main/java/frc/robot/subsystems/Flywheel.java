@@ -16,7 +16,7 @@ import frc.robot.Constants;
  */
 public class Flywheel extends SubsystemBase {
 	public static enum Speeds {
-		OFF(0), HALF(0.5), FULL(0.8);
+		OFF(0), HALF(0.5), FULL(0.58);
 
 		private double speed;
 
@@ -107,16 +107,16 @@ public class Flywheel extends SubsystemBase {
 		assert (flywheel.getInverted() != _flywheelFollow.getInverted());
 
 		// Get Flywheel Velocity for state tuning: Far
-		SmartDashboard.putNumber("Flywheel Velocity Current", flywheel.getSelectedSensorVelocity(currentSlot));
+		SmartDashboard.putNumber("Flywheel Velocity Current", flywheel.getSelectedSensorVelocity());
 
 		// Get Flywheel PID error rate for analysis: Far
-		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError(currentSlot));
+		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError(0));
 	}
 
 	private void setSlot(int slot) {
 		currentSlot = slot;
-		flywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, slot,
-				Constants.DRIVEBASE_TIMEOUT_MS);
+		// flywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, slot,
+		// 		Constants.DRIVEBASE_TIMEOUT_MS);
 		flywheel.selectProfileSlot(slot, Constants.REMOTE_0);
 	}
 

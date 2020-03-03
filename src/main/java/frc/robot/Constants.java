@@ -78,15 +78,15 @@ public final class Constants {
     public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
     
     // FIXME: Put proper flywheel values
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 16700;
-    public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.8;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 11300; // 12300
+    public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.57; // .585
 
     public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.5;
 
     // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
     //public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/10600, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
-    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_HIGH,0,0,( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
+    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic ((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/SHOOTER_FLYWHEEL_VELOCITY_HIGH, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
    // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.05, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
     public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_LOW, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
@@ -107,12 +107,12 @@ public final class Constants {
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Pivot related
-    public static final int PIVOT_ID = 0; // REMINDER: CHANGE TO 12 LATER
+    public static final int PIVOT_ID = 12; // REMINDER: CHANGE TO 12 LATER
     public static final boolean PIVOT_REVERSE = false;
-    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
     public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = -50200; // 45000
-    public static final int PIVOT_UP_LIMIT = -800; // 5000 
+    public static final int PIVOT_DOWN_LIMIT = (-50200 / 100) * 81; // 45000
+    public static final int PIVOT_UP_LIMIT = (-800 / 100) * 81; // 5000 
     public static final int PIVOT_VELOCITY = 5000;
     public static final double PIVOT_AFFECT_GRAVITY = -0.02;
 
@@ -126,8 +126,8 @@ public final class Constants {
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
-    public static final double HOPPER_LEFT_SPEED = 1.0;
-    public static final double HOPPER_RIGHT_SPEED = 0.8;
+    public static final double HOPPER_LEFT_SPEED = 0.8;
+    public static final double HOPPER_RIGHT_SPEED = 0.7;
     
     // ================================================================================
     // Vision Data
@@ -179,11 +179,12 @@ public final class Constants {
     public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 
-	public static final double LIMELIGHT_ERROR_RATE = 0.0005; //TODO: find good error rate
+	public static final double LIMELIGHT_ERROR_RATE = 0.2; //TODO: find good error rate
 
     public static final double PIVOT_ERROR_RANGE = 100;
     
     // Sensors
 
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
+	public static final int PIVOT_PDP_SLOT = 5;
 }

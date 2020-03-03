@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,7 +23,7 @@ public class Feeder extends SubsystemBase {
     WPI_TalonFX feed;
     HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
 
-    double feedSpeed;
+    double feedSpeed, feedSpeedOffset = 0;
     int stopCount;
     boolean ballSeen, shootSeen;
 
@@ -36,9 +37,12 @@ public class Feeder extends SubsystemBase {
     FeederStateTeleop _state = FeederStateTeleop.LOAD;
 
     int ballCount = 0;
-    boolean shooting = false;
+	boolean shooting = false;
+	private final PowerDistributionPanel pdp;
 
-    public Feeder() {
+    public Feeder(PowerDistributionPanel pdp) {
+		this.pdp = pdp;
+
         feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
 
         feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
@@ -64,8 +68,15 @@ public class Feeder extends SubsystemBase {
 
         ballUpdate();
 
-        feederLoadAndShoot();
-
+		feederLoadAndShoot();
+		
+		if(15 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
+			// Slow down indexer
+			feedSpeedOffset = 0.2;
+		}
+		else {
+			feedSpeedOffset = 0.0;
+		}
 
         SmartDashboard.putNumber("Ball Count", ballCount);
         SmartDashboard.putString("Feeder State", _state.name());
@@ -137,14 +148,14 @@ public class Feeder extends SubsystemBase {
                 // Run the feeder for a certain amount of time after it detects a ball entering.
                 if (System.currentTimeMillis() < ballStopTime) { 
                     if (ballCount < 3) {
-                        feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
+                        feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED - feedSpeedOffset);
                     } else {
                         // Runs if there are three balls.
-                        feed.set(feedSpeed);
+                        feed.set(feedSpeed - feedSpeedOffset);
                     }
                 } else {
                     // Waits for another ball to load.
-                    feed.set(feedSpeed);
+                    feed.set(feedSpeed - feedSpeedOffset);
                 }
                 // After it loads three balls, it will continue to the next stage.
                 if (ballCount >= 3) {
@@ -156,7 +167,7 @@ public class Feeder extends SubsystemBase {
                 // Move on after UP_DELAY ms.
                 if (System.currentTimeMillis() < upStopTime) {
                     // Move the feeder up.
-                    feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
+                    feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED - feedSpeedOffset);
                 } else {
                     _state = FeederStateTeleop.AUTO_REVERSE;
                     finalStopTime = System.currentTimeMillis() + Constants.SHOOTER_FEEDER_DOWN_DELAY;
@@ -166,7 +177,7 @@ public class Feeder extends SubsystemBase {
                 // Move on after DOWN_DELAY ms OR the balls clear the shoot sensor.
                 if (System.currentTimeMillis() < finalStopTime && !getValueOfDIOSensor(3)) {
                     // Reverse the feeder.
-                    feed.set(-Constants.SHOOTER_FEEDER_DEFAULT_SPEED);
+                    feed.set(-Constants.SHOOTER_FEEDER_DEFAULT_SPEED - feedSpeedOffset);
                 } else {
                     _state = FeederStateTeleop.READY;
                 }
@@ -177,14 +188,14 @@ public class Feeder extends SubsystemBase {
                 shooting = true;
 
                 if (ballCount > 0) {
-                    feed.set(feedSpeed);
+                    feed.set(feedSpeed - feedSpeedOffset);
                 } else {
                     _state = FeederStateTeleop.LOAD;
                     shooting = false;
                 }
                 break;
             default:
-                feed.set(feedSpeed);
+                feed.set(feedSpeed - feedSpeedOffset);
                 break;
         }
     }

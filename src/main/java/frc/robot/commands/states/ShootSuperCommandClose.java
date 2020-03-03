@@ -1,5 +1,6 @@
 package frc.robot.commands.states;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Flywheel.Speeds;
@@ -19,9 +20,11 @@ public class ShootSuperCommandClose extends SequentialCommandGroup {
             // Target
             new Targetor(drivebase, limelight, Positions.HALF),
              // Bring up to speed
-            new FlywheelCommand(flywheel, Velocity.HALF, Velocity.HALF), //Waits till up to speed
+            new FlywheelCommand(flywheel, Velocity.HALF), //Waits till up to speed
             // Push Balls. Keep running until current command is interuppted
-            new PushBallsUpSubCommand(intake, hopper, feeder) 
+            new PushBallsUpSubCommand(intake, hopper, feeder),
+			
+			new SuperStopShoot(feeder, intake, hopper)
         );
     }
 }
