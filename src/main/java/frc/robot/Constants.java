@@ -186,5 +186,7 @@ public final class Constants {
     // Sensors
 
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
-	public static final int PIVOT_PDP_SLOT = 5;
+	public static final int PIVOT_PDP_SLOT = 4;
+	public static final int FEEDER_PDP_SLOT = 5;
+	public static final long FEEDER_PUSH_BALL_DOWN = 300;
 }

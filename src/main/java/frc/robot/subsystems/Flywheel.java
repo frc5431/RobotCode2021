@@ -138,7 +138,7 @@ public class Flywheel extends SubsystemBase {
 	}
 
 	public double getSpeed() {
-		return flywheel.getMotorOutputPercent();
+		return flywheel.get();
 	}
 
 	public double getError(Velocity velocity) {

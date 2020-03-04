@@ -30,7 +30,7 @@ public class ShootSuperCommandFar extends SequentialCommandGroup {
              // Bring up to speed
             new FlywheelCommand(flywheel, Velocity.FULL), // Waits till up to speed
             // Push Balls. Keep running until current command is interuppted
-			new PushBallsUpSubCommand(intake, hopper, feeder)
+			new PushBallsUpSubCommand(intake, hopper, feeder, flywheel)
 
 			//new SuperStopShoot(feeder, intake, hopper, flywheel)
 		);

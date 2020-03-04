@@ -36,7 +36,7 @@ public class RobotMap {
 	private final Flywheel flywheel = new Flywheel();
 	private final Hopper hopper = new Hopper();
 	private final Intake intake = new Intake();
-	private final Pivot pivot = new Pivot();
+	private final Pivot pivot = new Pivot(pdp);
 
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
@@ -82,10 +82,10 @@ public class RobotMap {
 		// Operator Controls
 		{
 			// Human Player Intake
-			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(feeder, hopper, pivot));
+			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(feeder, hopper, pivot, flywheel));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(intake, hopper, pivot, feeder));
+			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(intake, hopper, pivot, feeder, flywheel));
 
 			// Pivot Down
 			new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
@@ -113,8 +113,8 @@ public class RobotMap {
 					.whenHeld(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));
 
 			// Intake (By itself)
-			new JoystickButton(buttonBoard, 2)
-					.toggleWhenPressed(new IntakeCommand(intake, Constants.INTAKE_DEFAULT_SPEED));
+			// new JoystickButton(buttonBoard, 2)
+			// 		.toggleWhenPressed(new IntakeCommand(intake, Constants.INTAKE_DEFAULT_SPEED));
 
 			/*
 			 * Not used as it is bound to triggers for the driver but here for historical
@@ -156,11 +156,11 @@ public class RobotMap {
 
 			// Three Hopper Out
 			new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
-					.whenHeld(new HopperCommand(hopper, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
+					.whenHeld(new HopperCommand(hopper, feeder, flywheel, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
 
 			// Five Hopper In
 			new JoystickButton(operator, LogitechExtreme3D.Button.FIVE.ordinal() + 1)
-					.whileHeld(new HopperCommand(hopper, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
+					.whileHeld(new HopperCommand(hopper, feeder, flywheel, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
 
 			// Six Intake Pivot Down
 			new JoystickButton(operator, LogitechExtreme3D.Button.SEVEN.ordinal() + 1)

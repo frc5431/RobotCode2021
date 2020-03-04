@@ -4,8 +4,8 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.PauseCommand;
 import frc.team5431.titan.core.misc.Logger;
+
 public class Robot extends TimedRobot {
 
   // Objects for mostly internal Robot.java usage
@@ -54,12 +54,13 @@ public class Robot extends TimedRobot {
       autonCommand.cancel();
     }
 
-    robotMap.resetEncoders();
+    // robotMap.resetEncoders();
     robotMap.resetBallCount();
   }
 
   @Override
-  public void disabledInit() {
+  public void disabledPeriodic() {
 	  CommandScheduler.getInstance().cancelAll();
+	  robotMap.resetEncoders();
   }
 }

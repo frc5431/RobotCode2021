@@ -13,7 +13,7 @@ public class SuperStopShoot extends ParallelCommandGroup {
 		addCommands(
 			new FeederCommand(feeder, 0),
 			new IntakeCommand(intake, 0),
-			new HopperCommand(hopper, 0, 0),
+			new HopperCommand(hopper, feeder, flywheel, 0, 0),
 			new FlywheelCommand(flywheel, Flywheel.Velocity.OFF)
 		);
 	}
