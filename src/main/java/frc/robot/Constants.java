@@ -51,7 +51,9 @@ public final class Constants {
 
     public static final int DRIVEBASE_FRONT_RIGHT_ID = 3;
     public static final int DRIVEBASE_BACK_RIGHT_ID = 2;
-    public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
+	public static final boolean DRIVEBASE_RIGHT_REVERSE = true;
+	
+	public static final double DRIVEBASE_TURN_MAX_SPEED = 0.35;
 
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
 
@@ -75,20 +77,22 @@ public final class Constants {
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
+	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
+	
+	public static final double FLYWHEEL_VELOCITY_RANGE = 300;
     
     // FIXME: Put proper flywheel values
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 11300; // 12300
-    public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.57; // .585
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 12300;
+    public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
     public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.5;
 
     // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
     //public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/10600, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
-    public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic ((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/SHOOTER_FLYWHEEL_VELOCITY_HIGH, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
+	public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.0466); //0.0474073170731707
    // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.05, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
-    public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_LOW, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
+    // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_LOW, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
     // Shooter Feeder Related
     public static final int SHOOTER_FEEDER_ID = 9;
@@ -126,7 +130,7 @@ public final class Constants {
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
-    public static final double HOPPER_LEFT_SPEED = 0.8;
+    public static final double HOPPER_LEFT_SPEED = 0.85;
     public static final double HOPPER_RIGHT_SPEED = 0.7;
     
     // ================================================================================
@@ -135,14 +139,11 @@ public final class Constants {
 
     public static final String VISION_FRONT_LIMELIGHT = "limelight";
     public static final int LIMELIGHT_PIPELINE_OFF = 9;
-    public static final int LIMELIGHT_PIPELINE_HALF = 0;
-    public static final int LIMELIGHT_PIPELINE_FULL = 1;
-    public static final PIDController LIMELIGHT_PID_OFF = new PIDController(0, 0, 0); 
-	public static final PIDController LIMELIGHT_PID_HALF = new PIDController(0.049, 0, 0.0057);
-    public static final PIDController LIMELIGHT_PID_FULL = new PIDController(0.05, 0, 0); 
-    // public static final PIDController LIMELIGHT_PID_POSITION_OFF =  new PIDController(0, 0, 0); 
-    // public static final PIDController LIMELIGHT_PID_POSITION_HALF =  new PIDController(0.05, 0, 0);
-    // public static final PIDController LIMELIGHT_PID_POSITION_FULL =  new PIDController(0.05, 0, 0); 
+    public static final int LIMELIGHT_PIPELINE_ON = 0;
+	public static final PIDController LIMELIGHT_PID = new PIDController(0.046, 0.002, 0);
+	public static final double LIMELIGHT_ERROR_RATE = 0.03;
+	public static final double LIMELIGHT_ASPECT_RATIO = 2.02;
+	public static final double LIMELIGHT_ASPECT_RATIO_ERROR = 0.5;
 
     // ================================================================================
     // IMU Data
@@ -178,8 +179,6 @@ public final class Constants {
 
     public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
-
-	public static final double LIMELIGHT_ERROR_RATE = 0.06; //TODO: find good error rate
 
     public static final double PIVOT_ERROR_RANGE = 100;
     

@@ -194,8 +194,8 @@ public class Drivebase extends SubsystemBase {
             power = 0;
         }
 
-        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * 0.35);
-        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * 0.35);
+        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
+        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
 
         // Logger.l("Power: %f, Turn: %f", power, turn);
     }
@@ -273,5 +273,5 @@ public class Drivebase extends SubsystemBase {
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
         return null;
-    }
+	}
 }

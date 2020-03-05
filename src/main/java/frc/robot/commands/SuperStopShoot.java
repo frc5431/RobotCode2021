@@ -11,7 +11,7 @@ public class SuperStopShoot extends ParallelCommandGroup {
 	public SuperStopShoot(Feeder feeder, Intake intake, Hopper hopper, Flywheel flywheel) {
 		this.feeder = feeder;
 		addCommands(
-			new FeederCommand(feeder, 0),
+			new FeederCommand(feeder, flywheel, 0),
 			new IntakeCommand(intake, 0),
 			new HopperCommand(hopper, feeder, flywheel, 0, 0),
 			new FlywheelCommand(flywheel, Flywheel.Velocity.OFF)

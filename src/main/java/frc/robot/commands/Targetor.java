@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.LimelightSubsystem.Positions;
 import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.LEDState;
@@ -20,8 +18,11 @@ public class Targetor extends CommandBase {
 
 	private final Drivebase drivebase;
 	private final Limelight limelight;
+	private boolean isLocked; 
+	private long startLockTime; 
+
 	// private final LimelightSubsystem limelightSubsytem;
-	private final LimelightSubsystem.Positions position;
+	// private final LimelightSubsystem.Positions position;
 
 	// private final PIDController turnController, positionController;
 
@@ -29,14 +30,14 @@ public class Targetor extends CommandBase {
 	 * @param drivebase
 	 * @param limelight
 	 */
-	public Targetor(Drivebase drivebase, Limelight limelight, LimelightSubsystem.Positions position) {
+	public Targetor(Drivebase drivebase, Limelight limelight) {
 		this.drivebase = drivebase;
 		this.limelight = limelight;
 		// this.limelightSubsytem = limelightSubsytem;
-		this.position = position;
+		// this.position = position;
 
-		position.getPIDControllerTurn().setSetpoint(0);
-		position.getPIDControllerTurn().setTolerance(Constants.LIMELIGHT_ERROR_RATE);
+		Constants.LIMELIGHT_PID.setSetpoint(0);
+		Constants.LIMELIGHT_PID.setTolerance(Constants.LIMELIGHT_ERROR_RATE);
 		// position.getPIDControllerTurn().setTolerance(0);
 
 		addRequirements(drivebase);
@@ -47,22 +48,45 @@ public class Targetor extends CommandBase {
 	@Override
 	public void initialize() {
 		Logger.l("Begin Targetor Command!");
-		limelight.setPipeline(position.getPipeline());
+		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_ON);
 		limelight.setLEDState(LEDState.DEFAULT);
+		SmartDashboard.putBoolean("Limelight Command Finished", false);
+		isLocked = false; 
+	}
+
+	public boolean isValid(){
+		double aspectRatio = limelight.getTable().getEntry("thor").getDouble(0.0)/limelight.getTable().getEntry("tvert").getDouble(0.0); 
+		SmartDashboard.putNumber("Limelight Aspect Ratio", aspectRatio);
+		return aspectRatio >= 1 && limelight.getValid(); 
+
+	}
+
+	public boolean isLocked(){
+		boolean targetLocked = Math.abs(Constants.LIMELIGHT_PID.calculate(limelight.getX())) <= Constants.LIMELIGHT_ERROR_RATE;
+		return targetLocked; 
 	}
 
 	// 20 ms loop
 	@Override
 	public void execute() {
-		limelight.setPipeline(position.getPipeline());
 
-		double xError = position.getPIDControllerTurn().calculate(limelight.getX());
+		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_ON);
+		
+
+		double xError = Constants.LIMELIGHT_PID.calculate(limelight.getX());
 		SmartDashboard.putNumber("Limelight Error X", xError);
-		SmartDashboard.putNumber("Limelight Pipeline", position.getPipeline()); 
-		// double yError = positionController.calculate(limelight.getY());
+		SmartDashboard.putNumber("Limelight Pipeline", Constants.LIMELIGHT_PIPELINE_ON);
 
-		drivebase.drivePercentageArcade(0, xError);
+		// double yError = positionController.calculate(limelight.getY());
+		if(isValid()){
+			drivebase.drivePercentageArcade(0, xError + (0.13 * Math.signum(xError)));
+		}
+		else{
+			drivebase.drivePercentageArcade(0, 0);
+		}
+
 	}
+
 
 	@Override
 	public void end(boolean interrupted) {
@@ -71,15 +95,28 @@ public class Targetor extends CommandBase {
 		else
 			Logger.l("Targetor Command Finished");
 		limelight.setLEDState(LEDState.DEFAULT);
-		limelight.setPipeline(Positions.OFF.getPipeline());
+		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+		SmartDashboard.putNumber("Limelight Pipeline", Constants.LIMELIGHT_PIPELINE_OFF); 
+		SmartDashboard.putBoolean("Limelight Command Finished", true
+		); 
+
     }
     @Override
     public boolean isFinished() {
-		double xError = position.getPIDControllerTurn().calculate(limelight.getX());
-        boolean targetLocked = Calc.approxEquals(xError, 0, Constants.LIMELIGHT_ERROR_RATE);
-        boolean limelightCanSee = limelight.getValid();
 
-		return targetLocked && limelightCanSee;
-		// return false;
+		boolean fullFinish = isLocked() && isValid();
+		if(fullFinish){
+			if(!isLocked){
+				isLocked = true;
+				startLockTime = System.currentTimeMillis(); 
+			}
+			else{
+				return startLockTime + 200 >= System.currentTimeMillis(); 
+			}
+		}
+		else{
+			isLocked = false; 
+		}
+		return false;
     }
 }

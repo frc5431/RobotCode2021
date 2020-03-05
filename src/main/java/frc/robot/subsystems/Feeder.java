@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.states.ShootSuperCommandClose;
+import frc.robot.commands.states.ShootSuperCommand;
 import frc.team5431.titan.core.misc.Logger;
 
 /**
@@ -21,6 +21,8 @@ public class Feeder extends SubsystemBase {
 	public enum FeederStateTeleop {
 		LOAD, COMPRESS, AUTO_REVERSE, READY
 	}
+
+	public static boolean ENABLE_AUTO_FEEDER = true; // Should Be true by default
 
 	WPI_TalonFX feed;
 	HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
@@ -176,11 +178,16 @@ public class Feeder extends SubsystemBase {
 		 */
 
 		if (feedSpeed == 0) {
-			if (readyToLoad) {
-				// Logger.l("Auto Feeder Running");
-				feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));
-			} else {
-				// Logger.l("Auto Feeder Stopped");
+			if(ENABLE_AUTO_FEEDER) {
+				if (readyToLoad) {
+					// Logger.l("Auto Feeder Running");
+					feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));
+				} else {
+					// Logger.l("Auto Feeder Stopped");
+					feed.set(0);
+				}
+			}
+			else {
 				feed.set(0);
 			}
 		} else {

@@ -1,28 +1,13 @@
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
-import frc.robot.commands.states.StowSuperCommand;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.LimelightSubsystem.Positions;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.vision.*;
 
@@ -45,7 +30,8 @@ public class RobotMap {
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
 	private static enum StartPosition {
-
+		SHOOT_AND_DRIVE_FOWARD_ONE,
+		DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE
 	};
 
 	SendableChooser<StartPosition> chooser = new SendableChooser<>();
@@ -54,6 +40,10 @@ public class RobotMap {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
 		bindKeys();
+
+		chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
+		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		SmartDashboard.putData("Auton Select", chooser);
 	}
 
 	private void bindKeys() {
@@ -61,7 +51,7 @@ public class RobotMap {
 		{
 			// Targetor REMINDER: SET TO FAR FOR TEST
 			new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-					.whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
+					.whenHeld(new Targetor(drivebase, limelight));
 
 			// Calibrate the Limelight
 			new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
@@ -94,10 +84,10 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(pivot, Pivot.POSITION.UP));
 
 			// Vision Far
-			new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
+			// new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
 
-			// Arbitrary button for Vision Close
-			new JoystickButton(buttonBoard, 7).whenHeld(new Targetor(drivebase, limelight, Positions.HALF));
+			// Vision Close
+			new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(drivebase, limelight));
 
 			// // Human player Intake Super Command (labeled "in") TODO
 			// new JoystickButton(buttonBoard, 11)
@@ -106,11 +96,11 @@ public class RobotMap {
 
 			// Shoot Close
 			new JoystickButton(buttonBoard, 1)
-					.whenHeld(new ShootSuperCommandClose(intake, hopper, feeder, flywheel, drivebase, limelight));
+					.whenHeld(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true));
 
-			// Shoot Far
-			new JoystickButton(buttonBoard, 14)
-					.whenHeld(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight));
+			// // Shoot Far
+			// new JoystickButton(buttonBoard, 14)
+			// 		.whenHeld(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight, false));
 
 			// Intake (By itself)
 			// new JoystickButton(buttonBoard, 2)
@@ -125,24 +115,24 @@ public class RobotMap {
 
 			// Stuck On Side.
 			// Run Hopper and pivot up with intake on
-			new JoystickButton(buttonBoard, 13);
+			// new JoystickButton(buttonBoard, 13);
 
 			new JoystickButton(buttonBoard, 12)
 					.whenPressed(new StowSuperCommand(intake, hopper, feeder, flywheel, elevator, balancer, pivot));
 
 			// Auto Switch
-			new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
+			// new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
 		}
 
 		// Operator Logitech
 		{
 			// Indexer Up
-			new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
-					.whenReleased(new FeederCommand(feeder, 0));
+			new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, flywheel, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
+					.whenReleased(new FeederCommand(feeder, flywheel, 0));
 
 			// Indexer Down
-			new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
-					.whenReleased(new FeederCommand(feeder, 0));
+			new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, flywheel, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
+					.whenReleased(new FeederCommand(feeder, flywheel, 0));
 
 			// Trigger Flywheel (Shoot Far)
 			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
@@ -177,10 +167,10 @@ public class RobotMap {
 					.whenHeld(new IntakeCommand(intake, 1));
 
 			// Vision Far 11
-			new JoystickButton(operator, 11).whenHeld(new Targetor(drivebase, limelight, Positions.FULL));
+			new JoystickButton(operator, 11).whenHeld(new Targetor(drivebase, limelight));
 
 			// Vision Close 12
-			new JoystickButton(operator, 12).whenHeld(new Targetor(drivebase, limelight, Positions.HALF));
+			new JoystickButton(operator, 12).whenHeld(new Targetor(drivebase, limelight));
 
 			// Ten Intake
 			new JoystickButton(operator, 10).whenHeld(new IntakeCommand(intake, Constants.INTAKE_DEFAULT_SPEED, false));
@@ -208,52 +198,33 @@ public class RobotMap {
 		feeder.resetVars();
 	}
 
-	public Command getAutonomousCommand() {
-
-		final var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-				new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter,
-						DriveConstants.kaVoltSecondsSquaredPerMeter),
-				DriveConstants.kDriveKinematics, 10);
-
-		final TrajectoryConfig config = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
-				AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-						// Add kinematics to ensure max speed is actually obeyed
-						.setKinematics(DriveConstants.kDriveKinematics)
-						// Apply the voltage constraint
-						.addConstraint(autoVoltageConstraint);
-
-		Trajectory trajectory = null;
-
-		switch (chooser.getSelected()) {
+	public CommandBase getAutonomousCommand() {
+		switch(chooser.getSelected()) {
+		case SHOOT_AND_DRIVE_FOWARD_ONE:
+			return new SequentialCommandGroup(
+				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true, false),
+				new DriveTime(drivebase, 0.3, 1000)
+			);
+		case DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE:
+			return new SequentialCommandGroup(
+				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true, false),
+				new WaitCommand(0.2),
+				new DriveTime(drivebase, -0.3, 500),
+				new WaitCommand(0.2),
+				new DriveTime(drivebase, 0.3, 1250)
+			);
 		default:
-			trajectory = TrajectoryGenerator.generateTrajectory(
-					// Start at the origin facing the +X direction
-					new Pose2d(0, 0, new Rotation2d(0)),
-					// Pass through these two interior waypoints, making an 's' curve path
-					List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-					// End 3 meters straight ahead of where we started, facing forward
-					new Pose2d(3, 0, new Rotation2d(0)),
-					// Pass config
-					config);
+			return new InstantCommand(() -> {});
 		}
-
-		assert (trajectory != null);
-
-		final RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drivebase::getPose,
-				new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-				new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter,
-						DriveConstants.kaVoltSecondsSquaredPerMeter),
-				DriveConstants.kDriveKinematics, drivebase::getWheelSpeeds,
-				new PIDController(DriveConstants.kPDriveVel, 0, 0), new PIDController(DriveConstants.kPDriveVel, 0, 0),
-				// RamseteCommand passes volts to the callback
-				drivebase::tankDriveVolts, drivebase);
-
-		return ramseteCommand.andThen(() -> drivebase.tankDriveVolts(0, 0));
-
-		// return chooser.getSelected();
 	}
 
 	public void resetEncoders() {
 		pivot.reset();
+	}
+
+	public void disabled() {
+		CommandScheduler.getInstance().cancelAll();
+		resetEncoders();
+		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
 	}
 }

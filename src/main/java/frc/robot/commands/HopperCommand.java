@@ -45,11 +45,11 @@ public class HopperCommand extends CommandBase {
 	public void execute() {
 		if (feeder.isFull() && (flywheel.getSpeed() == 0)) {
 			hopper.set(0,0);
-			Logger.l("Hopper Stop");
+			// Logger.l("Hopper Stop");
 			// Logger.l("Feeder is full; disabling hopper");
 		} else {
 			hopper.set(direction ? speedLeft : -speedLeft, direction ? speedRight : -speedRight);
-			Logger.l("Running Hopper Command");
+			// Logger.l("Running Hopper Command");
 		}
 
 		// Logger.l("%b",feeder.isFull());
