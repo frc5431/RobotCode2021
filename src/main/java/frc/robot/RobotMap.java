@@ -14,6 +14,12 @@ import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.vision.*;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ * @author Rishmita Rao
+ * @author Daniel Brubaker
+ */
 public class RobotMap {
 	private final PowerDistributionPanel pdp = new PowerDistributionPanel();
 

@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 import frc.team5431.titan.core.misc.Logger;
 
+/**
+ * @author Rishmita Rao
+ * @author Ryan Hirasaki
+ */
 public class DriveTime extends CommandBase {
 	private final Drivebase drivebase;
 	private final long driveTimeout;

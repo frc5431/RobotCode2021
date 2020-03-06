@@ -6,6 +6,9 @@ import frc.team5431.titan.core.misc.Logger;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 
+/**
+ * @author Colin Wong
+ */
 public class DriveBackForwardShoot extends SequentialCommandGroup {
     public DriveBackForwardShoot(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel, Drivebase drivebase) {
         addCommands(

@@ -7,6 +7,10 @@ import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Pivot;
 
+/**
+ * @author Rishmita Rao
+ * @author Ryan Hirasaki
+ */
 public class HumanPlayerIntake extends ParallelCommandGroup {
 	private final Feeder feeder;
 	public HumanPlayerIntake(Feeder feeder, Hopper hopper, Pivot pivot, Flywheel flywheel) {

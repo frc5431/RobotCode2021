@@ -5,7 +5,20 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
-
+/**
+ * Haha, the names are there because literally everyone on programming has touched Constants.
+ * 
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ * @author Rishmita Rao
+ * @author Daniel Brubaker
+ * @author Albert Ma
+ * @author Jyrell Go
+ * @author Isabella Diaz
+ * @author Carlo Greenwell
+ * @author Noah Markman
+ * @author Tauseef Afraz
+ */
 public final class Constants {
 
     // ================================================================================

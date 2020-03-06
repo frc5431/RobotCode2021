@@ -1,5 +1,8 @@
 package frc.robot.util;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class MotionMagic {
     public final double kF;
     public final double kP;
