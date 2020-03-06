@@ -181,7 +181,7 @@ public class Feeder extends SubsystemBase {
 			if(ENABLE_AUTO_FEEDER) {
 				if (readyToLoad) {
 					// Logger.l("Auto Feeder Running");
-					feed.set(Constants.SHOOTER_FEEDER_DEFAULT_SPEED - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));
+					feed.set(1 - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));
 				} else {
 					// Logger.l("Auto Feeder Stopped");
 					feed.set(0);

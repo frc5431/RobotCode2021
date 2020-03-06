@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Flywheel;
 import frc.team5431.titan.core.misc.Logger;
@@ -13,20 +14,20 @@ public class FeederCommand extends CommandBase {
     private final boolean direction;
 	private final double speed;
 	private final Flywheel flywheel;
+	private boolean rpmWait;  
 
-    public FeederCommand(Feeder feeder, Flywheel flywheel, boolean reverse) {
-        this(feeder, flywheel, 1, reverse);
+
+    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed,  boolean rpmWait) {
+        this(feeder, flywheel, speed, false, rpmWait);
     }
 
-    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed) {
-        this(feeder, flywheel, speed, false);
-    }
-
-    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed, boolean reverse) {
+    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed, boolean reverse, boolean rpmWait) {
         this.feeder = feeder;
         this.direction = reverse;
 		this.speed = speed;
 		this.flywheel = flywheel;
+		this.rpmWait = rpmWait; 
+		 
 
         addRequirements(feeder);
     }
@@ -38,8 +39,10 @@ public class FeederCommand extends CommandBase {
 	
 	@Override
 	public void execute() {
+
 		if(direction) {
-			if (flywheel.atVelocity()) {
+
+			if (flywheel.atVelocity() || !rpmWait) {
 				feeder.set(speed);
 			} else {
 				Logger.l("Flywheel not at speed, not pushing up!");

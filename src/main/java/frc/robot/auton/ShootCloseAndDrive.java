@@ -10,7 +10,7 @@ public class ShootCloseAndDrive extends SequentialCommandGroup {
 
 	public ShootCloseAndDrive(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel, Drivebase drivebase, Limelight limelight) {
 		addCommands(
-			new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true),
+			new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, true),
 			new DriveTime(drivebase, 0.25, 2)
 		);
 	}

@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
+import frc.team5431.titan.core.misc.Logger;
 
 public class DriveTime extends CommandBase {
 	private final Drivebase drivebase;
@@ -13,11 +14,15 @@ public class DriveTime extends CommandBase {
 		this.drivebase = drivebase;
 		this.driveTimeout = driveTimeout;
 		this.power = power;
+
+		addRequirements(drivebase);
 	}
 
 	@Override
 	public void initialize() {
 		startTime = System.currentTimeMillis();
+		Logger.l("starting drive time");
+
 	}
 
 	@Override
@@ -28,6 +33,7 @@ public class DriveTime extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		drivebase.drivePercentageArcade(0, 0);
+		Logger.l("finishing drive time");
 	}
 
 	@Override

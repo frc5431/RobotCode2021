@@ -5,10 +5,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.auton.AutonStates;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 
 public class RobotMap {
@@ -40,10 +42,18 @@ public class RobotMap {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
 		bindKeys();
+		outData();
 
+		// chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
+		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		// SmartDashboard.putData("Auton Select", chooser);
+	}
+
+	public void outData() {
 		chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
 		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		SmartDashboard.putData("Auton Select", chooser);
+		// SmartDashboard.putData("Auton Select", chooser);
 	}
 
 	private void bindKeys() {
@@ -96,11 +106,11 @@ public class RobotMap {
 
 			// Shoot Close
 			new JoystickButton(buttonBoard, 1)
-					.whenHeld(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true));
+					.whenHeld(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, false));
 
 			// // Shoot Far
-			// new JoystickButton(buttonBoard, 14)
-			// 		.whenHeld(new ShootSuperCommandFar(intake, hopper, feeder, flywheel, drivebase, limelight, false));
+			new JoystickButton(buttonBoard, 14)
+					.whenHeld(new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, false, false));
 
 			// Intake (By itself)
 			// new JoystickButton(buttonBoard, 2)
@@ -127,12 +137,12 @@ public class RobotMap {
 		// Operator Logitech
 		{
 			// Indexer Up
-			new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, flywheel, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
-					.whenReleased(new FeederCommand(feeder, flywheel, 0));
+			new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, flywheel, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+					.whenReleased(new FeederCommand(feeder, flywheel, 0, false));
 
 			// Indexer Down
-			new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, flywheel, Constants.SHOOTER_FEEDER_DEFAULT_SPEED))
-					.whenReleased(new FeederCommand(feeder, flywheel, 0));
+			new POVButton(operator, 180).whenPressed(new FeederCommand(feeder, flywheel, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+					.whenReleased(new FeederCommand(feeder, flywheel, 0, false));
 
 			// Trigger Flywheel (Shoot Far)
 			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
@@ -202,19 +212,20 @@ public class RobotMap {
 		switch(chooser.getSelected()) {
 		case SHOOT_AND_DRIVE_FOWARD_ONE:
 			return new SequentialCommandGroup(
-				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true, false),
+				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, true),
+				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
 				new DriveTime(drivebase, 0.3, 1000)
 			);
+		default:
 		case DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE:
 			return new SequentialCommandGroup(
-				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, limelight, true, false),
+				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, true),
+				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
 				new WaitCommand(0.2),
 				new DriveTime(drivebase, -0.3, 500),
 				new WaitCommand(0.2),
 				new DriveTime(drivebase, 0.3, 1250)
 			);
-		default:
-			return new InstantCommand(() -> {});
 		}
 	}
 

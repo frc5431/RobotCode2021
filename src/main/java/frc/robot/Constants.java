@@ -79,18 +79,18 @@ public final class Constants {
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
 	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
 	
-	public static final double FLYWHEEL_VELOCITY_RANGE = 300;
+	public static final double FLYWHEEL_VELOCITY_RANGE = 350;
     
     // FIXME: Put proper flywheel values
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 12300;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 11300;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10600;
-    public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.5;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10500; //11900
+    public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.4;
 
     // TODO: Come back as the flywheel needs time to get to speed (Adjust P)
     //public static final MotionMagic SHOOTER_FLYWHEEL_HIGH_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_HIGH * 1023)/10600, 0, 0, ( (SHOOTER_FLYWHEEL_SPEED_HIGH * 1023) / SHOOTER_FLYWHEEL_VELOCITY_HIGH));
-	public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.0466); //0.0474073170731707
+	public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); //0.0474073170731707, 0.004
    // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic(0.05, 0.0001, 0.0001, ( (SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
     // public static final MotionMagic SHOOTER_FLYWHEEL_LOW_GAINS = new MotionMagic((SHOOTER_FLYWHEEL_SPEED_LOW * 1023)/SHOOTER_FLYWHEEL_VELOCITY_LOW, 0, 0, ((SHOOTER_FLYWHEEL_SPEED_LOW * 1023) / SHOOTER_FLYWHEEL_VELOCITY_LOW));
 
@@ -98,7 +98,9 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.6;
+	public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.7;
+	public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.5;
+
 
     public static final long SHOOTER_FEEDER_BALL_DELAY = 1300;
 	public static final long SHOOTER_FEEDER_UP_DELAY = 1000;

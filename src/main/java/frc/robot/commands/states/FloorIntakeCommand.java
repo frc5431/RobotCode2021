@@ -8,6 +8,7 @@ import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PivotCommand;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Pivot.POSITION;
 
 /**
  * @author Colin Wong
@@ -33,6 +34,12 @@ public class FloorIntakeCommand extends ParallelCommandGroup {
 		);
 
 		
+	}
+
+	@Override
+	public void end(boolean interrupted) {
+		new PivotCommand(pivot, POSITION.UP);
+		super.end(interrupted);
 	}
 
 }

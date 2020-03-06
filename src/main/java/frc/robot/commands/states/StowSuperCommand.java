@@ -13,7 +13,7 @@ public class StowSuperCommand extends ParallelCommandGroup {
 			// new PivotCommand(pivot, Pivot.POSITION.UP), // Brings the Intake Up
 			new FlywheelCommand(flywheel, Flywheel.Speeds.OFF), // Stop The Flywheel
 			new HopperCommand(hopper, feeder, flywheel, 0.0, 0.0), // Stop The Hopper
-			new FeederCommand(feeder, flywheel, 0.0), // Stop The Feeder
+			new FeederCommand(feeder, flywheel, 0.0, false), // Stop The Feeder
 			new IntakeCommand(intake, 0.0) // Stop The Intake
 		);
 	}

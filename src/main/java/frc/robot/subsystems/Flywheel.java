@@ -6,10 +6,12 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.team5431.titan.core.misc.Calc;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
@@ -53,7 +55,6 @@ public class Flywheel extends SubsystemBase {
 	}
 
 	WPI_TalonFX flywheel, _flywheelFollow;
-	private int currentSlot = Constants.SLOT_0;
 
 	public Flywheel() {
 		flywheel = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
@@ -147,5 +148,16 @@ public class Flywheel extends SubsystemBase {
 		double currentVel = flywheel.getSelectedSensorVelocity();
 
 		return Calc.approxEquals(Math.abs(targetVel), Math.abs(currentVel),Constants.FLYWHEEL_VELOCITY_RANGE);
+	}
+
+	public double getTargetVelocity() {
+		double curr = flywheel.getSelectedSensorVelocity();
+		if (DriverStation.getInstance().isEnabled())
+			Logger.l("Retriving Flywheel Target: %f", curr);
+		return curr;
+	}
+
+	public int getCurrentVelocity() {
+		return flywheel.getSelectedSensorVelocity();
 	}
 }
