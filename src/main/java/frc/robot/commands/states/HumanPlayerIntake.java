@@ -1,9 +1,7 @@
 package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.FeederCommand;
-import frc.robot.commands.HopperCommand;
-import frc.robot.commands.PivotCommand;
+import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Hopper;

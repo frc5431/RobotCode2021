@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.states.ShootSuperCommand;
-import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Albert Ma

@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.auton.AutonStates;
+import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
+import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
-import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 
 public class RobotMap {
@@ -31,12 +32,7 @@ public class RobotMap {
 
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
-	private static enum StartPosition {
-		SHOOT_AND_DRIVE_FOWARD_ONE,
-		DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE
-	};
-
-	SendableChooser<StartPosition> chooser = new SendableChooser<>();
+	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
 	public RobotMap() {
 		limelight.setLEDState(LEDState.DEFAULT);
@@ -50,8 +46,8 @@ public class RobotMap {
 	}
 
 	public void outData() {
-		chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
-		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
+		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", AutonStates.DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		SmartDashboard.putData("Auton Select", chooser);
 		// SmartDashboard.putData("Auton Select", chooser);
 	}
@@ -85,7 +81,8 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(feeder, hopper, pivot, flywheel));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(intake, hopper, pivot, feeder, flywheel));
+			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(intake, hopper, pivot, feeder, flywheel)
+				.andThen(new PivotCommand(pivot, Pivot.POSITION.UP))); // TODO: test andThen
 
 			// Pivot Down
 			new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(pivot, Pivot.POSITION.DOWN));
@@ -210,21 +207,12 @@ public class RobotMap {
 
 	public CommandBase getAutonomousCommand() {
 		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_FOWARD_ONE:
-			return new SequentialCommandGroup(
-				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, true),
-				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
-				new DriveTime(drivebase, 0.3, 1000)
-			);
+		case SHOOT_AND_DRIVE_FORWARD_ONE:
+			return new ShootCloseAndDrive(intake, hopper, feeder, flywheel, drivebase, limelight);
 		default:
-		case DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE:
+		case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
 			return new SequentialCommandGroup(
-				new ShootSuperCommand(intake, hopper, feeder, flywheel, drivebase, true, true),
-				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
-				new WaitCommand(0.2),
-				new DriveTime(drivebase, -0.3, 500),
-				new WaitCommand(0.2),
-				new DriveTime(drivebase, 0.3, 1250)
+				
 			);
 		}
 	}

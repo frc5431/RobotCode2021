@@ -1,14 +1,12 @@
 package frc.robot.commands.states;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Flywheel.Velocity;
 import frc.team5431.titan.core.misc.Logger;
-import frc.team5431.titan.core.vision.Limelight;
+import frc.robot.Constants;
 import frc.robot.commands.*;
+import frc.robot.commands.subsystems.*;
 
 /**
  * @author Colin Wong
@@ -21,7 +19,8 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	private final Feeder feeder;
 	private final Flywheel flywheel;
 	private final Hopper hopper;
-
+	private final boolean rpmWait;
+	private long startTime;
 
 	public ShootSuperCommand(Intake intake, Hopper hopper, Feeder feeder, Flywheel flywheel, Drivebase drivebase,
 			boolean close, boolean rpmWait) {
@@ -29,6 +28,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		this.feeder = feeder;
 		this.flywheel = flywheel;
 		this.hopper = hopper;
+		this.rpmWait = rpmWait;
 
 		addCommands(
 				new SequentialCommandGroup(
@@ -38,13 +38,26 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 				new SequentialCommandGroup(
 					// new ParallelCommandGroup(
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = false;}), // Disable Auto Indexer
-					new PushBallDownCommand(feeder),
+					new FunctionalCommand(
+						() -> startTime = System.currentTimeMillis(),
+						() -> {
+							feeder.set(-0.4);
+							Logger.l("Pushing balls down");
+						}, 
+						(interrupted) -> {
+							feeder.set(0);
+							Logger.l("Finished pushing balls down");
+						}, 
+						() -> startTime + Constants.FEEDER_PUSH_BALL_DOWN <= System.currentTimeMillis() || 
+								feeder.getValueOfDIOSensor(3), 
+						feeder
+					),
 					// new InstantCommand(() -> {
 					// 	// while (flywheel.getTargetVelocity() == 0) {}
 					// 	while (){}
 					// 	Logger.l("Leaving Flywheel Wait In (ShootSuperCommand.java)");
 					// }),
-					new WaitTillFlywheelAtSpeed(flywheel, rpmWait),
+					new WaitUntilCommand(this::isFlywheelAtSpeed),
 					new PushBallsUpSubCommand(intake, hopper, feeder, flywheel, close, rpmWait),
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = true;}), // Enable Auto Indexer
 					new InstantCommand(() -> {FlywheelCommand.KILL = true;})
@@ -63,5 +76,9 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		super.end(interrupted);
 		Logger.l("Shooter Super Command Finished!");
 
+	}
+
+	private boolean isFlywheelAtSpeed() {
+		return !(!rpmWait && (!flywheel.atVelocity() || flywheel.getTargetVelocity() == 0));
 	}
 }
