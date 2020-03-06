@@ -20,6 +20,8 @@ public class Robot extends TimedRobot {
     robotMap = new RobotMap();
 	CameraServer.getInstance().startAutomaticCapture();
 	robotMap.outData();
+	robotMap.disabled();
+
   }
   
   @Override
@@ -60,8 +62,8 @@ public class Robot extends TimedRobot {
     robotMap.resetBallCount();
   }
 
-  @Override
-  public void disabledPeriodic() {
-	  robotMap.disabled();
-  }
+//   @Override
+//   public void disabledPeriodic() {
+// 	  robotMap.disabled();
+//   }
 }
