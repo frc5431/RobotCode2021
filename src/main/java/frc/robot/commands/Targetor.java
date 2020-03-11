@@ -1,11 +1,9 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
-import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.LEDState;
 import frc.team5431.titan.core.vision.Limelight;

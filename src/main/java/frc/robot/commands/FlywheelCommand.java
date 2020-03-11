@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Flywheel.Velocity;
-import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
 
 /**

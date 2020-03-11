@@ -4,7 +4,6 @@ import java.util.Set;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.*;
 
 public class PauseCommand extends CommandBase {
     Set<Subsystem> requirements;

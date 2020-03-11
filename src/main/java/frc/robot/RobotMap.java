@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
-import frc.robot.auton.AutonStates;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.subsystems.*;
