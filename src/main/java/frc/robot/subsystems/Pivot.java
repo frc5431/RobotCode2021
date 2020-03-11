@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -171,5 +173,9 @@ public class Pivot extends SubsystemBase {
 
 	public double error() {
 		return pivotMotor.getClosedLoopError();
-	}
+    }
+    
+    public List<WPI_TalonFX> getMotors() {
+        return List.of(pivotMotor);
+    }
 }

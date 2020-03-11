@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -64,5 +66,9 @@ public class Elevator extends SubsystemBase {
 
     public void resetEncoder() {
         elevator.setSelectedSensorPosition(0);
+    }
+
+    public List<WPI_TalonFX> getMotors() {
+        return List.of(elevator);
     }
 }

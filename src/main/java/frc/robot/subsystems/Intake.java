@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,5 +23,9 @@ public class Intake extends SubsystemBase {
 
     public void setSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public List<WPI_TalonFX> getMotors() {
+        return List.of(intakeMotor);
     }
 }

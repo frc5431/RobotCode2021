@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -273,5 +275,14 @@ public class Drivebase extends SubsystemBase {
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
         return null;
-	}
+    }
+    
+    public List<WPI_TalonFX> getMotors() {
+        return List.of(new WPI_TalonFX[]{
+            left,
+            right,
+            _leftFollow,
+            _rightFollow
+        });
+    }
 }

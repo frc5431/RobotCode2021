@@ -91,6 +91,10 @@ public class Feeder extends SubsystemBase {
 		feedSpeed = speed;
 	}
 
+	public WPI_TalonFX getMotors() {
+		return feed;
+	}
+
 	public HashMap<Integer, DigitalInput> getDIOSensors() {
 		return dioSensors;
 	}

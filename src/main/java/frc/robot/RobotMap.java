@@ -1,5 +1,11 @@
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.auton.AutonStates;
 import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
+import frc.robot.commands.music.*;
+import frc.robot.commands.music.MusicLoadCommand.LoadType;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
@@ -32,6 +40,9 @@ public class RobotMap {
 	private final Intake intake = new Intake();
 	private final Pivot pivot = new Pivot(pdp);
 
+	private List<WPI_TalonFX> motors = new ArrayList<WPI_TalonFX>();
+	private Music music;
+
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
@@ -49,6 +60,11 @@ public class RobotMap {
 		// chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
 		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		// SmartDashboard.putData("Auton Select", chooser);
+
+		Stream.of(drivebase.getMotors(), elevator.getMotors(), feeder.getMotors(), flywheel.getMotors(), intake.getMotors(), pivot.getMotors())
+				.forEach((motor) -> motors.addAll((List<WPI_TalonFX>) motor));
+		music = new Music(motors);
+		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 	}
 
 	public void outData() {
@@ -59,7 +75,12 @@ public class RobotMap {
 	}
 
 	private void bindKeys() {
-		// Driver Controls
+		
+		// ===========================
+		// ||                       ||
+		// ||    XBOX Controller    ||
+		// ||                       ||
+		// ===========================
 		{
 			// Targetor REMINDER: SET TO FAR FOR TEST
 			new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
@@ -81,7 +102,11 @@ public class RobotMap {
 
 		}
 
-		// Operator Controls
+		// ===========================
+		// ||                       ||
+		// ||     Button  Board     ||
+		// ||                       ||
+		// ===========================
 		{
 			// Human Player Intake
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(feeder, hopper, pivot, flywheel));
@@ -137,7 +162,11 @@ public class RobotMap {
 			// new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
 		}
 
-		// Operator Logitech
+		// ===========================
+		// ||                       ||
+		// ||   Logitech Operator   ||
+		// ||                       ||
+		// ===========================
 		{
 			// Indexer Up
 			new POVButton(operator, 0).whenPressed(new FeederCommand(feeder, flywheel, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
@@ -195,7 +224,11 @@ public class RobotMap {
 			new JoystickButton(operator, 6).whenHeld(new FlywheelCommand(flywheel, Flywheel.Velocity.HALF));
 		}
 
-		// Default Commands
+		// ===========================
+		// ||                       ||
+		// ||   Default  Commands   ||
+		// ||                       ||
+		// ===========================
 		{
 			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
@@ -205,6 +238,25 @@ public class RobotMap {
 			elevator.setDefaultCommand(new DefaultElevator(elevator,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
 		}
+
+		// ===========================
+		// ||                       ||
+		// ||     Music Controls    ||
+		// ||                       ||
+		// ===========================
+		/* {	// Sample Music Controls
+			// Play
+			new JoystickButton(buttonBoard, 10).whenPressed(new MusicPlayCommand(music));
+			// Pause
+			new JoystickButton(buttonBoard, 11).whenPressed(new MusicPauseCommand(music));
+			// Stop
+			new JoystickButton(buttonBoard, 12).whenPressed(new MusicStopCommand(music));
+
+			// Advance song by 1
+			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1));
+			// Decrement song by 1
+			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1));
+		} */
 	}
 
 	public void resetBallCount() {
@@ -229,7 +281,9 @@ public class RobotMap {
 
 	public void disabled() {
 		CommandScheduler.getInstance().cancelAll();
-		resetEncoders();
+		// resetEncoders();
+		music.stop();
+
 		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
 	}
 }
