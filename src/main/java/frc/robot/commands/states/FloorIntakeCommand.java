@@ -1,9 +1,7 @@
 package frc.robot.commands.states;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.Constants;
-import frc.robot.commands.FeederCommand;
+import frc.robot.Systems;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PivotCommand;
@@ -16,21 +14,14 @@ import frc.robot.subsystems.Pivot.POSITION;
  */
 public class FloorIntakeCommand extends ParallelCommandGroup {
 
-	private final Feeder feeder;
-	private final Intake intake;
-	private final Hopper hopper;
-	private final Pivot pivot;
+	private final Systems systems;
+	public FloorIntakeCommand(Systems systems) {
 
-	public FloorIntakeCommand(Intake intake, Hopper hopper, Pivot pivot, Feeder feeder, Flywheel flywheel) {
-		this.feeder = feeder; //
-		this.intake = intake; //
-		this.hopper = hopper; //
-		this.pivot = pivot; //
-
+		this.systems = systems;
 		addCommands(
-			new IntakeCommand(intake, false),
-			new HopperCommand(hopper, feeder, flywheel, false),
-			new PivotCommand(pivot, Pivot.POSITION.DOWN)
+			new IntakeCommand(systems, false),
+			new HopperCommand(systems, false),
+			new PivotCommand(systems, Pivot.POSITION.DOWN)
 		);
 
 		
@@ -38,7 +29,7 @@ public class FloorIntakeCommand extends ParallelCommandGroup {
 
 	@Override
 	public void end(boolean interrupted) {
-		new PivotCommand(pivot, POSITION.UP);
+		new PivotCommand(systems, POSITION.UP);
 		super.end(interrupted);
 	}
 

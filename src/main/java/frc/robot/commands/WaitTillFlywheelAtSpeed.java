@@ -1,20 +1,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Flywheel;
+import frc.robot.Systems;
 
 public class WaitTillFlywheelAtSpeed extends CommandBase {
 
-	private final Flywheel flywheel;
+	private final Systems systems;
 	private final boolean rpmWait;
 
-	public WaitTillFlywheelAtSpeed(Flywheel flywheel, boolean rpmWait) {
-		this.flywheel = flywheel;
+	public WaitTillFlywheelAtSpeed(Systems systems, boolean rpmWait) {
+		this.systems = systems;
 		this.rpmWait = rpmWait;
 	}
 
 	@Override
 	public boolean isFinished() {
-		return !(!rpmWait && (!flywheel.atVelocity() || flywheel.getTargetVelocity() == 0));
+		return !(!rpmWait && (!systems.getFlywheel().atVelocity() || systems.getFlywheel().getTargetVelocity() == 0));
 	}
 }

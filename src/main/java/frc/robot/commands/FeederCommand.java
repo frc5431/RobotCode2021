@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Systems;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Flywheel;
 import frc.team5431.titan.core.misc.Logger;
@@ -16,15 +17,15 @@ public class FeederCommand extends CommandBase {
 	private boolean rpmWait;  
 
 
-    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed,  boolean rpmWait) {
-        this(feeder, flywheel, speed, false, rpmWait);
+    public FeederCommand(Systems systems, double speed,  boolean rpmWait) {
+        this(systems, speed, false, rpmWait);
     }
 
-    public FeederCommand(Feeder feeder, Flywheel flywheel, double speed, boolean reverse, boolean rpmWait) {
-        this.feeder = feeder;
+    public FeederCommand(Systems systems, double speed, boolean reverse, boolean rpmWait) {
+        this.feeder = systems.getFeeder();
         this.direction = reverse;
 		this.speed = speed;
-		this.flywheel = flywheel;
+		this.flywheel = systems.getFlywheel();
 		this.rpmWait = rpmWait; 
 		 
 

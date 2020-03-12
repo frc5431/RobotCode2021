@@ -1,27 +1,24 @@
 package frc.robot.commands.states;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.FeederCommand;
+import frc.robot.Systems;
 import frc.robot.commands.HopperCommand;
 import frc.robot.commands.PivotCommand;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Pivot;
 
 public class HumanPlayerIntake extends ParallelCommandGroup {
-	private final Feeder feeder;
-	public HumanPlayerIntake(Feeder feeder, Hopper hopper, Pivot pivot, Flywheel flywheel) {
-		this.feeder = feeder;
+	private final Systems systems;
+	public HumanPlayerIntake(Systems systems) {
+		this.systems = systems;
 
 		addCommands(
-			new HopperCommand(hopper, feeder, flywheel, false),
-			new PivotCommand(pivot, Pivot.POSITION.DOWN)
+			new HopperCommand(systems, false),
+			new PivotCommand(systems, Pivot.POSITION.DOWN)
 		);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return feeder.getBallCount() >= 3;
+		return systems.getFeeder().getBallCount() >= 3;
 	}
 }

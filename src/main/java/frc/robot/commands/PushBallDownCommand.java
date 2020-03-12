@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 //import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Systems;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.misc.Logger;
 
@@ -16,8 +17,8 @@ public class PushBallDownCommand extends CommandBase{
 	long startTime;
 	boolean done = false;
 	
-    public PushBallDownCommand(Feeder feeder) {
-		this.feeder = feeder;
+    public PushBallDownCommand(Systems systems) {
+		this.feeder = systems.getFeeder();
         // addCommands(
         //     new FeederCommand(feeder, true),
         //     new HopperCommand(hopper, false)

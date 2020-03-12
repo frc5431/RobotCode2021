@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Systems;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Hopper;
@@ -17,21 +18,21 @@ public class HopperCommand extends CommandBase {
 	private final double speedLeft, speedRight;
 	private final Flywheel flywheel;
 
-    public HopperCommand(Hopper hopper, Feeder feeder, Flywheel flywheel, boolean reverse) {
-        this(hopper, feeder, flywheel, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED, reverse);
+    public HopperCommand(Systems systems, boolean reverse) {
+        this(systems, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED, reverse);
     }
 
-    public HopperCommand(Hopper hopper, Feeder feeder, Flywheel flywheel, double speedLeft, double speedRight) {
-        this(hopper, feeder, flywheel, speedLeft, speedRight, false);
+    public HopperCommand(Systems systems, double speedLeft, double speedRight) {
+        this(systems, speedLeft, speedRight, false);
     }
 
-    public HopperCommand(Hopper hopper, Feeder feeder, Flywheel flywheel, double speedLeft, double speedRight, boolean reverse) {
-        this.hopper = hopper;
+    public HopperCommand(Systems systems, double speedLeft, double speedRight, boolean reverse) {
+        this.hopper = systems.getHopper();
         this.direction = reverse;
         this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
-		this.feeder = feeder;
-		this.flywheel = flywheel;
+		this.feeder = systems.getFeeder();
+		this.flywheel = systems.getFlywheel();
 
         addRequirements(hopper);
     }

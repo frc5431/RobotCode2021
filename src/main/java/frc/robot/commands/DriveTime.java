@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Systems;
 import frc.robot.subsystems.Drivebase;
 import frc.team5431.titan.core.misc.Logger;
 
@@ -10,8 +11,8 @@ public class DriveTime extends CommandBase {
 	private final double power;
 	private long startTime;
 
-	public DriveTime(Drivebase drivebase, double power, long driveTimeout) {
-		this.drivebase = drivebase;
+	public DriveTime(Systems systems, double power, long driveTimeout) {
+		this.drivebase = systems.getDrivebase();
 		this.driveTimeout = driveTimeout;
 		this.power = power;
 

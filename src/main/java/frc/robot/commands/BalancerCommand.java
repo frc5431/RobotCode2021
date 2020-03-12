@@ -1,29 +1,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Balancer;
+import frc.robot.Systems;
 
 /**
  * @author Ryan Hirasaki
  */
 public class BalancerCommand extends CommandBase {
-    private final Balancer balancer;
+    private final Systems systems;
     private final boolean direction;
 
-    public BalancerCommand(Balancer balancer, boolean left) {
-        this.balancer = balancer;
+    public BalancerCommand(Systems systems, boolean left) {
+        this.systems = systems;
         this.direction = left;
 
-        addRequirements(balancer);
+        addRequirements(systems.getBalancer());
     }
 
     @Override
     public void initialize() {
-        balancer.set(direction ? 1 : -1);
+        systems.getBalancer().set(direction ? 1 : -1);
     }
 
     @Override
     public void end(boolean interrupted) {
-        balancer.set(0);
+        systems.getBalancer().set(0);
     }
 }
