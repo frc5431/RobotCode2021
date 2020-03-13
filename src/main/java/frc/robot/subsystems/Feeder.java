@@ -45,10 +45,10 @@ public class Feeder extends SubsystemBase {
 	boolean shooting = false;
 	private final PowerDistributionPanel pdp;
 
-	public Feeder(PowerDistributionPanel pdp) {
+	public Feeder(PowerDistributionPanel pdp, WPI_TalonFX feeder) {
 		this.pdp = pdp;
 
-		feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
+		feed = feeder;
 
 		feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
 		feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);

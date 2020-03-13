@@ -55,29 +55,28 @@ public class Pivot extends SubsystemBase {
 	private final PowerDistributionPanel pdp;
 
 
-    public Pivot(PowerDistributionPanel pdp) {
+    public Pivot(PowerDistributionPanel pdp, WPI_TalonFX pivotMotor) {
 		this.pdp = pdp;
-        pivotMotor = new WPI_TalonFX(Constants.PIVOT_ID);
-        pivotMotor.setInverted(Constants.PIVOT_REVERSE);
-        pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
-        pivotMotor.configFactoryDefault();
-
-        // reset encoder
-        pivotMotor.setSelectedSensorPosition(0);
+        this.pivotMotor = pivotMotor;
+        this.pivotMotor.setInverted(Constants.PIVOT_REVERSE);
+        this.pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
+        this.pivotMotor.configFactoryDefault();
         
-        pivotMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.SLOT_0,
+        // reset encoder
+        this.pivotMotor.setSelectedSensorPosition(0);
+        this.pivotMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.SLOT_0,
                 Constants.DRIVEBASE_TIMEOUT_MS);
 
         // flywheel.setSensorPhase(true);
 
-        pivotMotor.configPeakOutputForward(Constants.PIVOT_DEFAULT_SPEED);
-        pivotMotor.configPeakOutputReverse(-Constants.PIVOT_DEFAULT_SPEED);
+        this.pivotMotor.configPeakOutputForward(Constants.PIVOT_DEFAULT_SPEED);
+        this.pivotMotor.configPeakOutputReverse(-Constants.PIVOT_DEFAULT_SPEED);
 
 
-        pivotMotor.config_kF(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kF, Constants.DRIVEBASE_TIMEOUT_MS);
-        pivotMotor.config_kP(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kP, Constants.DRIVEBASE_TIMEOUT_MS);
-        pivotMotor.config_kI(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kI, Constants.DRIVEBASE_TIMEOUT_MS);
-        pivotMotor.config_kD(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kD, Constants.DRIVEBASE_TIMEOUT_MS);
+        this.pivotMotor.config_kF(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kF, Constants.DRIVEBASE_TIMEOUT_MS);
+        this.pivotMotor.config_kP(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kP, Constants.DRIVEBASE_TIMEOUT_MS);
+        this.pivotMotor.config_kI(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kI, Constants.DRIVEBASE_TIMEOUT_MS);
+        this.pivotMotor.config_kD(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kD, Constants.DRIVEBASE_TIMEOUT_MS);
     }
 
     

@@ -11,8 +11,8 @@ public class Elevator extends SubsystemBase {
 
     private WPI_TalonFX elevator;
 
-    public Elevator() {
-        elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
+    public Elevator(WPI_TalonFX elevatorFalcon) {
+        elevator = elevatorFalcon;
         elevator.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
         elevator.setNeutralMode(Constants.CLIMBER_ELEVATOR_NEUTRALMODE);
 

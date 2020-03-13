@@ -38,15 +38,15 @@ public class Drivebase extends SubsystemBase {
 
     private double ramping;
 
-    public Drivebase() {
+    public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
 
         pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
-        left = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_LEFT_ID);
-        right = new WPI_TalonFX(Constants.DRIVEBASE_FRONT_RIGHT_ID);
+        left = frontLeft;
+        right = frontRight;
 
-        _leftFollow = new WPI_TalonFX(Constants.DRIVEBASE_BACK_LEFT_ID);
-        _rightFollow = new WPI_TalonFX(Constants.DRIVEBASE_BACK_RIGHT_ID);
+        _leftFollow = rearLeft;
+        _rightFollow = rearRight;
 
         left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
         right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);

@@ -11,8 +11,8 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
     private WPI_TalonFX intakeMotor;
 
-    public Intake() {
-        intakeMotor = new WPI_TalonFX(Constants.INTAKE_ID);
+    public Intake(WPI_TalonFX motor) {
+        intakeMotor = motor;
         intakeMotor.setInverted(Constants.INTAKE_REVERSE);
         intakeMotor.setNeutralMode(Constants.INTAKE_NEUTRALMODE);
 

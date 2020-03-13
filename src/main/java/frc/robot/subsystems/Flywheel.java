@@ -56,9 +56,9 @@ public class Flywheel extends SubsystemBase {
 
 	WPI_TalonFX flywheel, _flywheelFollow;
 
-	public Flywheel() {
-		flywheel = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
-		_flywheelFollow = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_RIGHT_ID);
+	public Flywheel(WPI_TalonFX left, WPI_TalonFX right) {
+		flywheel = left;
+		_flywheelFollow = right;
 
 		_flywheelFollow.follow(flywheel);
 
