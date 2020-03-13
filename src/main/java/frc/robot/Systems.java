@@ -176,4 +176,23 @@ public class Systems {
 	public PowerDistributionPanel getPdp() {
 		return pdp;
 	}
+
+	/**
+	 * 
+	 * @return a list of all Falcon 500s on the robot
+	 */
+	public List<WPI_TalonFX> getAllFalcons() {
+		return List.of(
+			drivebase_Falcon_Left_Back,
+			drivebase_Falcon_Left_Front,
+			drivebase_Falcon_Right_Back,
+			drivebase_Falcon_Right_Front,
+			elevator_Falcon,
+			flywheel_Falcon_Left,
+			flywheel_Falcon_Right,
+			intake_Falcon,
+			feeder_Falcon,
+			pivot_Falcon
+		);
+	}
 }

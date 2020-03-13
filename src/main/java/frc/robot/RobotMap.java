@@ -1,11 +1,5 @@
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -13,8 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.auton.AutonStates;
 import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
-import frc.robot.commands.music.*;
-import frc.robot.commands.music.MusicLoadCommand.LoadType;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
@@ -30,8 +22,7 @@ import frc.team5431.titan.core.vision.*;
 public class RobotMap {
 	private final Systems systems = new Systems();
 
-	private List<WPI_TalonFX> motors = new ArrayList<WPI_TalonFX>();
-	private Music music;
+	private final Music music;
 
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
@@ -51,14 +42,7 @@ public class RobotMap {
 		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		// SmartDashboard.putData("Auton Select", chooser);
 
-		motors.addAll(systems.getDrivebase().getMotors());
-		motors.addAll(systems.getElevator().getMotors());
-		motors.addAll(systems.getFeeder().getMotors());
-		motors.addAll(systems.getFlywheel().getMotors());
-		motors.addAll(systems.getIntake().getMotors());
-		motors.addAll(systems.getPivot().getMotors());
-		
-		music = new Music(motors);
+		music = new Music(systems.getAllFalcons());
 		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 	}
 
