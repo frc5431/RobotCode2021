@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.misc.Logger;
 
-public final class Systems {
+public class Systems {
 
 	private final WPI_TalonSRX balancer_Talon;
 
