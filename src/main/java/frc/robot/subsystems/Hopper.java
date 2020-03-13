@@ -13,9 +13,9 @@ import frc.robot.Constants;
 public class Hopper extends SubsystemBase {
     WPI_TalonSRX hopperLeft, hopperRight;
 
-    public Hopper() {
-        hopperLeft = new WPI_TalonSRX(Constants.HOPPER_LEFT_ID);
-        hopperRight = new WPI_TalonSRX(Constants.HOPPER_RIGHT_ID);
+    public Hopper(WPI_TalonSRX left, WPI_TalonSRX right) {
+        hopperLeft = left;
+        hopperRight = right;
 
         hopperLeft.setInverted(Constants.HOPPER_REVERSE);
         hopperRight.setInverted(!Constants.HOPPER_REVERSE);

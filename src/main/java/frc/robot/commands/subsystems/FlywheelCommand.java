@@ -1,6 +1,7 @@
 package frc.robot.commands.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Systems;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Flywheel.Velocity;
 import frc.team5431.titan.core.misc.Logger;
@@ -16,16 +17,16 @@ public class FlywheelCommand extends CommandBase {
     private final Flywheel.Speeds speed;    
     private final Flywheel.Velocity velocity;  
 
-    public FlywheelCommand(Flywheel flywheel, Flywheel.Speeds speed) {
-        this.flywheel = flywheel;
+    public FlywheelCommand(Systems systems, Flywheel.Speeds speed) {
+        this.flywheel = systems.getFlywheel();
         this.speed = speed;
         this.velocity = null;
 
         addRequirements(flywheel);
     }
 
-    public FlywheelCommand(Flywheel flywheel, Flywheel.Velocity velocity) {
-        this.flywheel = flywheel;
+    public FlywheelCommand(Systems systems, Flywheel.Velocity velocity) {
+        this.flywheel = systems.getFlywheel();
         this.velocity = velocity;
         this.speed = null;
 

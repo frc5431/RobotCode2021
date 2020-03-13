@@ -1,6 +1,7 @@
 package frc.robot.commands.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Systems;
 import frc.robot.subsystems.Pivot;
 import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
@@ -13,8 +14,8 @@ public class PivotCommand extends CommandBase {
     private Pivot.POSITION position;
     private Pivot.SPEED speed;
 
-    public PivotCommand(Pivot pivot, Pivot.POSITION pos) {
-        this.pivot = pivot;
+    public PivotCommand(Systems systems, Pivot.POSITION pos) {
+        this.pivot = systems.getPivot();
         this.position = pos;
 
         assert (pos != null);
@@ -22,8 +23,8 @@ public class PivotCommand extends CommandBase {
         addRequirements(pivot);
     }
 
-    public PivotCommand(Pivot pivot, Pivot.SPEED speed) {
-        this.pivot = pivot;
+    public PivotCommand(Systems systems, Pivot.SPEED speed) {
+        this.pivot = systems.getPivot();
         this.speed = speed;
 
         addRequirements(pivot);

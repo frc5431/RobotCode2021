@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Systems;
 import frc.robot.subsystems.Drivebase;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.LEDState;
@@ -28,8 +29,8 @@ public class Targetor extends CommandBase {
 	 * @param drivebase
 	 * @param limelight
 	 */
-	public Targetor(Drivebase drivebase, Limelight limelight) {
-		this.drivebase = drivebase;
+	public Targetor(Systems systems, Limelight limelight) {
+		this.drivebase = systems.getDrivebase();
 		this.limelight = limelight;
 		// this.limelightSubsytem = limelightSubsytem;
 		// this.position = position;
@@ -38,7 +39,7 @@ public class Targetor extends CommandBase {
 		Constants.LIMELIGHT_PID.setTolerance(Constants.LIMELIGHT_ERROR_RATE);
 		// position.getPIDControllerTurn().setTolerance(0);
 
-		addRequirements(drivebase);
+		addRequirements(systems.getDrivebase());
 		// addRequirements(limelightSubsytem);
 
 	}

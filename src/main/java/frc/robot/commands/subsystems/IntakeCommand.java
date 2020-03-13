@@ -2,6 +2,7 @@ package frc.robot.commands.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Systems;
 import frc.robot.subsystems.Intake;
 import frc.team5431.titan.core.misc.Logger;
 
@@ -19,16 +20,16 @@ public class IntakeCommand extends CommandBase {
     private final boolean direction;
     private final double speed;
 
-    public IntakeCommand(Intake intake, boolean reverse) {
-        this(intake, Constants.INTAKE_DEFAULT_SPEED, reverse);
+    public IntakeCommand(Systems systems, boolean reverse) {
+        this(systems, Constants.INTAKE_DEFAULT_SPEED, reverse);
     }
 
-    public IntakeCommand(Intake intake, double speed) {
-        this(intake, speed, false);
+    public IntakeCommand(Systems systems, double speed) {
+        this(systems, speed, false);
     }
 
-    public IntakeCommand(Intake intake, double speed, boolean reverse) {
-        this.intake = intake;
+    public IntakeCommand(Systems systems, double speed, boolean reverse) {
+        this.intake = systems.getIntake();
         this.direction = reverse;
         this.speed = speed;
 

@@ -13,9 +13,10 @@ public class Balancer extends SubsystemBase {
 
     private WPI_TalonSRX balancer;
 
-    public Balancer() {
-        balancer = new WPI_TalonSRX(Constants.CLIMBER_BALANCER_ID);
-        balancer.setInverted(Constants.CLIMBER_BALANCER_REVERSE);
+    public Balancer(WPI_TalonSRX balancer) {
+        this.balancer = balancer;
+        this.balancer.setInverted(Constants.CLIMBER_BALANCER_REVERSE);
+
     }
 
     public void set(double speed) {
