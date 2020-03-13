@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -91,8 +92,8 @@ public class Feeder extends SubsystemBase {
 		feedSpeed = speed;
 	}
 
-	public WPI_TalonFX getMotors() {
-		return feed;
+	public List<WPI_TalonFX> getMotors() {
+		return List.of(feed);
 	}
 
 	public HashMap<Integer, DigitalInput> getDIOSensors() {

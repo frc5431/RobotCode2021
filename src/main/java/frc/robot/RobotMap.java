@@ -51,8 +51,13 @@ public class RobotMap {
 		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		// SmartDashboard.putData("Auton Select", chooser);
 
-		Stream.of(systems.getDrivebase().getMotors(), systems.getElevator().getMotors(), systems.getFeeder().getMotors(), systems.getFlywheel().getMotors(), systems.getIntake().getMotors(), systems.getPivot().getMotors())
-				.forEach((motor) -> motors.addAll((List<WPI_TalonFX>) motor));
+		motors.addAll(systems.getDrivebase().getMotors());
+		motors.addAll(systems.getElevator().getMotors());
+		motors.addAll(systems.getFeeder().getMotors());
+		motors.addAll(systems.getFlywheel().getMotors());
+		motors.addAll(systems.getIntake().getMotors());
+		motors.addAll(systems.getPivot().getMotors());
+		
 		music = new Music(motors);
 		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 	}
