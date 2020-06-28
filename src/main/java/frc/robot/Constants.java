@@ -5,7 +5,20 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
-
+/**
+ * Haha, the names are there because literally everyone on programming has touched Constants.
+ * 
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ * @author Rishmita Rao
+ * @author Daniel Brubaker
+ * @author Albert Ma
+ * @author Jyrell Go
+ * @author Isabella Diaz
+ * @author Carlo Greenwell
+ * @author Noah Markman
+ * @author Tauseef Afraz
+ */
 public final class Constants {
 
     // ================================================================================
@@ -184,5 +197,10 @@ public final class Constants {
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
 	public static final int PIVOT_PDP_SLOT = 4;
 	public static final int FEEDER_PDP_SLOT = 5;
-	public static final long FEEDER_PUSH_BALL_DOWN = 300;
+    public static final long FEEDER_PUSH_BALL_DOWN = 300;
+    
+    // ================================================================================
+    // Music
+    // ================================================================================
+	public static final boolean MUSIC_AUTO_QUEUE = true;
 }

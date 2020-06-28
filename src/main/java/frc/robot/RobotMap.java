@@ -4,15 +4,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.auton.AutonStates;
+import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
+import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
-import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ * @author Rishmita Rao
+ * @author Daniel Brubaker
+ */
 public class RobotMap {
 	private final Systems systems = new Systems();
+
+	private final Music music;
 
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
@@ -20,12 +30,7 @@ public class RobotMap {
 
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
-	private static enum StartPosition {
-		SHOOT_AND_DRIVE_FOWARD_ONE,
-		DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE
-	};
-
-	SendableChooser<StartPosition> chooser = new SendableChooser<>();
+	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
 	public RobotMap() {
 		limelight.setLEDState(LEDState.DEFAULT);
@@ -36,17 +41,25 @@ public class RobotMap {
 		// chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
 		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		// SmartDashboard.putData("Auton Select", chooser);
+
+		music = new Music(systems.getAllFalcons());
+		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 	}
 
 	public void outData() {
-		chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
-		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
+		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", AutonStates.DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		SmartDashboard.putData("Auton Select", chooser);
 		// SmartDashboard.putData("Auton Select", chooser);
 	}
 
 	private void bindKeys() {
-		// Driver Controls
+		
+		// ===========================
+		// ||                       ||
+		// ||    XBOX Controller    ||
+		// ||                       ||
+		// ===========================
 		{
 			// Targetor REMINDER: SET TO FAR FOR TEST
 			new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
@@ -68,13 +81,18 @@ public class RobotMap {
 
 		}
 
-		// Operator Controls
+		// ===========================
+		// ||                       ||
+		// ||     Button  Board     ||
+		// ||                       ||
+		// ===========================
 		{
 			// Human Player Intake
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems));
+			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems).andThen(new PivotCommand(systems, Pivot.POSITION.UP))); // TODO: test andThen
+
 
 			// Pivot Down
 			new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
@@ -123,7 +141,11 @@ public class RobotMap {
 			// new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
 		}
 
-		// Operator Logitech
+		// ===========================
+		// ||                       ||
+		// ||   Logitech Operator   ||
+		// ||                       ||
+		// ===========================
 		{
 			// Indexer Up
 			new POVButton(operator, 0).whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
@@ -181,7 +203,11 @@ public class RobotMap {
 			new JoystickButton(operator, 6).whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF));
 		}
 
-		// Default Commands
+		// ===========================
+		// ||                       ||
+		// ||   Default  Commands   ||
+		// ||                       ||
+		// ===========================
 		{
 			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
@@ -191,6 +217,25 @@ public class RobotMap {
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
 		}
+
+		// ===========================
+		// ||                       ||
+		// ||     Music Controls    ||
+		// ||                       ||
+		// ===========================
+		/* {	// Sample Music Controls
+			// Play
+			new JoystickButton(buttonBoard, 10).whenPressed(new MusicPlayCommand(music));
+			// Pause
+			new JoystickButton(buttonBoard, 11).whenPressed(new MusicPauseCommand(music));
+			// Stop
+			new JoystickButton(buttonBoard, 12).whenPressed(new MusicStopCommand(music));
+
+			// Advance song by 1
+			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1));
+			// Decrement song by 1
+			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1));
+		} */
 	}
 
 	public void resetBallCount() {
@@ -199,21 +244,12 @@ public class RobotMap {
 
 	public CommandBase getAutonomousCommand() {
 		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_FOWARD_ONE:
-			return new SequentialCommandGroup(
-				new ShootSuperCommand(systems, true, true),
-				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
-				new DriveTime(systems, 0.3, 1000)
-			);
+		case SHOOT_AND_DRIVE_FORWARD_ONE:
+			return new ShootCloseAndDrive(systems, limelight);
 		default:
-		case DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE:
+		case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
 			return new SequentialCommandGroup(
-				new ShootSuperCommand(systems, true, true),
-				new InstantCommand(()-> Logger.l("exiting shoot super command") ),
-				new WaitCommand(0.2),
-				new DriveTime(systems, -0.3, 500),
-				new WaitCommand(0.2),
-				new DriveTime(systems, 0.3, 1250)
+				
 			);
 		}
 	}
@@ -225,8 +261,9 @@ public class RobotMap {
 	public void disabled() {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
+		// resetEncoders();
+		music.stop();
 		systems.clearAllCommands();
-
 		resetEncoders();
 
 		// Lets Not Blind the Refs :)

@@ -6,6 +6,11 @@ import frc.robot.commands.DriveTime;
 import frc.robot.commands.states.ShootSuperCommand;
 import frc.team5431.titan.core.vision.Limelight;
 
+/**
+ * @author Rishmita Rao
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ */
 public class ShootCloseAndDrive extends SequentialCommandGroup {
 
 	public ShootCloseAndDrive(Systems systems, Limelight limelight) {

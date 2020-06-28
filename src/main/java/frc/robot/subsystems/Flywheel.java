@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -56,9 +58,9 @@ public class Flywheel extends SubsystemBase {
 
 	WPI_TalonFX flywheel, _flywheelFollow;
 
-	public Flywheel() {
-		flywheel = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_LEFT_ID);
-		_flywheelFollow = new WPI_TalonFX(Constants.SHOOTER_FLYWHEEL_RIGHT_ID);
+	public Flywheel(WPI_TalonFX left, WPI_TalonFX right) {
+		flywheel = left;
+		_flywheelFollow = right;
 
 		_flywheelFollow.follow(flywheel);
 
@@ -110,6 +112,13 @@ public class Flywheel extends SubsystemBase {
 		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError());
 
 		SmartDashboard.putBoolean("Flywheel At Velocity", atVelocity());
+	}
+
+	public List<WPI_TalonFX> getMotors() {
+		return List.of(new WPI_TalonFX[]{
+			flywheel,
+			_flywheelFollow
+		});
 	}
 
 	private void setSlot(int slot) {

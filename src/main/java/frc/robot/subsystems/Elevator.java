@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -7,12 +9,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * @author Ryan Hirasaki
+ * @author Colin Wong
+ * @author Rishmita Rao
+ * @author Daniel Brubaker
+ */
 public class Elevator extends SubsystemBase {
 
     private WPI_TalonFX elevator;
 
-    public Elevator() {
-        elevator = new WPI_TalonFX(Constants.CLIMBER_ELEVATOR_ID);
+    public Elevator(WPI_TalonFX elevatorFalcon) {
+        elevator = elevatorFalcon;
         elevator.setInverted(Constants.CLIMBER_ELEVATOR_REVERSE);
         elevator.setNeutralMode(Constants.CLIMBER_ELEVATOR_NEUTRALMODE);
 
@@ -58,5 +66,9 @@ public class Elevator extends SubsystemBase {
 
     public void resetEncoder() {
         elevator.setSelectedSensorPosition(0);
+    }
+
+    public List<WPI_TalonFX> getMotors() {
+        return List.of(elevator);
     }
 }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -45,10 +46,10 @@ public class Feeder extends SubsystemBase {
 	boolean shooting = false;
 	private final PowerDistributionPanel pdp;
 
-	public Feeder(PowerDistributionPanel pdp) {
+	public Feeder(PowerDistributionPanel pdp, WPI_TalonFX feeder) {
 		this.pdp = pdp;
 
-		feed = new WPI_TalonFX(Constants.SHOOTER_FEEDER_ID);
+		feed = feeder;
 
 		feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
 		feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
@@ -89,6 +90,10 @@ public class Feeder extends SubsystemBase {
 
 	public void set(double speed) {
 		feedSpeed = speed;
+	}
+
+	public List<WPI_TalonFX> getMotors() {
+		return List.of(feed);
 	}
 
 	public HashMap<Integer, DigitalInput> getDIOSensors() {

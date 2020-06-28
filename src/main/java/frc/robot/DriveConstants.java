@@ -2,6 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class DriveConstants {
     public static final double ksVolts = 0.0;
     public static final double kvVoltSecondsPerMeter = 0.0;

@@ -1,5 +1,8 @@
 package frc.robot;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class AutoConstants {
 
 	public static final double kMaxSpeedMetersPerSecond = 0;

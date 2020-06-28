@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
 import frc.robot.subsystems.Drivebase;
 
+/**
+ * @author Ryan Hirasaki
+ */
 public class DefaultDrive extends CommandBase {
 
     private final Drivebase drivebase;

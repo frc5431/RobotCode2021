@@ -1,14 +1,12 @@
 package frc.robot.commands.states;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Flywheel.Velocity;
 import frc.team5431.titan.core.misc.Logger;
 import frc.robot.Systems;
 import frc.robot.commands.*;
+import frc.robot.commands.subsystems.*;
 
 /**
  * @author Colin Wong
@@ -19,12 +17,14 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	// public static boolean isAboutToShoot = false;
 	// private final SuperStopShoot stop;
 	private final Systems systems;
+	private final boolean rpmWait;
 
 
 	public ShootSuperCommand(Systems systems,
 			boolean close, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
+		this.rpmWait = rpmWait;
 
 		addCommands(
 				new SequentialCommandGroup(
@@ -59,5 +59,9 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		super.end(interrupted);
 		Logger.l("Shooter Super Command Finished!");
 
+	}
+
+	private boolean isFlywheelAtSpeed() {
+		return !(!rpmWait && (!systems.getFlywheel().atVelocity() || systems.getFlywheel().getTargetVelocity() == 0));
 	}
 }
