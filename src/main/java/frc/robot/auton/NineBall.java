@@ -8,5 +8,9 @@ public class NineBall extends SequentialCommandGroup {
 
 	public NineBall(Drivebase drivebase) {
 		this.drivebase = drivebase;
+
+		addCommands(
+			new SixBall(drivebase)
+		);
 	}
 }
