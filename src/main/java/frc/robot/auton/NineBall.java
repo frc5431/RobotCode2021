@@ -1,5 +1,5 @@
 package frc.robot.auton;
 
-public class NineBall {
+public class NineBall extends SequentialCommandGroup {
 
 }
