@@ -1,37 +1,37 @@
 package frc.robot.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.Systems;
 
 /**
  * @author Ryan Hirasaki
  */
 public class DriveArc extends CommandBase {
 
-    private final Drivebase drivebase;
+    private final Systems systems;
     private final double angle, distance;
 
-    public DriveArc(Drivebase drivebase, double angle, double distance) {
-        this.drivebase = drivebase;
+    public DriveArc(Systems systems, double angle, double distance) {
+        this.systems = systems;
         this.angle = angle;
         this.distance = distance;
 
-        addRequirements(drivebase);
+        addRequirements(systems.getDrivebase());
     }
 
     @Override
     public void initialize() {
-        drivebase.resetSensors();
-        drivebase.driveMotionMagic(distance, angle);
+        systems.getDrivebase().resetSensors();
+        systems.getDrivebase().driveMotionMagic(distance, angle);
     }
 
     @Override
     public void end(boolean interrupted) {
-        drivebase.drivePercentageTank(0, 0);
+        systems.getDrivebase().drivePercentageTank(0, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return false; // FIXME
+        return false; // FIXME: Will Run Continiously
     }
 }
