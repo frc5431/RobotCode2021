@@ -11,11 +11,11 @@ import frc.team5431.titan.core.misc.Logger;
  */
 public class DriveTime extends CommandBase {
 	private final Drivebase drivebase;
-	private final long driveTimeout;
+	private final double driveTimeout;
 	private final double power;
 	private long startTime;
 
-	public DriveTime(Systems systems, double power, long driveTimeout) {
+	public DriveTime(Systems systems, double power, double driveTimeout) {
 		this.drivebase = systems.getDrivebase();
 		this.driveTimeout = driveTimeout;
 		this.power = power;
