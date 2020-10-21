@@ -59,8 +59,7 @@ public class Music extends SubsystemBase {
      * @param motors The motors to pass. Has a variable amount of motors.
      */
     public Music(WPI_TalonFX... motors) {
-        talons = List.of(motors);
-        talons.forEach((motor) -> orchestra.addInstrument(motor));
+        this(List.of(motors));
     }
 
     /**
