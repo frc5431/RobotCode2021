@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2021.1.2"
+    id "edu.wpi.first.GradleRIO" version "2021.2.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -66,7 +66,7 @@ dependencies {
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
     simulation wpi.deps.sim.driverstation(wpi.platforms.desktop, false)
 
-    implementation 'com.github.frc5431:TitanUtil:2021.1.10'
+    implementation 'com.github.frc5431:TitanUtil:2021.2.1'
 
     // Websocket extensions require additional configuration.
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)
