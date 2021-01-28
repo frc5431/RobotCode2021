@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
+import frc.team5431.titan.pathweaver.DriveConfig;
+
 /**
  * Haha, the names are there because literally everyone on programming has touched Constants.
  * 
@@ -143,6 +145,31 @@ public final class Constants {
     public static final double HOPPER_LEFT_SPEED = 0.85;
     public static final double HOPPER_RIGHT_SPEED = 0.7;
     
+    // ================================================================================
+    // PathWeaver Data
+    // ================================================================================
+
+    public static final double VOLT_SECONDS_PER_METER = 0;
+    public static final double VOLT_SECONDS_SQUARED_PER_METER = 0;
+    public static final double VOLTS = 0;
+    public static final double TRACKWIDTH_METER = 0;
+    public static final double MAX_SPEED_METERS_PER_SECOND = 0;
+    public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 0;
+    public static final double RAMSETE_B = 0;
+    public static final double RAMSETE_ZETA = 0;
+    public static final double PDRIVE_VELOCITY = 0;
+    public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig(
+        VOLTS,
+        VOLT_SECONDS_PER_METER,
+        VOLT_SECONDS_SQUARED_PER_METER,
+        TRACKWIDTH_METER,
+        MAX_SPEED_METERS_PER_SECOND,
+        MAX_ACCELERATION_METERS_PER_SECOND_SQUARED,
+        RAMSETE_B,
+        RAMSETE_ZETA,
+        PDRIVE_VELOCITY
+    );
+
     // ================================================================================
     // Vision Data
     // ================================================================================
