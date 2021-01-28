@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.io.IOException;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -12,6 +15,7 @@ import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.vision.*;
+import frc.team5431.titan.pathweaver.Characterize;
 
 /**
  * @author Ryan Hirasaki
@@ -29,6 +33,7 @@ public class RobotMap {
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
+	private final Characterize pathweaver;
 
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
@@ -44,6 +49,16 @@ public class RobotMap {
 
 		music = new Music(systems.getAllFalcons());
 		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
+
+		Characterize _pathweaver = null;
+		try {
+			_pathweaver = new Characterize(
+				Constants.DRIVEBASE_PATHWEAVER_PATH,
+				Constants.DRIVEBASE_PATHWEAVER_CONFIG);
+		} catch(IOException e) {
+			DriverStation.reportError("Cannot Load PathWeaver path", e.getStackTrace());
+		}
+		pathweaver = _pathweaver;
 	}
 
 	public void outData() {
@@ -242,16 +257,18 @@ public class RobotMap {
 		systems.getFeeder().resetVars();
 	}
 
-	public CommandBase getAutonomousCommand() {
-		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_FORWARD_ONE:
-			return new ShootCloseAndDrive(systems, limelight);
-		default:
-		case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
-			return new SequentialCommandGroup(
+	public Command getAutonomousCommand() {
+		// switch(chooser.getSelected()) {
+		// case SHOOT_AND_DRIVE_FORWARD_ONE:
+		// 	return new ShootCloseAndDrive(systems, limelight);
+		// default:
+		// case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
+		// 	return new SequentialCommandGroup(
 				
-			);
-		}
+		// 	);
+		// }
+		// TODO: implement loading of different paths
+		return pathweaver.getCommand(systems.getDrivebase(), systems.getDrivebase());
 	}
 
 	public void resetEncoders() {

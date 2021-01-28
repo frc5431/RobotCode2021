@@ -158,6 +158,7 @@ public final class Constants {
     public static final double RAMSETE_B = 0;
     public static final double RAMSETE_ZETA = 0;
     public static final double PDRIVE_VELOCITY = 0;
+    public static final String DRIVEBASE_PATHWEAVER_PATH = "";
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig(
         VOLTS,
         VOLT_SECONDS_PER_METER,

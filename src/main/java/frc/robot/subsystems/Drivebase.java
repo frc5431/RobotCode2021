@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
+import frc.team5431.titan.pathweaver.DrivebaseCallback;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -26,7 +27,7 @@ import frc.team5431.titan.core.misc.Logger;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends SubsystemBase {
+public class Drivebase extends SubsystemBase implements DrivebaseCallback {
 
     private PigeonIMU pidgey;
 
