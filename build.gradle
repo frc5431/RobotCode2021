@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2021.2.1"
+    id 'eclipse' // Fix vscode intellij bug
 }
 
 sourceCompatibility = JavaVersion.VERSION_11

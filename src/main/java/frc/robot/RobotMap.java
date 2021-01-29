@@ -50,15 +50,9 @@ public class RobotMap {
 		music = new Music(systems.getAllFalcons());
 		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 
-		PathWeaver _pathweaver = null;
-		try {
-			_pathweaver = new PathWeaver(
-				Constants.DRIVEBASE_PATHWEAVER_PATH,
-				Constants.DRIVEBASE_PATHWEAVER_CONFIG);
-		} catch(IOException e) {
-			DriverStation.reportError("Cannot Load PathWeaver path", e.getStackTrace());
-		}
-		pathweaver = _pathweaver;
+		pathweaver = new PathWeaver(
+			Constants.DRIVEBASE_PATHWEAVER_CONFIG,
+			Constants.DRIVEBASE_PATHWEAVER_PATH);
 	}
 
 	public void outData() {
