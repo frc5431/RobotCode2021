@@ -15,7 +15,7 @@ import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.vision.*;
-import frc.team5431.titan.pathweaver.Characterize;
+import frc.team5431.titan.pathweaver.PathWeaver;
 
 /**
  * @author Ryan Hirasaki
@@ -33,7 +33,7 @@ public class RobotMap {
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
-	private final Characterize pathweaver;
+	private final PathWeaver pathweaver;
 
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
@@ -50,9 +50,9 @@ public class RobotMap {
 		music = new Music(systems.getAllFalcons());
 		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
 
-		Characterize _pathweaver = null;
+		PathWeaver _pathweaver = null;
 		try {
-			_pathweaver = new Characterize(
+			_pathweaver = new PathWeaver(
 				Constants.DRIVEBASE_PATHWEAVER_PATH,
 				Constants.DRIVEBASE_PATHWEAVER_CONFIG);
 		} catch(IOException e) {
