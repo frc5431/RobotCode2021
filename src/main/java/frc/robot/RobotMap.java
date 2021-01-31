@@ -1,22 +1,18 @@
 package frc.robot;
 
-import java.io.IOException;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.auton.AutonStates;
-import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.vision.*;
-import frc.team5431.titan.robot.JoystickButton;
-import frc.team5431.titan.finder.PathLoader;
+import frc.team5431.titan.core.robot.JoystickButton;
+import frc.team5431.titan.pathfinder.PathLoader;
 
 /**
  * @author Ryan Hirasaki
@@ -264,7 +260,7 @@ public class RobotMap {
         // );
         // }
         // TODO: implement loading of different paths
-        return pathweaver.getCommand(systems.getDrivebase());
+        return pathweaver.generateCommand(systems.getDrivebase());
     }
 
     public void resetEncoders() {
