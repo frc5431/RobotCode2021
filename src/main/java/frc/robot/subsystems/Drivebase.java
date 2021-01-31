@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
-import frc.team5431.titan.pathweaver.DrivebaseCallback;
+import frc.team5431.titan.pathfinder.PathFinderControls;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -27,7 +27,7 @@ import frc.team5431.titan.pathweaver.DrivebaseCallback;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends SubsystemBase implements DrivebaseCallback {
+public class Drivebase extends SubsystemBase implements PathFinderControls {
 
     private PigeonIMU pidgey;
 
@@ -263,8 +263,8 @@ public class Drivebase extends SubsystemBase implements DrivebaseCallback {
     }
 
     public Pose2d getPose() {
+        throw new RuntimeException("Unimplemented");
         // return m_odometry.getPoseMeters();
-        return null;
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -274,8 +274,8 @@ public class Drivebase extends SubsystemBase implements DrivebaseCallback {
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        throw new RuntimeException("Unimplemented");
         // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
-        return null;
     }
     
     public List<WPI_TalonFX> getMotors() {

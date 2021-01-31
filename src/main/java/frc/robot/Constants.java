@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
-import frc.team5431.titan.pathweaver.DriveConfig;
+import frc.team5431.titan.pathfinder.DriveConfig;
 
 /**
  * Haha, the names are there because literally everyone on programming has
