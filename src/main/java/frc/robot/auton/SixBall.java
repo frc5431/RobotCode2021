@@ -8,6 +8,7 @@ import frc.robot.commands.states.FloorIntakeCommand;
 import frc.robot.commands.states.StowSuperCommand;
 import frc.team5431.titan.core.vision.Limelight;
 
+@SuppressWarnings("unused")
 public class SixBall extends SequentialCommandGroup {
 
 	private final Systems systems;
