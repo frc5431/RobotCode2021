@@ -24,6 +24,8 @@ import frc.team5431.titan.pathfinder.DriveConfig;
  */
 public final class Constants {
 
+    private Constants() {
+    }
     // ================================================================================
     // Teleop Controller Data
     // ================================================================================
@@ -138,7 +140,7 @@ public final class Constants {
     // 0.0, 0, 0);
     public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.0,
-    // 0.0, 0.0, 0.0);
+    // 0.0, 0.0, 0.0) ;
 
     // Hopper
     public static final int HOPPER_LEFT_ID = 7;
@@ -152,7 +154,7 @@ public final class Constants {
     // PathWeaver Data
     // ================================================================================
 
-    public static final String DRIVEBASE_PATHWEAVER_PATH = "";
+    public static final String DRIVEBASE_PATHWEAVER_PATH = "/home/user/path.json";
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
             .setVolts(0) //
             .setVoltsSpeed(0) // seconds per meter
@@ -212,7 +214,7 @@ public final class Constants {
 
     // Sensors
 
-    public static final int[] DIGITAL_INPUT_IDS = { 6, 8, 7, 9 };
+    public static final int[] DIGITAL_INPUT_IDS = { 6, 8, 7, 9 }; // top -> bottom
     public static final int PIVOT_PDP_SLOT = 4;
     public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;

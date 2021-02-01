@@ -191,8 +191,7 @@ public class RobotMap {
             // .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Two Intake
-            new JoystickButton(operator, LogitechExtreme3D.Button.TWO)
-                    .whenHeld(new IntakeCommand(systems, 1));
+            new JoystickButton(operator, LogitechExtreme3D.Button.TWO).whenHeld(new IntakeCommand(systems, 1));
 
             // Vision Far 11
             new JoystickButton(operator, 11).whenHeld(new Targetor(systems, limelight));
@@ -251,14 +250,14 @@ public class RobotMap {
     }
 
     public Command getAutonomousCommand() {
-        // switch(chooser.getSelected()) {
-        // case SHOOT_AND_DRIVE_FORWARD_ONE:
-        // return new ShootCloseAndDrive(systems, limelight);
-        // default:
-        // case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
-        // return new SequentialCommandGroup(
+        // switch (chooser.getSelected()) {
+        //     case SHOOT_AND_DRIVE_FORWARD_ONE:
+        //         return new ShootCloseAndDrive(systems, limelight);
+        //     default:
+        //     case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
+        //         return new SequentialCommandGroup(
 
-        // );
+        //         );
         // }
         // TODO: implement loading of different paths
         return pathweaver.generateCommand(systems.getDrivebase());
