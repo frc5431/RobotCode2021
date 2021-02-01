@@ -43,9 +43,9 @@ public class RobotMap {
         outData();
 
         // chooser.setDefaultOption("Shoot, Drive foward one, stop",
-        // StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
-        // chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one,
-        // stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+        //         StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
+        // chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", 
+        //         StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
         // SmartDashboard.putData("Auton Select", chooser);
 
         music = new Music(systems.getAllFalcons());
@@ -53,7 +53,8 @@ public class RobotMap {
     }
 
     public void outData() {
-        chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
+        chooser.setDefaultOption("Shoot, Drive foward one, stop", 
+                AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
         chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop",
                 AutonStates.DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE);
         SmartDashboard.putData("Auton Select", chooser);
@@ -67,19 +68,23 @@ public class RobotMap {
         // ===========================
         {
             // Targetor REMINDER: SET TO FAR FOR TEST
-            new JoystickButton(driver, Xbox.Button.B).whenHeld(new Targetor(systems, limelight));
+            new JoystickButton(driver, Xbox.Button.B)
+                .whenHeld(new Targetor(systems, limelight));
 
             // Calibrate the Limelight
             new JoystickButton(driver, Xbox.Button.X);
 
             // Intake
-            new JoystickButton(driver, Xbox.Button.A).whileHeld(new IntakeCommand(systems, 1));
+            new JoystickButton(driver, Xbox.Button.A)
+                .whileHeld(new IntakeCommand(systems, 1));
 
             // Balancer Left
-            new JoystickButton(driver, Xbox.Button.BUMPER_L).whenHeld(new BalancerCommand(systems, true));
+            new JoystickButton(driver, Xbox.Button.BUMPER_L)
+                .whenHeld(new BalancerCommand(systems, true));
 
             // Balancer Right
-            new JoystickButton(driver, Xbox.Button.BUMPER_R).whenHeld(new BalancerCommand(systems, false));
+            new JoystickButton(driver, Xbox.Button.BUMPER_R)
+                .whenHeld(new BalancerCommand(systems, false));
 
         }
 
@@ -88,35 +93,42 @@ public class RobotMap {
         // ===========================
         {
             // Human Player Intake
-            new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
+            new JoystickButton(buttonBoard, 11)
+                .toggleWhenPressed(new HumanPlayerIntake(systems));
 
             // Floor Intake
-            new JoystickButton(buttonBoard, 4).toggleWhenPressed(
-                    new FloorIntakeCommand(systems).andThen(new PivotCommand(systems, Pivot.POSITION.UP))); // TODO:
-                                                                                                            // test
-                                                                                                            // andThen
+            new JoystickButton(buttonBoard, 4)
+                .toggleWhenPressed(
+                    new FloorIntakeCommand(systems)
+                        .andThen(new PivotCommand(systems, Pivot.POSITION.UP))); // TODO: test andThen
 
             // Pivot Down
-            new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
+            new JoystickButton(buttonBoard, 6)
+                .whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
 
             // Pivot Up
-            new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
+            new JoystickButton(buttonBoard, 5)
+                .whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
 
             // Vision Far
-            // new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
+            // new JoystickButton(buttonBoard, 3)
+            //     .whenHeld(new Targetor(drivebase, limelight));
 
             // Vision Close
-            new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(systems, limelight));
+            new JoystickButton(buttonBoard, 7)
+                .whenPressed(new Targetor(systems, limelight));
 
             // Human player Intake Super Command (labeled "in") TODO
             // new JoystickButton(buttonBoard, 11)
             //     .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot, feeder));
 
             // Shoot Close
-            new JoystickButton(buttonBoard, 1).whenHeld(new ShootSuperCommand(systems, true, false));
+            new JoystickButton(buttonBoard, 1)
+                .whenHeld(new ShootSuperCommand(systems, true, false));
 
             // // Shoot Far
-            new JoystickButton(buttonBoard, 14).whenHeld(new ShootSuperCommand(systems, false, false));
+            new JoystickButton(buttonBoard, 14)
+                .whenHeld(new ShootSuperCommand(systems, false, false));
 
             // Intake (By itself)
             // new JoystickButton(buttonBoard, 2)
@@ -130,10 +142,12 @@ public class RobotMap {
             // Run Hopper and pivot up with intake on
             // new JoystickButton(buttonBoard, 13);
 
-            new JoystickButton(buttonBoard, 12).whenPressed(new StowSuperCommand(systems));
+            new JoystickButton(buttonBoard, 12)
+                .whenPressed(new StowSuperCommand(systems));
 
             // Auto Switch
-            // new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
+            // new JoystickButton(buttonBoard, 9)
+            //     .whenPressed(new KillBallCounter(feeder));
         }
 
         // ===========================
@@ -142,61 +156,65 @@ public class RobotMap {
         {
             // Indexer Up
             new POVButton(operator, CompassPOV.NORTH)
-                    .whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
-                    .whenReleased(new FeederCommand(systems, 0, false));
+                .whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+                .whenReleased(new FeederCommand(systems, 0, false));
 
             // Indexer Down
             new POVButton(operator, CompassPOV.SOUTH)
-                    .whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
-                    .whenReleased(new FeederCommand(systems, 0, false));
+                .whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+                .whenReleased(new FeederCommand(systems, 0, false));
 
             // Trigger Flywheel (Shoot Far)
             new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER)
-                    .whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.FULL))
-                    .whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
+                .whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.FULL))
+                .whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
             // Arbitrary Flywheel control (Shoot Close)
             new JoystickButton(operator, LogitechExtreme3D.Button.TWELVE)
-                    .whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF))
-                    .whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
+                .whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF))
+                .whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
             // Three Hopper Out
             new JoystickButton(operator, LogitechExtreme3D.Button.THREE)
-                    .whenHeld(new HopperCommand(systems, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
+                .whenHeld(new HopperCommand(systems, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
 
             // Five Hopper In
             new JoystickButton(operator, LogitechExtreme3D.Button.FIVE)
-                    .whileHeld(new HopperCommand(systems, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
+                .whileHeld(new HopperCommand(systems, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
 
             // Six Intake Pivot Down
             new JoystickButton(operator, LogitechExtreme3D.Button.SEVEN)
-                    .whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
-            // .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
+                .whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
+            //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Four Intake Pivot Up
             new JoystickButton(operator, LogitechExtreme3D.Button.EIGHT)
-                    .whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
-            // .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
+                .whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
+            //     .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
             // Two Intake
             new JoystickButton(operator, LogitechExtreme3D.Button.TWO)
-                    .whenHeld(new IntakeCommand(systems, 1));
+                .whenHeld(new IntakeCommand(systems, 1));
 
             // Vision Far 11
-            new JoystickButton(operator, 11).whenHeld(new Targetor(systems, limelight));
+            new JoystickButton(operator, 11)
+                .whenHeld(new Targetor(systems, limelight));
 
             // Vision Close 12
-            new JoystickButton(operator, 12).whenHeld(new Targetor(systems, limelight));
+            new JoystickButton(operator, 12)
+                .whenHeld(new Targetor(systems, limelight));
 
             // Ten Intake
             new JoystickButton(operator, 10)
-                    .whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, false));
+                .whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, false));
 
             // Nine Intake Reverse
-            new JoystickButton(operator, 9).whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, true));
+            new JoystickButton(operator, 9)
+                .whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, true));
 
             // Flywheel close 6
-            new JoystickButton(operator, 6).whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF));
+            new JoystickButton(operator, 6)
+                .whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF));
         }
 
         // ===========================
