@@ -10,7 +10,6 @@ import frc.robot.subsystems.Elevator;
  * @author Ryan Hirasaki
  */
 public class DefaultElevator extends CommandBase {
-
     private final Elevator elevator;
     private final DoubleSupplier pow;
 
