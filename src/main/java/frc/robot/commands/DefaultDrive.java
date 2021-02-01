@@ -24,6 +24,6 @@ public class DefaultDrive extends CommandBase {
 
     @Override
     public void execute() {
-        drivebase.drivePercentageArcade(pow.getAsDouble(), ang.getAsDouble());
+        drivebase.driveArcade(pow.getAsDouble(), ang.getAsDouble());
     }
 }

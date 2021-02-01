@@ -127,7 +127,7 @@ public class Pivot extends SubsystemBase {
         SmartDashboard.putNumber("Pivot Speed", pivotMotor.get());
 		SmartDashboard.putNumber("Pivot Error Rate", pivotMotor.getClosedLoopError(Constants.SLOT_0));
 		SmartDashboard.putNumber("Pivot current", pdp.getCurrent(Constants.PIVOT_PDP_SLOT));
-		if(4 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
+		if (4 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
 			// Slow down pivot
 			pivotMotor.set(0);
 		}

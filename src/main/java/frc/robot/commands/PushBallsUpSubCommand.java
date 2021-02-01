@@ -14,7 +14,7 @@ import frc.robot.commands.subsystems.*;
 
 public class PushBallsUpSubCommand extends ParallelCommandGroup {
 	private final Feeder feeder;
-	long lastBallCountedTime = 0;
+	private long lastBallCountedTime = 0;
 	
     public PushBallsUpSubCommand(Systems systems, boolean close, boolean rpmWait) {
 		this.feeder = systems.getFeeder();
@@ -33,9 +33,9 @@ public class PushBallsUpSubCommand extends ParallelCommandGroup {
 
 	@Override
 	public void execute() {
-		if(!feeder.isEmpty()){
+		if (!feeder.isEmpty())
 			lastBallCountedTime = System.currentTimeMillis();
-		}
+		
 		super.execute();
 	}
 

@@ -17,27 +17,22 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	// public static boolean isAboutToShoot = false;
 	// private final SuperStopShoot stop;
 	private final Systems systems;
-	private final boolean rpmWait;
 
-
-	public ShootSuperCommand(Systems systems,
-			boolean close, boolean rpmWait) {
+	public ShootSuperCommand(Systems systems, boolean close, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
-		this.rpmWait = rpmWait;
 
 		addCommands(
 				new SequentialCommandGroup(
-					new WaitCommand(0.1), new FlywheelCommand(systems, close ? Flywheel.Velocity.HALF : Flywheel.Velocity.FULL
-				)
+					new WaitCommand(0.1), new FlywheelCommand(systems, close ? Flywheel.Velocity.HALF : Flywheel.Velocity.FULL)
 				),
 				new SequentialCommandGroup(
 					// new ParallelCommandGroup(
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = false;}), // Disable Auto Indexer
 					new PushBallDownCommand(systems),
 					// new InstantCommand(() -> {
-					// 	// while (flywheel.getTargetVelocity() == 0) {}
-					// 	while (){}
+					// 	// while (flywheel.getTargetVelocity() == 0) { }
+					// 	while () { }
 					// 	Logger.l("Leaving Flywheel Wait In (ShootSuperCommand.java)");
 					// }),
 					new WaitTillFlywheelAtSpeed(systems, rpmWait),
@@ -58,10 +53,5 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		FlywheelCommand.KILL = false;
 		super.end(interrupted);
 		Logger.l("Shooter Super Command Finished!");
-
-	}
-
-	private boolean isFlywheelAtSpeed() {
-		return !(!rpmWait && (!systems.getFlywheel().atVelocity() || systems.getFlywheel().getTargetVelocity() == 0));
 	}
 }

@@ -181,7 +181,7 @@ public class Feeder extends SubsystemBase {
 		 */
 
 		if (feedSpeed == 0) {
-			if(ENABLE_AUTO_FEEDER) {
+			if (ENABLE_AUTO_FEEDER) {
 				if (readyToLoad) {
 					// Logger.l("Auto Feeder Running");
 					feed.set(1 - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));
