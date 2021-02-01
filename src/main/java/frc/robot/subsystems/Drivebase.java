@@ -274,6 +274,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     /**
      * @deprecated use driveVolts
      */
+    @Deprecated
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         left.setVoltage(leftVolts);
         right.setVoltage(-rightVolts);
