@@ -3,14 +3,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.auton.AutonStates;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
+import frc.team5431.titan.core.joysticks.utils.CompassPOV;
 import frc.team5431.titan.core.vision.*;
+import frc.team5431.titan.core.robot.POVButton;
 import frc.team5431.titan.core.robot.JoystickButton;
 import frc.team5431.titan.pathfinder.PathLoader;
 
@@ -152,12 +153,12 @@ public class RobotMap {
         // ===========================
         {
             // Indexer Up
-            new POVButton(operator, 0)
+            new POVButton(operator, CompassPOV.NORTH)
                     .whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
                     .whenReleased(new FeederCommand(systems, 0, false));
 
             // Indexer Down
-            new POVButton(operator, 180)
+            new POVButton(operator, CompassPOV.SOUTH)
                     .whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
                     .whenReleased(new FeederCommand(systems, 0, false));
 
