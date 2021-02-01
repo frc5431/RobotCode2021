@@ -78,10 +78,10 @@ public class Targetor extends CommandBase {
 
 		// double yError = positionController.calculate(limelight.getY());
 		if(isValid()){
-			drivebase.drivePercentageArcade(0, xError + (0.15 * Math.signum(xError)));
+			drivebase.driveArcade(0, xError + (0.15 * Math.signum(xError)));
 		}
 		else{
-			drivebase.drivePercentageArcade(0, 0);
+			drivebase.driveArcade(0, 0);
 		}
 
 	}
