@@ -23,9 +23,8 @@ import frc.team5431.titan.pathfinder.DriveConfig;
  * @author Tauseef Afraz
  */
 public final class Constants {
+    private Constants() { }
 
-    private Constants() {
-    }
     // ================================================================================
     // Teleop Controller Data
     // ================================================================================
