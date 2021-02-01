@@ -63,9 +63,7 @@ public class RobotMap {
     private void bindKeys() {
 
         // ===========================
-        // || ||
-        // || XBOX Controller ||
-        // || ||
+        // ===   XBOX Controller   ===
         // ===========================
         {
             // Targetor REMINDER: SET TO FAR FOR TEST
@@ -86,9 +84,7 @@ public class RobotMap {
         }
 
         // ===========================
-        // || ||
-        // || Button Board ||
-        // || ||
+        // ===    Button Board     ===
         // ===========================
         {
             // Human Player Intake
@@ -107,16 +103,14 @@ public class RobotMap {
             new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
 
             // Vision Far
-            // new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase,
-            // limelight));
+            // new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
 
             // Vision Close
             new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(systems, limelight));
 
-            // // Human player Intake Super Command (labeled "in") TODO
+            // Human player Intake Super Command (labeled "in") TODO
             // new JoystickButton(buttonBoard, 11)
-            // .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot,
-            // feeder));
+            //     .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot, feeder));
 
             // Shoot Close
             new JoystickButton(buttonBoard, 1).whenHeld(new ShootSuperCommand(systems, true, false));
@@ -126,16 +120,12 @@ public class RobotMap {
 
             // Intake (By itself)
             // new JoystickButton(buttonBoard, 2)
-            // .toggleWhenPressed(new IntakeCommand(intake,
-            // Constants.INTAKE_DEFAULT_SPEED));
+            //     .toggleWhenPressed(new IntakeCommand(intake, Constants.INTAKE_DEFAULT_SPEED));
 
-            /*
-             * Not used as it is bound to triggers for the driver but here for historical
-             * purposes
-             * 
-             * // Climb new JoystickButton(buttonBoard, 8);
-             */
-
+            // Not used as it is bound to triggers for the driver but here for historical purposes
+            // Climb 
+            // new JoystickButton(buttonBoard, 8);
+            
             // Stuck On Side.
             // Run Hopper and pivot up with intake on
             // new JoystickButton(buttonBoard, 13);
@@ -147,9 +137,7 @@ public class RobotMap {
         }
 
         // ===========================
-        // || ||
-        // || Logitech Operator ||
-        // || ||
+        // ===  Logitech Operator  ===
         // ===========================
         {
             // Indexer Up
@@ -212,9 +200,7 @@ public class RobotMap {
         }
 
         // ===========================
-        // || ||
-        // || Default Commands ||
-        // || ||
+        // ===  Default Commands   ===
         // ===========================
         {
             driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
@@ -227,23 +213,27 @@ public class RobotMap {
         }
 
         // ===========================
-        // || ||
-        // || Music Controls ||
-        // || ||
+        // ===   Music Controls    ===
         // ===========================
-        /*
-         * { // Sample Music Controls // Play new JoystickButton(buttonBoard,
-         * 10).whenPressed(new MusicPlayCommand(music)); // Pause new
-         * JoystickButton(buttonBoard, 11).whenPressed(new MusicPauseCommand(music)); //
-         * Stop new JoystickButton(buttonBoard, 12).whenPressed(new
-         * MusicStopCommand(music));
-         * 
-         * // Advance song by 1 new JoystickButton(buttonBoard,
-         * 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music,
-         * LoadType.OFFSET, +1)); // Decrement song by 1 new JoystickButton(buttonBoard,
-         * 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music,
-         * LoadType.OFFSET, -1)); }
-         */
+        /*{ 
+            // Sample Music Controls 
+            // Play 
+            new JoystickButton(buttonBoard, 10)
+                .whenPressed(new MusicPlayCommand(music)); 
+            // Pause 
+            new JoystickButton(buttonBoard, 11)
+                .whenPressed(new MusicPauseCommand(music)); 
+            // Stop 
+            new JoystickButton(buttonBoard, 12)
+                .whenPressed(new MusicStopCommand(music));
+        
+            // Advance song by 1 
+            new JoystickButton(buttonBoard, 13)
+                .whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1)); 
+            // Decrement song by 1 
+            new JoystickButton(buttonBoard, 14)
+                .whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1)); 
+        }*/
     }
 
     public void resetBallCount() {
@@ -253,12 +243,12 @@ public class RobotMap {
     public Command getAutonomousCommand() {
         // switch(chooser.getSelected()) {
         // case SHOOT_AND_DRIVE_FORWARD_ONE:
-        // return new ShootCloseAndDrive(systems, limelight);
+        //     return new ShootCloseAndDrive(systems, limelight);
         // default:
         // case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
-        // return new SequentialCommandGroup(
+        //     return new SequentialCommandGroup(
 
-        // );
+        //     );
         // }
         // TODO: implement loading of different paths
         return pathweaver.generateCommand(systems.getDrivebase());

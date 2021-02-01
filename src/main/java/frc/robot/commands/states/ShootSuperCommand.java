@@ -61,6 +61,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 
 	}
 
+    @SuppressWarnings("unused")
 	private boolean isFlywheelAtSpeed() {
 		return !(!rpmWait && (!systems.getFlywheel().atVelocity() || systems.getFlywheel().getTargetVelocity() == 0));
 	}
