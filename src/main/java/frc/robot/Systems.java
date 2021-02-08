@@ -111,7 +111,7 @@ public class Systems {
 	 */
 	public void clearAllCommands() {
 		Logger.l("Clearing Commands In All Subsystems");
-		subsystems.forEach((subsystem) -> {
+		subsystems.forEach(subsystem -> {
             var command = subsystem.getCurrentCommand();
             if (command != null) command.cancel();
         });
