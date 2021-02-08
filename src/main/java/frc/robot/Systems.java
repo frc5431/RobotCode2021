@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.misc.Logger;
@@ -111,7 +112,10 @@ public class Systems {
 	 */
 	public void clearAllCommands() {
 		Logger.l("Clearing Commands In All Subsystems");
-		subsystems.forEach((subsystem) -> subsystem.getCurrentCommand().cancel());
+		subsystems.forEach(subsystem -> {
+            Command command = subsystem.getCurrentCommand();
+            if (command != null) command.cancel();
+        });
 	}
 
 	/**

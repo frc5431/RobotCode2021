@@ -22,7 +22,7 @@ import frc.team5431.titan.core.vision.*;
 public class RobotMap {
 	private final Systems systems = new Systems();
 
-	private final Music music;
+    // private final Music music;
 
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
@@ -42,9 +42,9 @@ public class RobotMap {
 		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		// SmartDashboard.putData("Auton Select", chooser);
 
-		music = new Music(systems.getAllFalcons());
-		music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
-	}
+        // music = new Music(systems.getAllFalcons());
+        // music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
+    }
 
 	public void outData() {
 		chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
