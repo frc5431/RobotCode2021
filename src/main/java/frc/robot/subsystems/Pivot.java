@@ -138,7 +138,7 @@ public class Pivot extends SubsystemBase {
         // setSpeed(pos.getValue());
         int horizontal = Constants.PIVOT_DOWN_LIMIT;
         double ticksToDegrees = (2048 / 360) / 81;
-        int curentPosition = getEncoderPosition();
+        double curentPosition = getEncoderPosition();
         double degrees = (curentPosition - horizontal) / ticksToDegrees;
         double radians = java.lang.Math.toRadians(degrees);
         double CosineScalar = Math.cos(radians);
@@ -151,12 +151,12 @@ public class Pivot extends SubsystemBase {
         pivotMotor.set(ControlMode.PercentOutput, speed.getValue());
     }
 
-    private int getEncoderPosition() {
+    private double getEncoderPosition() {
         return pivotMotor.getSelectedSensorPosition(Constants.SLOT_0);
     }
 
     public boolean atLocation() {
-        int encoderValue = pivotMotor.getSelectedSensorPosition();
+        double encoderValue = pivotMotor.getSelectedSensorPosition();
         return Calc.approxEquals(position.getValue(), encoderValue, Constants.PIVOT_ERROR_RANGE);
     }
 
