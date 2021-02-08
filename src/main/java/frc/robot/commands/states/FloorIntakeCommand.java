@@ -14,6 +14,7 @@ public class FloorIntakeCommand extends ParallelCommandGroup {
 
 	private final Systems systems;
 	public FloorIntakeCommand(Systems systems) {
+
 		this.systems = systems;
 		addCommands(
 			new IntakeCommand(systems, false),
@@ -27,4 +28,5 @@ public class FloorIntakeCommand extends ParallelCommandGroup {
 		new PivotCommand(systems, POSITION.UP);
 		super.end(interrupted);
 	}
+
 }

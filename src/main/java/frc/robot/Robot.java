@@ -4,6 +4,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    Logger.DEBUG = true;
     robotMap = new RobotMap();
 	CameraServer.getInstance().startAutomaticCapture();
 	robotMap.outData();

@@ -9,6 +9,7 @@ import frc.team5431.titan.core.misc.Logger;
  * @author Colin Wong
  * @deprecated
  */
+
 @Deprecated
 public class LoggerCommand extends CommandBase {
     /**

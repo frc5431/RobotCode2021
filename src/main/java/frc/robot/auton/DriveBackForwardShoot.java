@@ -1,6 +1,7 @@
 package frc.robot.auton;
 
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.subsystems.*;
 import frc.team5431.titan.core.misc.Logger;
 import frc.robot.Systems;
 import frc.robot.commands.*;

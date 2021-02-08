@@ -27,7 +27,7 @@ public class DriveArc extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        drivebase.driveTank(0, 0);
+        drivebase.drivePercentageTank(0, 0);
     }
 
     @Override
