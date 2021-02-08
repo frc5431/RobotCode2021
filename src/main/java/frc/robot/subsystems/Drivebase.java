@@ -11,13 +11,17 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
+import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
+import frc.team5431.titan.pathfinder.PathFinderControls;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -26,7 +30,7 @@ import frc.team5431.titan.core.misc.Logger;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends SubsystemBase {
+public class Drivebase extends DrivebaseSubsystem implements PathFinderControls {
 
     private PigeonIMU pidgey;
 
@@ -39,6 +43,8 @@ public class Drivebase extends SubsystemBase {
     private ErrorCode eCode = ErrorCode.OK;
 
     private double ramping;
+
+    private DifferentialDriveOdometry odometry;
 
     public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
 
@@ -57,7 +63,6 @@ public class Drivebase extends SubsystemBase {
 
         _leftFollow.follow(left);
         _rightFollow.follow(right);
-
 
         /* Factory Default all hardware to prevent unexpected behavior */
         eCode = left.configFactoryDefault();
@@ -108,6 +113,8 @@ public class Drivebase extends SubsystemBase {
                 Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
 
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-pidgey.getFusedHeading()));
+
         /* Set PID values for each slot */
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
         setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
@@ -116,7 +123,6 @@ public class Drivebase extends SubsystemBase {
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
         right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
 
-        zeroGyro();
         zeroDistance();
 
         setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
@@ -153,12 +159,6 @@ public class Drivebase extends SubsystemBase {
         assert (eCode == ErrorCode.OK);
     }
 
-    private void zeroGyro() {
-        zeroDistance();
-
-        pidgey.setYaw(0);
-    }
-
     @Override
     public void periodic() {
 
@@ -181,11 +181,23 @@ public class Drivebase extends SubsystemBase {
         right.selectProfileSlot(slot, 0);
     }
 
+    /**
+     * @deprecated use driveTank
+     * @param driveLeft
+     * @param driveRight
+     */
+    @Deprecated
     public void drivePercentageTank(double driveLeft, double driveRight) {
         left.set(ControlMode.PercentOutput, driveLeft);
         right.set(ControlMode.PercentOutput, driveRight);
     }
 
+    /**
+     * @deprecated use driveArcade
+     * @param power
+     * @param turn
+     */
+    @Deprecated
     public void drivePercentageArcade(double power, double turn) {
         /*
          * Arbitrary based turning. Theoretically better as it is controlled by the
@@ -196,8 +208,10 @@ public class Drivebase extends SubsystemBase {
             power = 0;
         }
 
-        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
-        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
+        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward,
+                -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
+        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward,
+                +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
 
         // Logger.l("Power: %f, Turn: %f", power, turn);
     }
@@ -213,6 +227,11 @@ public class Drivebase extends SubsystemBase {
         return (float) pidgey.getCompassHeading();
     }
 
+    public void updateOdometry() {
+        odometry.update(Rotation2d.fromDegrees(pidgey.getFusedHeading()), //
+                getLeftDistance(), getRightDistance());
+    }
+
     public void setRamping(double ramping) {
         this.ramping = ramping;
 
@@ -222,22 +241,9 @@ public class Drivebase extends SubsystemBase {
         right.configClosedloopRamp(0);
     }
 
-    public double getRamping() {
-        return ramping;
-    }
-
     public void resetSensors() {
         zeroDistance();
-        zeroGyro();
     }
-
-    public double getLeftSpeed() {
-        return left.get();
-    };
-
-    public double getRightSpeed() {
-        return right.get();
-    };
 
     public double getLeftEncoderCount() {
         return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
@@ -262,10 +268,13 @@ public class Drivebase extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        // return m_odometry.getPoseMeters();
-        return null;
+        return odometry.getPoseMeters();
     }
 
+    /**
+     * @deprecated use driveVolts
+     */
+    @Deprecated
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         left.setVoltage(leftVolts);
         right.setVoltage(-rightVolts);
@@ -273,16 +282,25 @@ public class Drivebase extends SubsystemBase {
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        // return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
-        return null;
+        throw new RuntimeException("Unimplemented");
     }
-    
+
     public List<WPI_TalonFX> getMotors() {
-        return List.of(new WPI_TalonFX[]{
-            left,
-            right,
-            _leftFollow,
-            _rightFollow
-        });
+        return List.of(new WPI_TalonFX[] { left, right, _leftFollow, _rightFollow });
+    }
+
+    @Override
+    protected SpeedController getLeft() {
+        return left;
+    }
+
+    @Override
+    protected SpeedController getRight() {
+        return right;
+    }
+
+    @Override
+    protected double getMaxTurnValue() {
+        return Constants.DRIVEBASE_TURN_MAX_SPEED;
     }
 }

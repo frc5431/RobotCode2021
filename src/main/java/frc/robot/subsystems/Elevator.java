@@ -37,7 +37,7 @@ public class Elevator extends SubsystemBase {
 
     public void setSpeed(double speed) {
         // Encoder Clicks
-        double encoder = getEncoderPosition();
+        int encoder = getEncoderPosition();
         boolean limitReached = false;
 
         // If Going down set a lower limit of a encoder value of the constant lower limit
@@ -56,7 +56,7 @@ public class Elevator extends SubsystemBase {
         elevator.set(ControlMode.PercentOutput, speed);
     }
 
-    public double getEncoderPosition() {
+    public int getEncoderPosition() {
         return elevator.getSelectedSensorPosition();
     }
 

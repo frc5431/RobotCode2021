@@ -16,7 +16,6 @@ public class FeederCommand extends CommandBase {
 	private final Flywheel flywheel;
 	private boolean rpmWait;  
 
-
     public FeederCommand(Systems systems, double speed,  boolean rpmWait) {
         this(systems, speed, false, rpmWait);
     }
@@ -27,8 +26,7 @@ public class FeederCommand extends CommandBase {
 		this.speed = speed;
 		this.flywheel = systems.getFlywheel();
 		this.rpmWait = rpmWait; 
-		 
-
+		
         addRequirements(feeder);
     }
 
@@ -39,19 +37,15 @@ public class FeederCommand extends CommandBase {
 	
 	@Override
 	public void execute() {
-
-		if(direction) {
-
-			if (flywheel.atVelocity() || !rpmWait) {
-				feeder.set(speed);
-			} else {
+		if (direction) {
+			if (flywheel.atVelocity() || !rpmWait)
+                feeder.set(speed);
+            else {
 				Logger.l("Flywheel not at speed, not pushing up!");
 				feeder.set(0);
 			}
-		}
-		else {
+		} else
 			feeder.set(-speed);
-		}
 	}
 
     @Override

@@ -108,6 +108,8 @@ Temporary Items
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
+.history/
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -159,3 +161,7 @@ imgui.ini
 
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
+
+# IntelliJ
+.idea/
+out/

@@ -166,7 +166,7 @@ public class Flywheel extends SubsystemBase {
 		return curr;
 	}
 
-	public double getCurrentVelocity() {
+	public int getCurrentVelocity() {
 		return flywheel.getSelectedSensorVelocity();
 	}
 }
