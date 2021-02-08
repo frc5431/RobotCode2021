@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "frc.robot.Main",
+            "projectName": "RobotCode2021"
+        },
+        {
             "type": "wpilib",
             "name": "WPILib Desktop Debug",
             "request": "launch",

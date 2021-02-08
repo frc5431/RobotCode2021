@@ -24,7 +24,7 @@ import frc.team5431.titan.pathfinder.PathLoader;
 public class RobotMap {
     private final Systems systems = new Systems();
 
-    private final Music music;
+    // private final Music music;
 
     private final Xbox driver = new Xbox(0);
     private final Joystick buttonBoard = new Joystick(1);
@@ -48,8 +48,8 @@ public class RobotMap {
         //         StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
         // SmartDashboard.putData("Auton Select", chooser);
 
-        music = new Music(systems.getAllFalcons());
-        music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
+        // music = new Music(systems.getAllFalcons());
+        // music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
     }
 
     public void outData() {
@@ -280,7 +280,7 @@ public class RobotMap {
         // These two functions should do the same thing but is both here just in case
         CommandScheduler.getInstance().cancelAll();
         // resetEncoders();
-        music.stop();
+        // music.stop();
         systems.clearAllCommands();
         resetEncoders();
 
