@@ -30,7 +30,8 @@ public class RobotMap {
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
-	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
+    private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
+    private final PathLoader pathweaver = new PathLoader(Constants.DRIVEBASE_PATHWEAVER_CONFIG, Constants.DRIVEBASE_PATHWEAVER_PATH);
 
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
