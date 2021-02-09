@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ctre.phoenix.ErrorCode;
@@ -31,7 +32,7 @@ public class Music extends SubsystemBase {
     private MUSIC_STATE prevChooserState;
 
     /* An array of songs that are available to be played, can you guess the song/artists? */
-    private String[] songs = new String[] {
+    private List<String> songs = new ArrayList<>(List.of(
         "song1.chrp",
         "song2.chrp",
         "song3.chrp",
@@ -42,8 +43,8 @@ public class Music extends SubsystemBase {
         "song8.chrp",
         "song9.chrp", /* the remaining songs play better with three or more FXs */
         "song10.chrp",
-        "song11.chrp",
-    };
+        "song11.chrp"
+    ));
 
     /* track which song is selected for play */
     int songSelection = 0;
@@ -119,13 +120,13 @@ public class Music extends SubsystemBase {
         return orchestra;
     }
 
-    public String[] getSongs() {
+    public List<String> getSongs() {
         return songs;
     }
 
     public String getCurrentSong() {
         if (state != MUSIC_STATE.STOPPED)
-            return songs[songSelection];
+            return songs.get(songSelection);
         else
             return "None";
     }
@@ -161,14 +162,14 @@ public class Music extends SubsystemBase {
         /* increment song selection */
         songSelection += offset;
         /* wrap song index in case it exceeds boundary */
-        if (songSelection >= songs.length) {
+        if (songSelection >= songs.size()) {
             songSelection = 0;
         }
         if (songSelection < 0) {
-            songSelection = songs.length - 1;
+            songSelection = songs.size() - 1;
         }
         /* load the chirp file */
-        orchestra.loadMusic(songs[songSelection]);
+        orchestra.loadMusic(songs.get(songSelection));
 
         if (autoQueue)
             timeToPlayLoops = 10;
@@ -182,7 +183,7 @@ public class Music extends SubsystemBase {
     public void loadMusicSelectionAbs(int selection) {
         songSelection = selection;
 
-        orchestra.loadMusic(songs[songSelection]);
+        orchestra.loadMusic(songs.get(songSelection));
 
         if (autoQueue)
             timeToPlayLoops = 10;
@@ -195,14 +196,13 @@ public class Music extends SubsystemBase {
      * @return Whether the program ran successfully and found a song.
      */
     public boolean loadMusicSelectionName(String name) {
-        List<String> tempSongs = List.of(songs);
-        int index = tempSongs.indexOf(name);
+        int index = songs.indexOf(name);
 
         if (index == -1)
             return false;
         
         songSelection = index;
-        orchestra.loadMusic(songs[songSelection]);
+        orchestra.loadMusic(songs.get(songSelection));
 
         if (autoQueue)
             timeToPlayLoops = 10;

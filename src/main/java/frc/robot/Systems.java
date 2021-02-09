@@ -71,35 +71,35 @@ public class Systems {
 
 		pivot_Falcon = new WPI_TalonFX(Constants.PIVOT_ID);
 
-		final String constucting = "Constructing %s Object!";
+		final String constructingMsg = "Constructing %s Object!";
 
-		Logger.l(constucting, "PowerDistributionPanel");
+		Logger.l(constructingMsg, "PowerDistributionPanel");
 		pdp = new PowerDistributionPanel();
 
 		// Independent Subsystems
-		Logger.l(constucting, "Balancer");
+		Logger.l(constructingMsg, "Balancer");
 		balancer = new Balancer(balancer_Talon);
 		
-		Logger.l(constucting, "Drivebase");
+		Logger.l(constructingMsg, "Drivebase");
 		drivebase = new Drivebase(drivebase_Falcon_Left_Front, drivebase_Falcon_Right_Front, drivebase_Falcon_Left_Back, drivebase_Falcon_Right_Back);
 		
-		Logger.l(constucting, "Elevator");
+		Logger.l(constructingMsg, "Elevator");
 		elevator = new Elevator(elevator_Falcon);
 		
-		Logger.l(constucting, "Flywheel");
+		Logger.l(constructingMsg, "Flywheel");
 		flywheel = new Flywheel(flywheel_Falcon_Left, flywheel_Falcon_Right);
 
-		Logger.l(constucting, "Hopper");
+		Logger.l(constructingMsg, "Hopper");
 		hopper = new Hopper(hopper_Talon_Left, hopper_Talon_Right);
 
-		Logger.l(constucting, "Intake");
+		Logger.l(constructingMsg, "Intake");
 		intake = new Intake(intake_Falcon);
 
 		// Dependent Subsystems
-		Logger.l(constucting, "Feeder");
+		Logger.l(constructingMsg, "Feeder");
 		feeder = new Feeder(pdp, feeder_Falcon);
 
-		Logger.l(constucting, "Pivot");
+		Logger.l(constructingMsg, "Pivot");
 		pivot = new Pivot(pdp, pivot_Falcon);
 
 		subsystems = List.of(
@@ -108,7 +108,7 @@ public class Systems {
 	}
 
 	/**
-	 * This Function Will Clear All Commands From Every Subsystem
+	 * Clears all commands from every subsystem
 	 */
 	public void clearAllCommands() {
 		Logger.l("Clearing Commands In All Subsystems");
