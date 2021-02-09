@@ -22,31 +22,27 @@ import frc.team5431.titan.pathfinder.PathLoader;
  * @author Daniel Brubaker
  */
 public class RobotMap {
-    private final Systems systems = new Systems();
+	private final Systems systems = new Systems();
 
     // private final Music music;
 
-    private final Xbox driver = new Xbox(0);
-    private final Joystick buttonBoard = new Joystick(1);
-    private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
+	private final Xbox driver = new Xbox(0);
+	private final Joystick buttonBoard = new Joystick(1);
+	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
-    private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
-    private final PathLoader pathweaver = new PathLoader(Constants.DRIVEBASE_PATHWEAVER_CONFIG,
-            Constants.DRIVEBASE_PATHWEAVER_PATH);
+	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
-    SendableChooser<AutonStates> chooser = new SendableChooser<>();
+	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
-    public RobotMap() {
-        limelight.setLEDState(LEDState.DEFAULT);
-        limelight.setPipeline(9);
-        bindKeys();
-        outData();
+	public RobotMap() {
+		limelight.setLEDState(LEDState.DEFAULT);
+		limelight.setPipeline(9);
+		bindKeys();
+		outData();
 
-        // chooser.setDefaultOption("Shoot, Drive foward one, stop",
-        //         StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
-        // chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", 
-        //         StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
-        // SmartDashboard.putData("Auton Select", chooser);
+		// chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
+		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		// SmartDashboard.putData("Auton Select", chooser);
 
         // music = new Music(systems.getAllFalcons());
         // music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
