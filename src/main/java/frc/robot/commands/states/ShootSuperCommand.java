@@ -17,14 +17,12 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	// public static boolean isAboutToShoot = false;
 	// private final SuperStopShoot stop;
 	private final Systems systems;
-	private final boolean rpmWait;
 
 
 	public ShootSuperCommand(Systems systems,
 			boolean close, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
-		this.rpmWait = rpmWait;
 
 		addCommands(
 				new SequentialCommandGroup(
@@ -59,9 +57,5 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		super.end(interrupted);
 		Logger.l("Shooter Super Command Finished!");
 
-	}
-
-	private boolean isFlywheelAtSpeed() {
-		return !(!rpmWait && (!systems.getFlywheel().atVelocity() || systems.getFlywheel().getTargetVelocity() == 0));
 	}
 }

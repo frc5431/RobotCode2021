@@ -262,7 +262,7 @@ public class RobotMap {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
 		// resetEncoders();
-		music.stop();
+		// music.stop();
 		systems.clearAllCommands();
 		resetEncoders();
 
