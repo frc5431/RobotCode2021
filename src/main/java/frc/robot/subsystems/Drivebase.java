@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpiutil.math.VecBuilder;
 import edu.wpi.first.wpiutil.math.numbers.N1;
 import edu.wpi.first.wpiutil.math.numbers.N7;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
@@ -191,6 +193,14 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         // Check if the the motors are working together
         assert (left.get() == _leftFollow.get());
         assert (right.get() == _rightFollow.get());
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // go to https://bit.ly/3puz4bm for more info
+        double in_voltage = RobotController.getInputVoltage();
+        drivetrainSim.setInputs(left.get() * in_voltage, right.get() * in_voltage);
+        drivetrainSim.update(Robot.kDefaultPeriod);
     }
 
     public void setSlot(int slot) {
