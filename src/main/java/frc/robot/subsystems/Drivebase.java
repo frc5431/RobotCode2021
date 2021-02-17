@@ -33,6 +33,17 @@ import frc.team5431.titan.pathfinder.PathFinderControls;
  */
 public class Drivebase extends DrivebaseSubsystem implements PathFinderControls {
 
+    private static class ProcessError {
+        public interface Function {
+            ErrorCode run();
+        }
+
+        public static void test(Function lambda) {
+            ErrorCode code = lambda.run();
+            assert (code == ErrorCode.OK);
+        }
+    }
+
     private PigeonIMU pidgey;
 
     private WPI_TalonFX left;
@@ -40,8 +51,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
     private WPI_TalonFX _leftFollow;
     private WPI_TalonFX _rightFollow;
-
-    private ErrorCode eCode = ErrorCode.OK;
 
     private double ramping;
 
@@ -67,53 +76,40 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         _rightFollow.follow(right);
 
         /* Factory Default all hardware to prevent unexpected behavior */
-        eCode = left.configFactoryDefault();
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configFactoryDefault();
-        assert (eCode == ErrorCode.OK);
-        eCode = pidgey.configFactoryDefault();
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> left.configFactoryDefault());
+        ProcessError.test(() -> right.configFactoryDefault());
+        ProcessError.test(() -> pidgey.configFactoryDefault());
 
         /* Set what state the motors will be at when the speed is at zero */
         left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
         right.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
 
         /* Set the motor output ranges */
-        eCode = left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = left.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configPeakOutputReverse(-1, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> left.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> right.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
 
         /* Tell motors which sensors it is reading from */
-        eCode = left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
         /* Tell the motors which sesnor specifically is being used */
-        eCode = right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
-                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(
+                () -> right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
+                        Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        eCode = right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1,
-                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1,
+                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        eCode = right.configSelectedFeedbackCoefficient(0.5, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
-                Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-        eCode = right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
-                Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> right.configSelectedFeedbackCoefficient(0.5,
+                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
+                Constants.DRIVEBASE_TIMEOUT_MS));
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-pidgey.getFusedHeading()));
 
@@ -131,34 +127,22 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
-        eCode = right.config_kP(slot, gain.kP);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.config_kI(slot, gain.kI);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.config_kD(slot, gain.kD);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.config_kF(slot, gain.kF);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.config_IntegralZone(slot, gain.kIntegralZone, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.configClosedLoopPeakOutput(slot, gain.kPeakOutput, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.configClosedLoopPeriod(slot, gain.kClosedLoopTime, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError.test(() -> right.config_kP(slot, gain.kP));
+        ProcessError.test(() -> right.config_kI(slot, gain.kI));
+        ProcessError.test(() -> right.config_kD(slot, gain.kD));
+        ProcessError.test(() -> right.config_kF(slot, gain.kF));
+        ProcessError.test(() -> right.config_IntegralZone(slot, gain.kIntegralZone, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError
+                .test(() -> right.configClosedLoopPeakOutput(slot, gain.kPeakOutput, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError
+                .test(() -> right.configClosedLoopPeriod(slot, gain.kClosedLoopTime, Constants.DRIVEBASE_TIMEOUT_MS));
     }
 
     private void zeroDistance() {
-        eCode = left.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
-
-        eCode = right.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        ProcessError
+                .test(() -> left.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError
+                .test(() -> right.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS));
     }
 
     @Override
