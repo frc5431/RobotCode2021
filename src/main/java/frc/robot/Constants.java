@@ -6,7 +6,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
-
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpiutil.math.VecBuilder;
+import edu.wpi.first.wpiutil.math.Vector;
+import edu.wpi.first.wpiutil.math.numbers.N7;
 import frc.team5431.titan.pathfinder.DriveConfig;
 
 /**
@@ -152,6 +155,29 @@ public final class Constants {
     public static final double HOPPER_RIGHT_SPEED = 0.7;
 
     // ================================================================================
+    // Simulation Data
+    // ================================================================================
+
+    // drivebase single gearbox
+    public static final DCMotor ROBOT_GEARBOX_MOTORS = DCMotor.getFalcon500(2);
+
+    // Retireved via frc-characterize
+    public static final double ROBOT_V_LINEAR = 0.0;
+    public static final double ROBOT_A_LINEAR = 0.0;
+    public static final double ROBOT_V_ANGULAR = 0.0;
+    public static final double ROBOT_A_ANGULAR = 0.0;
+
+    // Noise correction, disable with bool
+    public static final boolean ROBOT_DEVIATION_ENABLE = true;
+    public static final double ROBOT_DEVIATION_X = 0.001;
+    public static final double ROBOT_DEVIATION_Y = 0.001;
+    public static final double ROBOT_DEVIATION_HEADING = 0.001;
+    public static final double ROBOT_DEVIATION_VEL_L = 0.1;
+    public static final double ROBOT_DEVIATION_VEL_R = 0.1;
+    public static final double ROBOT_DEVIATION_POS_L = 0.005;
+    public static final double ROBOT_DEVIATION_POS_R = 0.005;
+
+    // ================================================================================
     // PathWeaver Data
     // ================================================================================
 
@@ -193,8 +219,8 @@ public final class Constants {
     // ================================================================================
 
     public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
-    public static final int GEAR_RATIO = 0; // TODO: Find Gear Ratio
+    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence in meters
+    public static final double GEAR_RATIO = 0; // TODO: Find Gear Ratio
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values

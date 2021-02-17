@@ -16,8 +16,16 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpiutil.math.Matrix;
+import edu.wpi.first.wpiutil.math.VecBuilder;
+import edu.wpi.first.wpiutil.math.numbers.N1;
+import edu.wpi.first.wpiutil.math.numbers.N7;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
@@ -57,7 +65,9 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     private double ramping;
 
     private DifferentialDriveOdometry odometry;
+
     private Field2d m_field = new Field2d();
+    private DifferentialDrivetrainSim drivetrainSim;
 
     public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
 
@@ -126,6 +136,28 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         zeroDistance();
 
         setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
+
+        Matrix<N7, N1> deviation = null;
+        if (Constants.ROBOT_DEVIATION_ENABLE) {
+            deviation = VecBuilder.fill(//
+                    Constants.ROBOT_DEVIATION_X, Constants.ROBOT_DEVIATION_Y, //
+                    Constants.ROBOT_DEVIATION_HEADING, //
+                    Constants.ROBOT_DEVIATION_VEL_L, Constants.ROBOT_DEVIATION_VEL_R, //
+                    Constants.ROBOT_DEVIATION_POS_L, Constants.ROBOT_DEVIATION_POS_R);
+        }
+
+        drivetrainSim = new DifferentialDrivetrainSim(//
+                LinearSystemId.identifyDrivetrainSystem( //
+                        Constants.ROBOT_V_LINEAR, //
+                        Constants.ROBOT_A_LINEAR, //
+                        Constants.ROBOT_V_ANGULAR, //
+                        Constants.ROBOT_A_ANGULAR //
+                ), //
+                Constants.ROBOT_GEARBOX_MOTORS, //
+                Constants.GEAR_RATIO, //
+                Constants.DRIVEBASE_PATHWEAVER_CONFIG.kTrackwidthMeters, //
+                Constants.WHEEL_CIRCUMFERENCE / (Math.PI * 2.0), // Get radius from circumfrence
+                deviation);
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
