@@ -40,7 +40,9 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
         public static void test(Function lambda) {
             ErrorCode code = lambda.run();
-            assert (code == ErrorCode.OK);
+            // Weird syntax but valid
+            // https://docs.oracle.com/javase/8/docs/technotes/guides/language/assert.html
+            assert (code == ErrorCode.OK) : code.toString();
         }
     }
 
