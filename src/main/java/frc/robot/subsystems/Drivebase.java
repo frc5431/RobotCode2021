@@ -8,7 +8,10 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
+import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -56,11 +59,11 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
     private PigeonIMU pidgey;
 
-    private WPI_TalonFX left;
-    private WPI_TalonFX right;
+    private BaseTalon left;
+    private BaseTalon right;
 
-    private WPI_TalonFX _leftFollow;
-    private WPI_TalonFX _rightFollow;
+    private BaseTalon _leftFollow;
+    private BaseTalon _rightFollow;
 
     private double ramping;
 
@@ -68,8 +71,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
     private Field2d m_field = new Field2d();
     private DifferentialDrivetrainSim drivetrainSim;
+    private TalonSRXSimCollection leftDriveSim;
+    private TalonSRXSimCollection rightDriveSim;
 
-    public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
+    public Drivebase(BaseTalon frontLeft, BaseTalon frontRight, BaseTalon rearLeft, BaseTalon rearRight) {
 
         pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
@@ -158,6 +163,8 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
                 Constants.DRIVEBASE_PATHWEAVER_CONFIG.kTrackwidthMeters, //
                 Constants.WHEEL_CIRCUMFERENCE / (Math.PI * 2.0), // Get radius from circumfrence
                 deviation);
+        leftDriveSim = ((TalonSRX) left).getSimCollection();
+        rightDriveSim = ((TalonSRX) right).getSimCollection();
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
@@ -173,17 +180,22 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     }
 
     private void zeroDistance() {
-        ProcessError
-                .test(() -> left.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError
-                .test(() -> right.getSensorCollection().setIntegratedSensorPosition(0, Constants.DRIVEBASE_TIMEOUT_MS));
+        if (!Robot.isReal()) {
+            leftDriveSim.setAnalogPosition(0);
+            rightDriveSim.setAnalogPosition(0);
+            return;
+        }
+        ProcessError.test(() -> ((TalonFX) left).getSensorCollection().setIntegratedSensorPosition(0,
+                Constants.DRIVEBASE_TIMEOUT_MS));
+        ProcessError.test(() -> ((TalonFX) right).getSensorCollection().setIntegratedSensorPosition(0,
+                Constants.DRIVEBASE_TIMEOUT_MS));
     }
 
     @Override
     public void periodic() {
 
-        SmartDashboard.putNumber("Drivebase Left", left.get());
-        SmartDashboard.putNumber("Drivebase Right", right.get());
+        SmartDashboard.putNumber("Drivebase Left", getLeft().get());
+        SmartDashboard.putNumber("Drivebase Right", getRight().get());
         SmartDashboard.putNumber("Drivebase Right Encoder", right.getSelectedSensorPosition());
         SmartDashboard.putNumber("Drivebase Left Encoder", left.getSelectedSensorPosition());
         setRamping(ramping);
@@ -191,15 +203,15 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         SmartDashboard.putData("Field", m_field);
 
         // Check if the the motors are working together
-        assert (left.get() == _leftFollow.get());
-        assert (right.get() == _rightFollow.get());
+        assert (getLeft().get() == ((SpeedController) _leftFollow).get());
+        assert (getRight().get() == ((SpeedController) _rightFollow).get());
     }
 
     @Override
     public void simulationPeriodic() {
         // go to https://bit.ly/3puz4bm for more info
         double in_voltage = RobotController.getInputVoltage();
-        drivetrainSim.setInputs(left.get() * in_voltage, right.get() * in_voltage);
+        drivetrainSim.setInputs(getLeft().get() * in_voltage, getRight().get() * in_voltage);
         drivetrainSim.update(Robot.kDefaultPeriod);
     }
 
@@ -268,8 +280,8 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        left.setVoltage(leftVolts);
-        right.setVoltage(-rightVolts);
+        getLeft().setVoltage(leftVolts);
+        getRight().setVoltage(-rightVolts);
         // m_drive.feed();
     }
 
@@ -277,18 +289,18 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         throw new RuntimeException("Unimplemented");
     }
 
-    public List<WPI_TalonFX> getMotors() {
-        return List.of(new WPI_TalonFX[] { left, right, _leftFollow, _rightFollow });
+    public List<SpeedController> getMotors() {
+        return List.of(getLeft(), getRight());
     }
 
     @Override
     protected SpeedController getLeft() {
-        return left;
+        return (SpeedController) left;
     }
 
     @Override
     protected SpeedController getRight() {
-        return right;
+        return (SpeedController) right;
     }
 
     @Override
