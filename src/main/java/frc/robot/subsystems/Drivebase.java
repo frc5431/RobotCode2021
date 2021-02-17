@@ -241,10 +241,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         return odometry.getPoseMeters();
     }
 
-    /**
-     * @deprecated use driveVolts
-     */
-    @Deprecated
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         left.setVoltage(leftVolts);
         right.setVoltage(-rightVolts);
