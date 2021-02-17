@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
@@ -45,6 +46,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     private double ramping;
 
     private DifferentialDriveOdometry odometry;
+    private Field2d m_field = new Field2d();
 
     public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
 
@@ -167,6 +169,8 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         SmartDashboard.putNumber("Drivebase Right Encoder", right.getSelectedSensorPosition());
         SmartDashboard.putNumber("Drivebase Left Encoder", left.getSelectedSensorPosition());
         setRamping(ramping);
+        updateOdometry();
+        SmartDashboard.putData("Field", m_field);
 
         // Check if the the motors are working together
         assert (left.get() == _leftFollow.get());
@@ -179,41 +183,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         assert (slot <= 3);
 
         right.selectProfileSlot(slot, 0);
-    }
-
-    /**
-     * @deprecated use driveTank
-     * @param driveLeft
-     * @param driveRight
-     */
-    @Deprecated
-    public void drivePercentageTank(double driveLeft, double driveRight) {
-        left.set(ControlMode.PercentOutput, driveLeft);
-        right.set(ControlMode.PercentOutput, driveRight);
-    }
-
-    /**
-     * @deprecated use driveArcade
-     * @param power
-     * @param turn
-     */
-    @Deprecated
-    public void drivePercentageArcade(double power, double turn) {
-        /*
-         * Arbitrary based turning. Theoretically better as it is controlled by the
-         * speed controller.
-         */
-
-        if (Math.abs(power) == 0) {
-            power = 0;
-        }
-
-        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward,
-                -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
-        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward,
-                +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
-
-        // Logger.l("Power: %f, Turn: %f", power, turn);
     }
 
     public void driveMotionMagic(double distance, double angle) {
@@ -230,6 +199,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     public void updateOdometry() {
         odometry.update(Rotation2d.fromDegrees(pidgey.getFusedHeading()), //
                 getLeftDistance(), getRightDistance());
+        m_field.setRobotPose(odometry.getPoseMeters());
     }
 
     public void setRamping(double ramping) {
