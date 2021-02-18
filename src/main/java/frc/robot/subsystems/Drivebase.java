@@ -101,51 +101,55 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         _leftFollow.follow(left);
         _rightFollow.follow(right);
 
-        /* Factory Default all hardware to prevent unexpected behavior */
-        ProcessError.test(() -> left.configFactoryDefault());
-        ProcessError.test(() -> right.configFactoryDefault());
-        ProcessError.test(() -> pidgey.configFactoryDefault());
+        // put in block to allow IDE collapse
+        {
+            /* Factory Default all hardware to prevent unexpected behavior */
+            ProcessError.test(() -> left.configFactoryDefault());
+            ProcessError.test(() -> right.configFactoryDefault());
+            ProcessError.test(() -> pidgey.configFactoryDefault());
 
-        /* Set what state the motors will be at when the speed is at zero */
-        left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
-        right.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
+            /* Set what state the motors will be at when the speed is at zero */
+            left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
+            right.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
 
-        /* Set the motor output ranges */
-        ProcessError.test(() -> left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> left.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> right.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
+            /* Set the motor output ranges */
+            ProcessError.test(() -> left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> left.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        /* Tell motors which sensors it is reading from */
-        ProcessError.test(() -> left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+            /* Tell motors which sensors it is reading from */
+            ProcessError.test(() -> left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
+                    Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        /* Tell the motors which sesnor specifically is being used */
-        ProcessError.test(
-                () -> right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
-                        Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
-                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+            /* Tell the motors which sesnor specifically is being used */
+            ProcessError.test(() -> right.configRemoteFeedbackFilter(left.getDeviceID(),
+                    RemoteSensorSource.TalonFX_SelectedSensor, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE,
+                    Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError
+                    .test(() -> right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+                            Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1,
-                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
+                    Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1,
+                    Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
-        ProcessError.test(() -> right.configSelectedFeedbackCoefficient(0.5,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> right.configSelectedFeedbackCoefficient(1, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE,
-                Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configSelectedFeedbackCoefficient(0.5,
+                    Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> right.configSelectedFeedbackCoefficient(1,
+                    Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS));
 
+            /* Set PID values for each slot */
+            setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
+            setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
+
+            right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT,
+                    Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
+            right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT,
+                    Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
+        }
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-pidgey.getFusedHeading()));
-
-        /* Set PID values for each slot */
-        setPID(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_GAINS);
-        setPID(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_GAINS);
-
-        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_SLOT,
-                Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
-        right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
 
         Matrix<N7, N1> deviation = null;
         if (Constants.ROBOT_DEVIATION_ENABLE) {
