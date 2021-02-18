@@ -82,7 +82,7 @@ public class Drivebase extends DrivebaseSubsystem {
     private AnalogGyroSim gyroSim = new AnalogGyroSim(fake_gyro);
 
     public Drivebase(BaseTalon frontLeft, BaseTalon frontRight, BaseTalon rearLeft, BaseTalon rearRight) {
-
+        super((SpeedController) frontLeft, (SpeedController) frontRight, Constants.DRIVEBASE_TURN_MAX_SPEED);
         pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
         left = ProcessError.test_motor(frontLeft);
@@ -210,8 +210,8 @@ public class Drivebase extends DrivebaseSubsystem {
     @Override
     public void periodic() {
 
-        SmartDashboard.putNumber("Drivebase Left Speed", getLeft().get());
-        SmartDashboard.putNumber("Drivebase Right Speed", getRight().get());
+        SmartDashboard.putNumber("Drivebase Left Speed", left.getMotorOutputPercent());
+        SmartDashboard.putNumber("Drivebase Right Speed", right.getMotorOutputPercent());
         SmartDashboard.putNumber("Drivebase Left Meters", getLeftDistance());
         SmartDashboard.putNumber("Drivebase Right Meters", getRightDistance());
         SmartDashboard.putNumber("Drivebase Field Position X", field_2d.getRobotPose().getX());
@@ -230,7 +230,9 @@ public class Drivebase extends DrivebaseSubsystem {
     public void simulationPeriodic() {
         // go to https://bit.ly/3puz4bm for more info
         double in_voltage = RobotController.getInputVoltage();
-        drivetrainSim.setInputs(getLeft().get() * in_voltage, getRight().get() * in_voltage);
+        double left_pow = left.getMotorOutputPercent();
+        double right_pow = right.getMotorOutputPercent();
+        drivetrainSim.setInputs(left_pow * in_voltage, right_pow * in_voltage);
         drivetrainSim.update(Robot.kDefaultPeriod);
 
         int left_ticks = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftPositionMeters());
@@ -300,20 +302,5 @@ public class Drivebase extends DrivebaseSubsystem {
     @Override
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(left.getSelectedSensorVelocity(), right.getSelectedSensorVelocity());
-    }
-
-    @Override
-    protected SpeedController getLeft() {
-        return (SpeedController) left;
-    }
-
-    @Override
-    protected SpeedController getRight() {
-        return (SpeedController) right;
-    }
-
-    @Override
-    protected double getMaxTurnValue() {
-        return Constants.DRIVEBASE_TURN_MAX_SPEED;
     }
 }
