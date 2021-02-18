@@ -20,16 +20,16 @@ import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.system.LinearSystem;
 import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
 import edu.wpi.first.wpiutil.math.Matrix;
 import edu.wpi.first.wpiutil.math.VecBuilder;
-import edu.wpi.first.wpiutil.math.numbers.N1;
-import edu.wpi.first.wpiutil.math.numbers.N7;
+import edu.wpi.first.wpiutil.math.numbers.*;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.EncoderTools;
 import frc.robot.util.MotionMagic;
-import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
+import frc.team5431.titan.core.subsystem.TitanDifferentalDrivebase;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -38,7 +38,7 @@ import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends DrivebaseSubsystem {
+public class Drivebase extends TitanDifferentalDrivebase {
 
     private static class ProcessError {
         public interface Function {
@@ -157,13 +157,15 @@ public class Drivebase extends DrivebaseSubsystem {
                     Constants.ROBOT_DEVIATION_POS_L, Constants.ROBOT_DEVIATION_POS_R);
         }
 
+        LinearSystem<N2, N2, N2> standardDrivetrainSystem = LinearSystemId.identifyDrivetrainSystem( //
+                Constants.ROBOT_V_LINEAR, //
+                Constants.ROBOT_A_LINEAR, //
+                Constants.ROBOT_V_ANGULAR, //
+                Constants.ROBOT_A_ANGULAR //
+        );
+
         drivetrainSim = new DifferentialDrivetrainSim(//
-                LinearSystemId.identifyDrivetrainSystem( //
-                        Constants.ROBOT_V_LINEAR, //
-                        Constants.ROBOT_A_LINEAR, //
-                        Constants.ROBOT_V_ANGULAR, //
-                        Constants.ROBOT_A_ANGULAR //
-                ), //
+                standardDrivetrainSystem, //
                 Constants.ROBOT_GEARBOX_MOTORS, //
                 Constants.GEAR_RATIO, //
                 Constants.DRIVEBASE_PATHWEAVER_CONFIG.kTrackwidthMeters, //
