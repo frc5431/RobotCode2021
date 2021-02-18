@@ -30,6 +30,7 @@ import edu.wpi.first.wpiutil.math.numbers.N1;
 import edu.wpi.first.wpiutil.math.numbers.N7;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.util.EncoderTools;
 import frc.robot.util.MotionMagic;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
@@ -253,27 +254,21 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         zeroDistance();
     }
 
-    public double getLeftEncoderCount() {
-        return left.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
+    public double getLeftRevolutions() {
+        return EncoderTools.ticksToRevolutions(left.getSelectedSensorPosition());
     };
 
-    public double getRightEncoderCount() {
-        return right.getSelectedSensorPosition() / Constants.COUNTS_PER_REVOLUTION;
+    public double getRightRevolutions() {
+        return EncoderTools.ticksToRevolutions(right.getSelectedSensorPosition());
     };
 
     public double getLeftDistance() {
-        return getLeftEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE
-                * Constants.GEAR_RATIO;
+        return EncoderTools.ticksToMeters(left.getSelectedSensorPosition());
     };
 
     public double getRightDistance() {
-        return getRightEncoderCount() / Constants.COUNTS_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE
-                * Constants.GEAR_RATIO;
+        return EncoderTools.ticksToMeters(right.getSelectedSensorPosition());
     };
-
-    public double getRPM() {
-        return ((getLeftEncoderCount() * 600) + (getRightEncoderCount() * 600)) / 2;
-    }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
