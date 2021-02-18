@@ -7,9 +7,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.system.plant.DCMotor;
-import edu.wpi.first.wpiutil.math.VecBuilder;
-import edu.wpi.first.wpiutil.math.Vector;
-import edu.wpi.first.wpiutil.math.numbers.N7;
 import frc.team5431.titan.pathfinder.DriveConfig;
 
 /**
