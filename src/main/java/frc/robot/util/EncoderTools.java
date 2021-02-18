@@ -12,7 +12,7 @@ public class EncoderTools {
     }
     
     public static double ticksToMeters(double ticks) {
-    return ticksToWheelRevolutions(ticks) * Constants.WHEEL_CIRCUMFERENCE;
+        return ticksToWheelRevolutions(ticks) * Constants.WHEEL_CIRCUMFERENCE;
     }
 
     public static double axleRevolutionsToTicks(double revolutions) {
