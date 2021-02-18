@@ -254,14 +254,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         zeroDistance();
     }
 
-    public double getLeftRevolutions() {
-        return EncoderTools.ticksToAxleRevolutions(left.getSelectedSensorPosition());
-    };
-
-    public double getRightRevolutions() {
-        return EncoderTools.ticksToAxleRevolutions(right.getSelectedSensorPosition());
-    };
-
     public double getLeftDistance() {
         return EncoderTools.ticksToMeters(left.getSelectedSensorPosition());
     };
