@@ -209,10 +209,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     @Override
     public void periodic() {
 
-        SmartDashboard.putNumber("Drivebase Left", getLeft().get());
-        SmartDashboard.putNumber("Drivebase Right", getRight().get());
-        SmartDashboard.putNumber("Drivebase Right Encoder", right.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Drivebase Left Encoder", left.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Drivebase Left Speed", getLeft().get());
+        SmartDashboard.putNumber("Drivebase Right Speed", getRight().get());
+        SmartDashboard.putNumber("Drivebase Left Meters", getLeftDistance());
+        SmartDashboard.putNumber("Drivebase Right Meters", getRightDistance());
         setRamping(ramping);
         updateOdometry();
 
@@ -234,10 +234,12 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         int left_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftVelocityMetersPerSecond());
         int right_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getRightVelocityMetersPerSecond());
 
-        leftDriveSim.setAnalogPosition(left_ticks);
-        leftDriveSim.setAnalogVelocity(left_ticks_vel_sec / 10); // divide to get 100ms
-        rightDriveSim.setAnalogPosition(right_ticks);
-        rightDriveSim.setAnalogVelocity(right_ticks_vel_sec / 10);
+        ProcessError.test(() -> leftDriveSim.setQuadratureRawPosition(left_ticks));
+        ProcessError.test(() -> leftDriveSim.setQuadratureVelocity(left_ticks_vel_sec / 10)); // divide to get 100ms
+        ProcessError.test(() -> rightDriveSim.setQuadratureRawPosition(right_ticks));
+        ProcessError.test(() -> rightDriveSim.setQuadratureVelocity(right_ticks_vel_sec / 10));
+        assert left_ticks == (int) EncoderTools.metersToTicks(getLeftDistance());
+        assert right_ticks == (int) EncoderTools.metersToTicks(getRightDistance());
         // TODO: wait for PigeonIMU to support simulation
     }
 
@@ -246,17 +248,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         assert (slot >= 0 && slot <= 3);
 
         right.selectProfileSlot(slot, 0);
-    }
-
-    public void driveMotionMagic(double distance, double angle) {
-        left.follow(right, FollowerType.AuxOutput1);
-        right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
-
-        Logger.l("Distance: %f, Angle: %f", distance, angle);
-    }
-
-    public float getHeading() {
-        return (float) pidgey.getCompassHeading();
     }
 
     public void updateOdometry() {
