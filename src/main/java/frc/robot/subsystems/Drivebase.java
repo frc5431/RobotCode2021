@@ -214,6 +214,18 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         double in_voltage = RobotController.getInputVoltage();
         drivetrainSim.setInputs(getLeft().get() * in_voltage, getRight().get() * in_voltage);
         drivetrainSim.update(Robot.kDefaultPeriod);
+
+        int left_ticks = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftPositionMeters());
+        int right_ticks = (int) EncoderTools.metersToTicks(drivetrainSim.getRightPositionMeters());
+
+        int left_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftVelocityMetersPerSecond());
+        int right_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getRightVelocityMetersPerSecond());
+
+        leftDriveSim.setAnalogPosition(left_ticks);
+        leftDriveSim.setAnalogVelocity(left_ticks_vel_sec / 10);
+        rightDriveSim.setAnalogPosition(right_ticks);
+        rightDriveSim.setAnalogVelocity(right_ticks_vel_sec / 10);
+        // TODO: wait for PigeonIMU to support simulation
     }
 
     public void setSlot(int slot) {
