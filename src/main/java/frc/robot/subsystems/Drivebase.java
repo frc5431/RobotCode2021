@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -56,6 +58,14 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
             // https://docs.oracle.com/javase/8/docs/technotes/guides/language/assert.html
             assert (code == ErrorCode.OK) : code.toString();
         }
+        public static BaseTalon test_motor(BaseTalon talon) {
+            assert talon instanceof SpeedController;
+            if (Robot.isReal())
+                assert talon instanceof WPI_TalonFX;
+            else
+                assert talon instanceof WPI_TalonSRX;
+            return talon;
+        }
     }
 
     private PigeonIMU pidgey;
@@ -79,11 +89,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
         pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
-        left = frontLeft;
-        right = frontRight;
-
-        _leftFollow = rearLeft;
-        _rightFollow = rearRight;
+        left = ProcessError.test_motor(frontLeft);
+        right = ProcessError.test_motor(frontRight);
+        _leftFollow = ProcessError.test_motor(rearLeft);
+        _rightFollow = ProcessError.test_motor(rearRight);
 
         left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
         right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
@@ -139,10 +148,6 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE);
         right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT, Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
 
-        zeroDistance();
-
-        setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
-
         Matrix<N7, N1> deviation = null;
         if (Constants.ROBOT_DEVIATION_ENABLE) {
             deviation = VecBuilder.fill(//
@@ -164,8 +169,15 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
                 Constants.DRIVEBASE_PATHWEAVER_CONFIG.kTrackwidthMeters, //
                 Constants.WHEEL_CIRCUMFERENCE / (Math.PI * 2.0), // Get radius from circumfrence
                 deviation);
-        leftDriveSim = ((TalonSRX) left).getSimCollection();
-        rightDriveSim = ((TalonSRX) right).getSimCollection();
+
+        if (Robot.isSimulation()) {
+            // Will only work as on simulation left and right are actually WPI_TalonSRX
+            leftDriveSim = ((WPI_TalonSRX) left).getSimCollection();
+            rightDriveSim = ((WPI_TalonSRX) right).getSimCollection();
+        }
+
+        zeroDistance();
+        setRamping(Constants.DRIVEBASE_DEFAULT_RAMPING);
     }
 
     private void setPID(final int slot, final MotionMagic gain) {
@@ -181,14 +193,14 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     }
 
     private void zeroDistance() {
-        if (!Robot.isReal()) {
+        if (Robot.isSimulation()) {
             leftDriveSim.setAnalogPosition(0);
             rightDriveSim.setAnalogPosition(0);
             return;
         }
-        ProcessError.test(() -> ((TalonFX) left).getSensorCollection().setIntegratedSensorPosition(0,
+        ProcessError.test(() -> ((WPI_TalonFX) left).getSensorCollection().setIntegratedSensorPosition(0,
                 Constants.DRIVEBASE_TIMEOUT_MS));
-        ProcessError.test(() -> ((TalonFX) right).getSensorCollection().setIntegratedSensorPosition(0,
+        ProcessError.test(() -> ((WPI_TalonFX) right).getSensorCollection().setIntegratedSensorPosition(0,
                 Constants.DRIVEBASE_TIMEOUT_MS));
     }
 
@@ -204,8 +216,8 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         SmartDashboard.putData("Field", m_field);
 
         // Check if the the motors are working together
-        assert (getLeft().get() == ((SpeedController) _leftFollow).get());
-        assert (getRight().get() == ((SpeedController) _rightFollow).get());
+        assert (((SpeedController) left).get() == ((SpeedController) _leftFollow).get());
+        assert (((SpeedController) right).get() == ((SpeedController) _rightFollow).get());
     }
 
     @Override
@@ -222,7 +234,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         int right_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getRightVelocityMetersPerSecond());
 
         leftDriveSim.setAnalogPosition(left_ticks);
-        leftDriveSim.setAnalogVelocity(left_ticks_vel_sec / 10); //divide to get 100ms
+        leftDriveSim.setAnalogVelocity(left_ticks_vel_sec / 10); // divide to get 100ms
         rightDriveSim.setAnalogPosition(right_ticks);
         rightDriveSim.setAnalogVelocity(right_ticks_vel_sec / 10);
         // TODO: wait for PigeonIMU to support simulation
@@ -230,8 +242,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
     public void setSlot(int slot) {
         // Add asserts as the motorcontrollers only support 4 slots
-        assert (slot >= 0);
-        assert (slot <= 3);
+        assert (slot >= 0 && slot <= 3);
 
         right.selectProfileSlot(slot, 0);
     }
