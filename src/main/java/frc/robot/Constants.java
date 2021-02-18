@@ -159,10 +159,10 @@ public final class Constants {
     public static final DCMotor ROBOT_GEARBOX_MOTORS = DCMotor.getFalcon500(2);
 
     // Retireved via frc-characterize
-    public static final double ROBOT_V_LINEAR = 0.0;
-    public static final double ROBOT_A_LINEAR = 0.0;
-    public static final double ROBOT_V_ANGULAR = 0.0;
-    public static final double ROBOT_A_ANGULAR = 0.0;
+    public static final double ROBOT_V_LINEAR = 1.0;
+    public static final double ROBOT_A_LINEAR = 1.0;
+    public static final double ROBOT_V_ANGULAR = 1.0;
+    public static final double ROBOT_A_ANGULAR = 1.0;
 
     // Noise correction, disable with bool
     public static final boolean ROBOT_DEVIATION_ENABLE = true;

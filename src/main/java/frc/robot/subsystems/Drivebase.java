@@ -56,6 +56,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
             // https://docs.oracle.com/javase/8/docs/technotes/guides/language/assert.html
             assert (code == ErrorCode.OK) : code.toString();
         }
+
         public static BaseTalon test_motor(BaseTalon talon) {
             assert talon instanceof SpeedController;
             if (Robot.isReal())
@@ -78,7 +79,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
 
     private DifferentialDriveOdometry odometry;
 
-    private Field2d m_field = new Field2d();
+    private Field2d field_2d;
     private DifferentialDrivetrainSim drivetrainSim;
     private TalonSRXSimCollection leftDriveSim;
     private TalonSRXSimCollection rightDriveSim;
@@ -168,6 +169,9 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
                 Constants.WHEEL_CIRCUMFERENCE / (Math.PI * 2.0), // Get radius from circumfrence
                 deviation);
 
+        field_2d = new Field2d();
+        // Only needs to be published once
+        SmartDashboard.putData("Field", field_2d);
         if (Robot.isSimulation()) {
             // Will only work as on simulation left and right are actually WPI_TalonSRX
             leftDriveSim = ((WPI_TalonSRX) left).getSimCollection();
@@ -211,11 +215,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         SmartDashboard.putNumber("Drivebase Left Encoder", left.getSelectedSensorPosition());
         setRamping(ramping);
         updateOdometry();
-        SmartDashboard.putData("Field", m_field);
 
         // Check if the the motors are working together
-        assert (((SpeedController) left).get() == ((SpeedController) _leftFollow).get());
-        assert (((SpeedController) right).get() == ((SpeedController) _rightFollow).get());
+        assert (left.getMotorOutputPercent() == _leftFollow.getMotorOutputPercent());
+        assert (right.getMotorOutputPercent() == _rightFollow.getMotorOutputPercent());
     }
 
     @Override
@@ -259,7 +262,7 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     public void updateOdometry() {
         odometry.update(Rotation2d.fromDegrees(pidgey.getFusedHeading()), //
                 getLeftDistance(), getRightDistance());
-        m_field.setRobotPose(odometry.getPoseMeters());
+        field_2d.setRobotPose(odometry.getPoseMeters());
     }
 
     public void setRamping(double ramping) {

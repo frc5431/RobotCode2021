@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
 import frc.robot.subsystems.Drivebase;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
@@ -24,6 +25,9 @@ public class DefaultDrive extends CommandBase {
 
     @Override
     public void execute() {
-        drivebase.driveArcade(pow.getAsDouble(), ang.getAsDouble());
+        double _pow = pow.getAsDouble();
+        double _ang = ang.getAsDouble();
+        Logger.l("DefaultDrive: Power %f, Angle %f", _pow, _ang);
+        drivebase.driveArcade(_pow, _ang);
     }
 }
