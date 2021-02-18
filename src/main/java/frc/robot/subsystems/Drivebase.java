@@ -255,11 +255,11 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     }
 
     public double getLeftRevolutions() {
-        return EncoderTools.ticksToRevolutions(left.getSelectedSensorPosition());
+        return EncoderTools.ticksToAxleRevolutions(left.getSelectedSensorPosition());
     };
 
     public double getRightRevolutions() {
-        return EncoderTools.ticksToRevolutions(right.getSelectedSensorPosition());
+        return EncoderTools.ticksToAxleRevolutions(right.getSelectedSensorPosition());
     };
 
     public double getLeftDistance() {
