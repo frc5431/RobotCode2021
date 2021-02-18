@@ -68,7 +68,7 @@ dependencies {
     simulation wpi.deps.sim.driverstation(wpi.platforms.desktop, false)
 
     // TODO: Replace with release when done, consider experimental
-    implementation 'com.github.frc5431:TitanUtil:7269ec127f'
+    implementation 'com.github.frc5431:TitanUtil:4c04be0563'
 
     // Websocket extensions require additional configuration.
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)

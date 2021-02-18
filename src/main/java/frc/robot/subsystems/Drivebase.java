@@ -1,12 +1,7 @@
 package frc.robot.subsystems;
 
-import java.util.List;
-
 import com.ctre.phoenix.ErrorCode;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
@@ -14,12 +9,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,9 +29,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.util.EncoderTools;
 import frc.robot.util.MotionMagic;
-import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.subsystem.DrivebaseSubsystem;
-import frc.team5431.titan.pathfinder.PathFinderControls;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
 */
@@ -43,7 +38,7 @@ import frc.team5431.titan.pathfinder.PathFinderControls;
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
-public class Drivebase extends DrivebaseSubsystem implements PathFinderControls {
+public class Drivebase extends DrivebaseSubsystem {
 
     private static class ProcessError {
         public interface Function {
@@ -83,6 +78,8 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
     private DifferentialDrivetrainSim drivetrainSim;
     private TalonSRXSimCollection leftDriveSim;
     private TalonSRXSimCollection rightDriveSim;
+    private AnalogGyro fake_gyro = new AnalogGyro(1);
+    private AnalogGyroSim gyroSim = new AnalogGyroSim(fake_gyro);
 
     public Drivebase(BaseTalon frontLeft, BaseTalon frontRight, BaseTalon rearLeft, BaseTalon rearRight) {
 
@@ -217,6 +214,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         SmartDashboard.putNumber("Drivebase Right Speed", getRight().get());
         SmartDashboard.putNumber("Drivebase Left Meters", getLeftDistance());
         SmartDashboard.putNumber("Drivebase Right Meters", getRightDistance());
+        SmartDashboard.putNumber("Drivebase Field Position X", field_2d.getRobotPose().getX());
+        SmartDashboard.putNumber("Drivebase Field Position Y", field_2d.getRobotPose().getY());
+        SmartDashboard.putNumber("Drivebase Field Heading", field_2d.getRobotPose().getRotation().getDegrees());
+        field_2d.getRobotPose().getRotation().getDegrees();
         setRamping(ramping);
         updateOdometry();
 
@@ -245,6 +246,10 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         assert left_ticks == (int) EncoderTools.metersToTicks(getLeftDistance());
         assert right_ticks == (int) EncoderTools.metersToTicks(getRightDistance());
         // TODO: wait for PigeonIMU to support simulation
+        gyroSim.setAngle(drivetrainSim.getHeading().getDegrees());
+
+        leftDriveSim.setBusVoltage(RobotController.getBatteryVoltage());
+        rightDriveSim.setBusVoltage(RobotController.getBatteryVoltage());
     }
 
     public void setSlot(int slot) {
@@ -254,9 +259,15 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         right.selectProfileSlot(slot, 0);
     }
 
+    public double getHeading() {
+        if (Robot.isReal())
+            return pidgey.getFusedHeading();
+        else
+            return fake_gyro.getAngle();
+    }
+
     public void updateOdometry() {
-        odometry.update(Rotation2d.fromDegrees(pidgey.getFusedHeading()), //
-                getLeftDistance(), getRightDistance());
+        odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
         field_2d.setRobotPose(odometry.getPoseMeters());
     }
 
@@ -281,22 +292,14 @@ public class Drivebase extends DrivebaseSubsystem implements PathFinderControls 
         return EncoderTools.ticksToMeters(right.getSelectedSensorPosition());
     };
 
+    @Override
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
 
-    public void tankDriveVolts(double leftVolts, double rightVolts) {
-        getLeft().setVoltage(leftVolts);
-        getRight().setVoltage(-rightVolts);
-        // m_drive.feed();
-    }
-
+    @Override
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        throw new RuntimeException("Unimplemented");
-    }
-
-    public List<SpeedController> getMotors() {
-        return List.of(getLeft(), getRight());
+        return new DifferentialDriveWheelSpeeds(left.getSelectedSensorVelocity(), right.getSelectedSensorVelocity());
     }
 
     @Override
