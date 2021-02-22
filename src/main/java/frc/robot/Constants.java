@@ -181,13 +181,13 @@ public final class Constants {
     public static final String DRIVEBASE_PATHWEAVER_PATH = "/home/user/path.json";
     // FIXME: Bad data
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
-            .setVolts(0.22) //
-            .setVoltsSpeed(1.98) // seconds per meter
-            .setVoltsAccel(0.2) // seconds squared per meter
-            .setTrackwidth(0.69) // meters
-            .setRamseteB(2) //
-            .setRamseteZeta(0.7) //
-            .setPDriveVel(8.5).build();
+            .setVolts(0.729) // kS
+            .setVoltsSpeed(0.303) // kV seconds per meter
+            .setVoltsAccel(0.0552) // kA seconds squared per meter
+            .setTrackwidth(0.67) // meters, measured with a meterstick
+            .setRamseteB(0) //
+            .setRamseteZeta(0) //
+            .setPDriveVel(0.000302).build();
 
     // ================================================================================
     // Vision Data
@@ -217,8 +217,8 @@ public final class Constants {
     // ================================================================================
 
     public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 6; // TODO: Find Wheel Circumfrence in meters
-    public static final double GEAR_RATIO = 1; // TODO: Find Gear Ratio
+    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
+    public static final double GEAR_RATIO = 2.7; // TODO: Find Gear Ratio
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
