@@ -2,12 +2,16 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMUSimCollection;
+import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.RobotController;
@@ -62,7 +66,7 @@ public class Drivebase extends TitanDifferentalDrivebase {
         }
     }
 
-    private PigeonIMU pidgey;
+    private WPI_PigeonIMU pidgey;
 
     private BaseTalon left;
     private BaseTalon right;
@@ -78,42 +82,43 @@ public class Drivebase extends TitanDifferentalDrivebase {
     private DifferentialDrivetrainSim drivetrainSim;
     private TalonSRXSimCollection leftDriveSim;
     private TalonSRXSimCollection rightDriveSim;
-    private AnalogGyro fake_gyro = new AnalogGyro(1);
-    private AnalogGyroSim gyroSim = new AnalogGyroSim(fake_gyro);
+    private PigeonIMUSimCollection pigeonSim;
 
     public Drivebase(BaseTalon frontLeft, BaseTalon frontRight, BaseTalon rearLeft, BaseTalon rearRight) {
-        super((SpeedController) frontLeft, (SpeedController) frontRight, Constants.DRIVEBASE_TURN_MAX_SPEED);
-        pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
+        super((SpeedController) frontLeft, (SpeedController) frontRight);
+        pidgey = new WPI_PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
         left = ProcessError.test_motor(frontLeft);
         right = ProcessError.test_motor(frontRight);
         _leftFollow = ProcessError.test_motor(rearLeft);
         _rightFollow = ProcessError.test_motor(rearRight);
 
-        left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
-        right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
-        _leftFollow.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
-        _rightFollow.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
-
-        _leftFollow.follow(left);
-        _rightFollow.follow(right);
-
         // put in block to allow IDE collapse
         {
             /* Factory Default all hardware to prevent unexpected behavior */
             ProcessError.test(() -> left.configFactoryDefault());
+            ProcessError.test(() -> _leftFollow.configFactoryDefault());
             ProcessError.test(() -> right.configFactoryDefault());
+            ProcessError.test(() -> _rightFollow.configFactoryDefault());
             ProcessError.test(() -> pidgey.configFactoryDefault());
+
+            left.setInverted(Constants.DRIVEBASE_LEFT_REVERSE);
+            right.setInverted(Constants.DRIVEBASE_RIGHT_REVERSE);
+
+            _leftFollow.follow(left);
+            _rightFollow.follow(right);
+            _leftFollow.setInverted(InvertType.FollowMaster);
+            _rightFollow.setInverted(InvertType.FollowMaster);
 
             /* Set what state the motors will be at when the speed is at zero */
             left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
             right.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
 
             /* Set the motor output ranges */
-            ProcessError.test(() -> left.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
-            ProcessError.test(() -> left.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
-            ProcessError.test(() -> right.configPeakOutputForward(1, Constants.DRIVEBASE_TIMEOUT_MS));
-            ProcessError.test(() -> right.configPeakOutputReverse(1, Constants.DRIVEBASE_TIMEOUT_MS));
+            ProcessError.test(() -> left.configPeakOutputForward(Constants.MAX_MOTOR_SPEED));
+            ProcessError.test(() -> left.configPeakOutputReverse(-Constants.MAX_MOTOR_SPEED));
+            ProcessError.test(() -> right.configPeakOutputForward(Constants.MAX_MOTOR_SPEED));
+            ProcessError.test(() -> right.configPeakOutputReverse(-Constants.MAX_MOTOR_SPEED));
 
             /* Tell motors which sensors it is reading from */
             ProcessError.test(() -> left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
@@ -146,7 +151,7 @@ public class Drivebase extends TitanDifferentalDrivebase {
             right.selectProfileSlot(Constants.DRIVEBASE_MOTIONMAGIC_TURN_SLOT,
                     Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE);
         }
-        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-pidgey.getFusedHeading()));
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(pidgey.getFusedHeading()));
 
         Matrix<N7, N1> deviation = null;
         if (Constants.ROBOT_DEVIATION_ENABLE) {
@@ -179,6 +184,7 @@ public class Drivebase extends TitanDifferentalDrivebase {
             // Will only work as on simulation left and right are actually WPI_TalonSRX
             leftDriveSim = ((WPI_TalonSRX) left).getSimCollection();
             rightDriveSim = ((WPI_TalonSRX) right).getSimCollection();
+            pigeonSim = pidgey.getSimCollection();
         }
 
         zeroDistance();
@@ -211,49 +217,46 @@ public class Drivebase extends TitanDifferentalDrivebase {
 
     @Override
     public void periodic() {
-
+        Pose2d pose = field_2d.getRobotPose();
         SmartDashboard.putNumber("Drivebase Left Speed", left.getMotorOutputPercent());
         SmartDashboard.putNumber("Drivebase Right Speed", right.getMotorOutputPercent());
         SmartDashboard.putNumber("Drivebase Left Meters", getLeftDistance());
         SmartDashboard.putNumber("Drivebase Right Meters", getRightDistance());
-        SmartDashboard.putNumber("Drivebase Field Position X", field_2d.getRobotPose().getX());
-        SmartDashboard.putNumber("Drivebase Field Position Y", field_2d.getRobotPose().getY());
-        SmartDashboard.putNumber("Drivebase Field Heading", field_2d.getRobotPose().getRotation().getDegrees());
-        field_2d.getRobotPose().getRotation().getDegrees();
+        SmartDashboard.putNumber("Drivebase Field Position X", pose.getX());
+        SmartDashboard.putNumber("Drivebase Field Position Y", pose.getY());
+        SmartDashboard.putNumber("Drivebase Field Heading", pose.getRotation().getDegrees());
         setRamping(ramping);
         updateOdometry();
 
         // Check if the the motors are working together
         assert (left.getMotorOutputPercent() == _leftFollow.getMotorOutputPercent());
         assert (right.getMotorOutputPercent() == _rightFollow.getMotorOutputPercent());
+        assert (pose.getRotation().getDegrees() == getHeading());
     }
 
     @Override
     public void simulationPeriodic() {
         // go to https://bit.ly/3puz4bm for more info
-        double in_voltage = RobotController.getInputVoltage();
-        double left_pow = left.getMotorOutputPercent();
-        double right_pow = right.getMotorOutputPercent();
-        drivetrainSim.setInputs(left_pow * in_voltage, right_pow * in_voltage);
+        drivetrainSim.setInputs(left.getMotorOutputVoltage(), right.getMotorOutputVoltage());
         drivetrainSim.update(Robot.kDefaultPeriod);
 
-        int left_ticks = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftPositionMeters());
-        int right_ticks = (int) EncoderTools.metersToTicks(drivetrainSim.getRightPositionMeters());
+        ProcessError.test(() -> leftDriveSim.setQuadratureRawPosition(//
+                (int) EncoderTools.metersToTicks(//
+                        drivetrainSim.getLeftPositionMeters())));
+        ProcessError.test(() -> leftDriveSim.setQuadratureVelocity(//
+                (int) EncoderTools.metersToTicks(//
+                        drivetrainSim.getLeftVelocityMetersPerSecond() / 10)));
+        ProcessError.test(() -> rightDriveSim.setQuadratureRawPosition(//
+                (int) EncoderTools.metersToTicks(//
+                        drivetrainSim.getRightPositionMeters())));
+        ProcessError.test(() -> rightDriveSim.setQuadratureVelocity(//
+                (int) EncoderTools.metersToTicks(//
+                        drivetrainSim.getRightVelocityMetersPerSecond() / 10)));
+        pigeonSim.setRawHeading(drivetrainSim.getHeading().getDegrees());
 
-        int left_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getLeftVelocityMetersPerSecond());
-        int right_ticks_vel_sec = (int) EncoderTools.metersToTicks(drivetrainSim.getRightVelocityMetersPerSecond());
-
-        ProcessError.test(() -> leftDriveSim.setQuadratureRawPosition(left_ticks));
-        ProcessError.test(() -> leftDriveSim.setQuadratureVelocity(left_ticks_vel_sec / 10)); // divide to get 100ms
-        ProcessError.test(() -> rightDriveSim.setQuadratureRawPosition(right_ticks));
-        ProcessError.test(() -> rightDriveSim.setQuadratureVelocity(right_ticks_vel_sec / 10));
-        assert left_ticks == (int) EncoderTools.metersToTicks(getLeftDistance());
-        assert right_ticks == (int) EncoderTools.metersToTicks(getRightDistance());
-        // TODO: wait for PigeonIMU to support simulation
-        gyroSim.setAngle(drivetrainSim.getHeading().getDegrees());
-
-        leftDriveSim.setBusVoltage(RobotController.getBatteryVoltage());
-        rightDriveSim.setBusVoltage(RobotController.getBatteryVoltage());
+        double bus_voltage = RobotController.getBatteryVoltage();
+        leftDriveSim.setBusVoltage(bus_voltage);
+        rightDriveSim.setBusVoltage(bus_voltage);
     }
 
     public void setSlot(int slot) {
@@ -264,14 +267,11 @@ public class Drivebase extends TitanDifferentalDrivebase {
     }
 
     public double getHeading() {
-        if (Robot.isReal())
-            return pidgey.getFusedHeading();
-        else
-            return fake_gyro.getAngle();
+        return -pidgey.getFusedHeading();
     }
 
     public void updateOdometry() {
-        odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
+        odometry.update(pidgey.getRotation2d(), getLeftDistance(), getRightDistance());
         field_2d.setRobotPose(odometry.getPoseMeters());
     }
 
@@ -293,7 +293,7 @@ public class Drivebase extends TitanDifferentalDrivebase {
     };
 
     public double getRightDistance() {
-        return EncoderTools.ticksToMeters(right.getSelectedSensorPosition());
+        return EncoderTools.ticksToMeters(-right.getSelectedSensorPosition());
     };
 
     @Override

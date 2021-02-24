@@ -9,23 +9,21 @@ import frc.robot.subsystems.Drivebase;
 /**
  * @author Ryan Hirasaki
  */
-public class DefaultDrive extends CommandBase {
+public class DefaultDriveTank extends CommandBase {
 
     private final Drivebase drivebase;
-    private final DoubleSupplier pow, ang;
+    private final DoubleSupplier left, right;
 
-    public DefaultDrive(Systems systems, DoubleSupplier power, DoubleSupplier angle) {
+    public DefaultDriveTank(Systems systems, DoubleSupplier left, DoubleSupplier right) {
         this.drivebase = systems.getDrivebase();
-        this.pow = power;
-        this.ang = angle;
+        this.left = left;
+        this.right = right;
 
         addRequirements(drivebase);
     }
 
     @Override
     public void execute() {
-        double _pow = pow.getAsDouble();
-        double _ang = ang.getAsDouble();
-        drivebase.driveArcade(_pow, _ang);
+        drivebase.driveTank(left.getAsDouble(), right.getAsDouble());
     }
 }
