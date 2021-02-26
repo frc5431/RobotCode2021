@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotMap = new RobotMap();
-	CameraServer.getInstance().startAutomaticCapture();
+	// CameraServer.getInstance().startAutomaticCapture();
 	robotMap.outData();
 	robotMap.disabled();
 
@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    robotMap.resetBallCount();
     autonCommand = robotMap.getAutonomousCommand();
 
     /*
@@ -53,17 +54,16 @@ public class Robot extends TimedRobot {
       autonCommand.schedule();
     }
 
-    robotMap.resetBallCount();
   }
 
   @Override
   public void teleopInit() {
+    // robotMap.resetEncoders();
+    robotMap.resetBallCount();
     if (autonCommand != null) {
       autonCommand.cancel();
     }
 
-    // robotMap.resetEncoders();
-    robotMap.resetBallCount();
   }
 
 //   @Override

@@ -14,6 +14,7 @@ import frc.robot.subsystems.*;
 import frc.robot.util.GeneratePaths;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.utils.CompassPOV;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 import frc.team5431.titan.core.robot.POVButton;
 import frc.team5431.titan.core.robot.JoystickButton;
@@ -222,6 +223,7 @@ public class RobotMap {
         if (cmd != null) {
             var loader = paths.get(cmd);
             if (loader != null) {
+                Logger.l("PathFinder Loaded");
                 return loader.generateCommand(systems.getDrivebase());
             }
         }

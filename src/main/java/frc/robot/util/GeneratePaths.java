@@ -17,8 +17,10 @@ public class GeneratePaths {
     private static PathLoader build(String name) throws IOException {
         PathLoader ldr = new PathLoader(//
                 Constants.DRIVEBASE_PATHWEAVER_CONFIG, name);
-        if (ldr.getStatus() != Status.LOADED)
+        if (ldr.getStatus() == Status.ERROR_PARSE)
             throw new IOException("File not Parsable");
+        if (ldr.getStatus() == Status.ERROR_NON_REAL)
+            throw new IOException("File not Opened");
         return ldr;
     }
 
