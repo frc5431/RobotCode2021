@@ -2,11 +2,9 @@ package frc.robot;
 
 import java.util.Map;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.auton.AutonStates;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
