@@ -179,7 +179,6 @@ public final class Constants {
     // PathWeaver Data
     // ================================================================================
 
-    public static final String DRIVEBASE_PATHWEAVER_PATH_DIRECTORY = "paths/";
     public static final String[] DRIVEBASE_PATHWEAVER_PATHS = { //
             "Barrel.wpilib.json", "Bounce.wpilib.json", //
             "Galactic_A_Blue.wpilib.json", "Galactic_A_Red.wpilib.json", //

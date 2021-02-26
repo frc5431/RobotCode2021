@@ -13,21 +13,10 @@ import frc.team5431.titan.pathfinder.PathLoader;
 import frc.team5431.titan.pathfinder.PathLoader.Status;
 
 public class GeneratePaths {
-    private static String getPath(String name) throws IOException {
-        File full_dir = new File(//
-                Filesystem.getDeployDirectory(), //
-                Constants.DRIVEBASE_PATHWEAVER_PATH_DIRECTORY);
-        File trajectory = new File(full_dir, name);
-        if (trajectory.exists()) {
-            return trajectory.getAbsolutePath();
-        }
-        throw new IOException("File not Found");
-    }
 
     private static PathLoader build(String name) throws IOException {
-        String path = getPath(name);
         PathLoader ldr = new PathLoader(//
-                Constants.DRIVEBASE_PATHWEAVER_CONFIG, path);
+                Constants.DRIVEBASE_PATHWEAVER_CONFIG, name);
         if (ldr.getStatus() != Status.LOADED)
             throw new IOException("File not Parsable");
         return ldr;
