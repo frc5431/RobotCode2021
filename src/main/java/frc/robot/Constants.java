@@ -179,7 +179,6 @@ public final class Constants {
     // ================================================================================
 
     public static final String DRIVEBASE_PATHWEAVER_PATH = "/home/user/path.json";
-    // FIXME: Bad data
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
             .setVolts(0.729) // kS
             .setVoltsSpeed(0.303) // kV seconds per meter
@@ -217,8 +216,8 @@ public final class Constants {
     // ================================================================================
 
     public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
-    public static final double GEAR_RATIO = 2.7; // TODO: Find Gear Ratio
+    public static final double WHEEL_CIRCUMFERENCE = 18.84956;
+    public static final double GEAR_RATIO = 2.7;
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
