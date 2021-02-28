@@ -25,7 +25,8 @@ import frc.team5431.titan.pathfinder.DriveConfig;
  * @author Tauseef Afraz
  */
 public final class Constants {
-    private Constants() { }
+    private Constants() {
+    }
 
     // ================================================================================
     // Teleop Controller Data
@@ -178,7 +179,12 @@ public final class Constants {
     // PathWeaver Data
     // ================================================================================
 
-    public static final String DRIVEBASE_PATHWEAVER_PATH = "/home/user/path.json";
+
+    public static final String[] DRIVEBASE_PATHWEAVER_PATHS = { //
+            "Barrel.wpilib.json", "Bounce.wpilib.json", //
+            "Galactic_A_Blue.wpilib.json", "Galactic_A_Red.wpilib.json", //
+            "Galactic_A_Red.wpilib.json", "Galactic_B_Red.wpilib.json", //
+            "Slalom.wpilib.json" };
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
             .setVolts(0.729) // kS
             .setVoltsSpeed(0.303) // kV seconds per meter
@@ -238,7 +244,7 @@ public final class Constants {
 
     // Sensors
 
-    public static final List<Integer> DIGITAL_INPUT_IDS = List.of( 6, 8, 7, 9 ); // top -> bottom
+    public static final List<Integer> DIGITAL_INPUT_IDS = List.of(6, 8, 7, 9); // top -> bottom
     public static final int PIVOT_PDP_SLOT = 4;
     public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;
