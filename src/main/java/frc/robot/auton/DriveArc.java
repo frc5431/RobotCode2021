@@ -22,7 +22,7 @@ public class DriveArc extends CommandBase {
     @Override
     public void initialize() {
         drivebase.resetSensors();
-        drivebase.driveMotionMagic(distance, angle);
+        drivebase.driveArcade(distance, angle);
     }
 
     @Override

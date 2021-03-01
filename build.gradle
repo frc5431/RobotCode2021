@@ -46,7 +46,7 @@ deploy {
 }
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
+def includeDesktopSupport = true
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -68,7 +68,7 @@ dependencies {
     simulation wpi.deps.sim.driverstation(wpi.platforms.desktop, false)
 
     // TODO: Replace with release when done, consider experimental
-    implementation 'com.github.frc5431:TitanUtil:b24d2e2482'
+    implementation 'com.github.frc5431:TitanUtil:968ba3cdbb'
 
     // Websocket extensions require additional configuration.
     // simulation wpi.deps.sim.ws_server(wpi.platforms.desktop, false)

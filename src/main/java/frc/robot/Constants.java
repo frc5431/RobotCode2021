@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
 import edu.wpi.first.wpilibj.controller.PIDController;
-
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
 import frc.team5431.titan.pathfinder.DriveConfig;
 
 /**
@@ -25,7 +25,8 @@ import frc.team5431.titan.pathfinder.DriveConfig;
  * @author Tauseef Afraz
  */
 public final class Constants {
-    private Constants() { }
+    private Constants() {
+    }
 
     // ================================================================================
     // Teleop Controller Data
@@ -152,10 +153,38 @@ public final class Constants {
     public static final double HOPPER_RIGHT_SPEED = 0.7;
 
     // ================================================================================
+    // Simulation Data
+    // ================================================================================
+
+    // drivebase single gearbox
+    public static final DCMotor ROBOT_GEARBOX_MOTORS = DCMotor.getFalcon500(2);
+
+    // Retireved via frc-characterize
+    public static final double ROBOT_V_LINEAR = 1.0;
+    public static final double ROBOT_A_LINEAR = 1.0;
+    public static final double ROBOT_V_ANGULAR = 1.0;
+    public static final double ROBOT_A_ANGULAR = 1.0;
+
+    // Noise correction, disable with bool
+    public static final boolean ROBOT_DEVIATION_ENABLE = true;
+    public static final double ROBOT_DEVIATION_X = 0.001;
+    public static final double ROBOT_DEVIATION_Y = 0.001;
+    public static final double ROBOT_DEVIATION_HEADING = 0.001;
+    public static final double ROBOT_DEVIATION_VEL_L = 0.1;
+    public static final double ROBOT_DEVIATION_VEL_R = 0.1;
+    public static final double ROBOT_DEVIATION_POS_L = 0.005;
+    public static final double ROBOT_DEVIATION_POS_R = 0.005;
+
+    // ================================================================================
     // PathWeaver Data
     // ================================================================================
 
-    public static final String DRIVEBASE_PATHWEAVER_PATH = "/home/user/path.json";
+
+    public static final String[] DRIVEBASE_PATHWEAVER_PATHS = { //
+            "Barrel.wpilib.json", "Bounce.wpilib.json", //
+            "Galactic_A_Blue.wpilib.json", "Galactic_A_Red.wpilib.json", //
+            "Galactic_A_Red.wpilib.json", "Galactic_B_Red.wpilib.json", //
+            "Slalom.wpilib.json" };
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
             .setVolts(0.729) // kS
             .setVoltsSpeed(0.303) // kV seconds per meter
@@ -193,8 +222,8 @@ public final class Constants {
     // ================================================================================
 
     public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
-    public static final double GEAR_RATIO = 2.7; // TODO: Find Gear Ratio
+    public static final double WHEEL_CIRCUMFERENCE = 18.84956;
+    public static final double GEAR_RATIO = 2.7;
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
@@ -215,7 +244,7 @@ public final class Constants {
 
     // Sensors
 
-    public static final List<Integer> DIGITAL_INPUT_IDS = List.of( 6, 8, 7, 9 ); // top -> bottom
+    public static final List<Integer> DIGITAL_INPUT_IDS = List.of(6, 8, 7, 9); // top -> bottom
     public static final int PIVOT_PDP_SLOT = 4;
     public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;
