@@ -180,19 +180,19 @@ public final class Constants {
     // ================================================================================
 
 
-    public static final String[] DRIVEBASE_PATHWEAVER_PATHS = { //
+    public static final List<String> DRIVEBASE_PATHWEAVER_PATHS = List.of( //
             "Barrel.wpilib.json", "Bounce.wpilib.json", //
             "Galactic_A_Blue.wpilib.json", "Galactic_A_Red.wpilib.json", //
             "Galactic_A_Red.wpilib.json", "Galactic_B_Red.wpilib.json", //
-            "Slalom.wpilib.json" };
+            "Slalom.wpilib.json" );
     public static final DriveConfig DRIVEBASE_PATHWEAVER_CONFIG = new DriveConfig.Builder() //
-            .setVolts(0.729) // kS
-            .setVoltsSpeed(0.303) // kV seconds per meter
-            .setVoltsAccel(0.0552) // kA seconds squared per meter
+            .setVolts(0.731) // kS
+            .setVoltsSpeed(0.0444) // kV seconds per meter
+            .setVoltsAccel(-0.0029) // kA seconds squared per meter
             .setTrackwidth(0.67) // meters, measured with a meterstick
-            .setRamseteB(0) //
-            .setRamseteZeta(0) //
-            .setPDriveVel(0.000302).build();
+            .setRamseteB(2) //
+            .setRamseteZeta(0.7) //
+            .setPDriveVel(0).build();
 
     // ================================================================================
     // Vision Data
@@ -221,9 +221,9 @@ public final class Constants {
     // Drive Base Numbers
     // ================================================================================
 
-    public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 18.84956;
-    public static final double GEAR_RATIO = 2.7;
+    public static final double COUNTS_PER_REVOLUTION = 4096;
+    public static final double WHEEL_CIRCUMFERENCE = 0.478779;
+    public static final double GEAR_RATIO = 0.37;
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
