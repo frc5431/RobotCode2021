@@ -25,8 +25,7 @@ import frc.team5431.titan.pathfinder.DriveConfig;
  * @author Tauseef Afraz
  */
 public final class Constants {
-    private Constants() {
-    }
+    private Constants() { }
 
     // ================================================================================
     // Teleop Controller Data
@@ -244,7 +243,8 @@ public final class Constants {
 
     // Sensors
 
-    public static final List<Integer> DIGITAL_INPUT_IDS = List.of(6, 8, 7, 9); // top -> bottom
+    // public static final List<Integer> DIGITAL_INPUT_IDS = List.of( 6, 8, 7, 9 ); // top -> bottom
+    public static final List<Integer> DIGITAL_INPUT_IDS = List.of( 9, 7, 8, 6 ); // top -> bottom
     public static final int PIVOT_PDP_SLOT = 4;
     public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;

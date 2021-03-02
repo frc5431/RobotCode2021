@@ -11,6 +11,7 @@ import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.GeneratePaths;
 import frc.team5431.titan.core.joysticks.*;
+import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
 import frc.team5431.titan.core.joysticks.utils.CompassPOV;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
@@ -203,12 +204,12 @@ public class RobotMap {
             driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
             systems.getDrivebase().setDefaultCommand(new DefaultDrive(systems,
-                    () -> -driver.getRawAxis(Xbox.Axis.LEFT_Y), () -> driver.getRawAxis(Xbox.Axis.LEFT_X)));
-            // systems.getDrivebase().setDefaultCommand(new DefaultDriveTank(systems,
-            // () -> -driver.getRawAxis(1), () -> -driver.getRawAxis(4)));
+                    () -> -driver.getRawAxis(Xbox.Axis.LEFT_Y), () -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
 
             systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
                     () -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
+            systems.getFlywheel()
+                    .setDefaultCommand(new DefaultFlywheel(systems, () -> -operator.getRawAxis(Axis.SLIDER)));
         }
     }
 
