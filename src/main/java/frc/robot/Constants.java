@@ -76,7 +76,7 @@ public final class Constants {
 
     public static final NeutralMode DRIVEBASE_NEUTRAL_MODE = NeutralMode.Brake;
 
-    public static final double DRIVEBASE_DEFAULT_RAMPING = 0.6;
+    public static final double DRIVEBASE_DEFAULT_RAMPING = 0.4;
 
     // Climber Related
     public static final int CLIMBER_BALANCER_ID = 13;
@@ -100,10 +100,10 @@ public final class Constants {
 
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 11300;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 15000; //11300;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10500; // 11900
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 14500; //10500; // 11900
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.4;
 
     public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); // 0.0474073170731707,
@@ -134,7 +134,7 @@ public final class Constants {
     public static final int PIVOT_DOWN_LIMIT = (-50200 / 100) * 81; // 45000
     public static final int PIVOT_UP_LIMIT = (-800 / 100) * 81; // 5000
     public static final int PIVOT_VELOCITY = 5000;
-    public static final double PIVOT_AFFECT_GRAVITY = -0.02;
+    public static final double PIVOT_AFFECT_GRAVITY = -0.04;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023,
