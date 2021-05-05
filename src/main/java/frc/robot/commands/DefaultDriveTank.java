@@ -24,6 +24,6 @@ public class DefaultDriveTank extends CommandBase {
 
     @Override
     public void execute() {
-        drivebase.driveTank(left.getAsDouble(), right.getAsDouble());
+        drivebase.tankDrive(left.getAsDouble(), right.getAsDouble());
     }
 }

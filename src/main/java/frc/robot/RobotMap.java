@@ -2,21 +2,28 @@ package frc.robot;
 
 import java.util.Map;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
-import frc.robot.util.GeneratePaths;
+import frc.robot.util.PathLoader;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.utils.CompassPOV;
-import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 import frc.team5431.titan.core.robot.POVButton;
 import frc.team5431.titan.core.robot.JoystickButton;
-import frc.team5431.titan.pathfinder.PathLoader;
 
 /**
  * @author Ryan Hirasaki
@@ -34,23 +41,20 @@ public class RobotMap {
     private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
     private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
-    private final Map<String, PathLoader> paths = GeneratePaths.generate();
 
-    SendableChooser<String> chooser = new SendableChooser<>();
+    private final RamseteController ramsete = new RamseteController();
+
+    SendableChooser<String> paths = new SendableChooser<>();
 
     public RobotMap() {
         limelight.setLEDState(LEDState.DEFAULT);
         limelight.setPipeline(9);
-        bindKeys();
-        outData();
-    }
-
-    public void outData() {
-        chooser.setDefaultOption("No Path", null);
-        for (String key : paths.keySet()) {
-            chooser.addOption(key, key);
+        // bindKeys();
+        paths.setDefaultOption("No Path", null);
+        for (String key : Constants.DRIVEBASE_PATHWEAVER_PATHS) {
+            paths.addOption(key, key);
         }
-        SmartDashboard.putData("Auton Select", chooser);
+        SmartDashboard.putData("Auton Select", paths);
     }
 
     private void bindKeys() {
@@ -216,20 +220,6 @@ public class RobotMap {
         systems.getFeeder().resetVars();
     }
 
-    public Command getAutonomousCommand() {
-        var cmd = chooser.getSelected();
-        if (cmd != null) {
-            var loader = paths.get(cmd);
-            if (loader != null) {
-                Logger.l("PathFinder Loaded");
-                return loader.generateCommand(systems.getDrivebase());
-            }
-        }
-        return new CommandBase() {
-
-        };
-    }
-
     public void resetEncoders() {
         systems.getPivot().reset();
     }
@@ -244,5 +234,34 @@ public class RobotMap {
 
         // Lets Not Blind the Refs :)
         limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+    }
+
+    public Command getAutonCommand() {
+        Drivebase drivebase = systems.getDrivebase();
+        // Trajectory trajectory = PathLoader.FromFile(paths.getSelected());
+        Trajectory trajectory = PathLoader.FromSample();
+        SimpleMotorFeedforward feedforward = drivebase.getFeedforward();
+        DifferentialDriveKinematics kinematics = drivebase.getKinematics();
+
+        var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(feedforward, kinematics,
+                Constants.ROBOT_TRAJECTORY_MAX_VOLTAGE);
+        var config = new TrajectoryConfig( //
+                Constants.ROBOT_TRAJECTORY_MAX_SPEED, //
+                Constants.ROBOT_TRAJECTORY_MAX_ACCEL) //
+                        .setKinematics(kinematics).addConstraint(autoVoltageConstraint);
+        var command = new RamseteCommand(trajectory, //
+                drivebase::getPose, // Pose2D Supplier
+                new RamseteController(), // Ramsete Controller with default values
+                feedforward, // SimpleMotorFeedforward
+                kinematics, // DifferentialDriveKinematics
+                drivebase::getWheelSpeeds, // DifferentialDriveWheelSpeed Supplier
+                Constants.ROBOT_TRAJECTORY_PID, // PID
+                Constants.ROBOT_TRAJECTORY_PID, // PID
+                drivebase::tankDriveVolts, // Drivebase Controller 
+                drivebase // Command Requirments
+        );
+        drivebase.resetOdometry(trajectory.getInitialPose());
+        drivebase.drawTrajectory(trajectory);
+        return command.andThen(() -> drivebase.tankDriveVolts(0, 0));
     }
 }

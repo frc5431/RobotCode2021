@@ -32,12 +32,12 @@ public class DriveTime extends CommandBase {
 
 	@Override
 	public void execute() {
-		drivebase.driveArcade(power, 0);
+		drivebase.arcadeDrive(power, 0);
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		drivebase.driveArcade(0, 0);
+		drivebase.arcadeDrive(0, 0);
 		Logger.l("finishing drive time");
 	}
 

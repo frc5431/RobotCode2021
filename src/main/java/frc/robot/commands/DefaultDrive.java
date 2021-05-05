@@ -26,6 +26,6 @@ public class DefaultDrive extends CommandBase {
     public void execute() {
         double _pow = pow.getAsDouble();
         double _ang = ang.getAsDouble();
-        drivebase.driveArcade(_pow, _ang);
+        drivebase.arcadeDrive(_pow, _ang);
     }
 }
