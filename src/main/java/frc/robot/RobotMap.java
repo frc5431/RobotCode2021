@@ -238,8 +238,8 @@ public class RobotMap {
 
     public Command getAutonCommand() {
         Drivebase drivebase = systems.getDrivebase();
-        // Trajectory trajectory = PathLoader.FromFile(paths.getSelected());
-        Trajectory trajectory = PathLoader.FromSample();
+        Trajectory trajectory = PathLoader.FromFile("paths/"+paths.getSelected());
+        // Trajectory trajectory = PathLoader.FromSample();
         SimpleMotorFeedforward feedforward = drivebase.getFeedforward();
         DifferentialDriveKinematics kinematics = drivebase.getKinematics();
 

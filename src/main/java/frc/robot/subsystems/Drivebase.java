@@ -170,10 +170,10 @@ public class Drivebase extends SubsystemBase {
         drivetrainSim.setInputs(leftMain.getMotorOutputVoltage(), rightMain.getMotorOutputVoltage());
         drivetrainSim.update(Robot.kDefaultPeriod);
 
-        var leftPosition = leftMain.getSelectedSensorPosition();
-        var rightPosition = rightMain.getSelectedSensorPosition();
-        var leftVelocity = leftMain.getSelectedSensorVelocity();
-        var rightVelocity = rightMain.getSelectedSensorVelocity();
+        double leftPosition = drivetrainSim.getLeftPositionMeters();
+        double rightPosition = drivetrainSim.getRightPositionMeters();
+        double leftVelocity = drivetrainSim.getLeftVelocityMetersPerSecond();
+        double rightVelocity = drivetrainSim.getRightVelocityMetersPerSecond();
         leftDriveSim.setQuadratureRawPosition(FalconUtils.distanceToNativeUnits(leftPosition));
         leftDriveSim.setQuadratureVelocity(FalconUtils.velocityToNativeUnits(leftVelocity));
         rightDriveSim.setQuadratureRawPosition(FalconUtils.distanceToNativeUnits(rightPosition));
