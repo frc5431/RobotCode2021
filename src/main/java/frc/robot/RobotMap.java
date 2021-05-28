@@ -1,6 +1,8 @@
 package frc.robot;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -238,6 +240,16 @@ public class RobotMap {
 
     public Command getAutonCommand() {
         Drivebase drivebase = systems.getDrivebase();
+
+        // Sim-specific code for choosing paths
+        // TODO: Change to time-based auton eventually
+        if (paths.getSelected() == null) return new Command(){
+            @Override
+            public Set<Subsystem> getRequirements() {
+                return new HashSet<>();
+            }
+        };
+
         Trajectory trajectory = PathLoader.FromFile("paths/"+paths.getSelected());
         // Trajectory trajectory = PathLoader.FromSample();
         SimpleMotorFeedforward feedforward = drivebase.getFeedforward();
