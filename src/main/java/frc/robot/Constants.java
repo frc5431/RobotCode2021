@@ -145,18 +145,18 @@ public final class Constants {
     // ================================================================================
 
     // User Set
-    /// Max runtime speed, lower than max
+    /// Max runtime speed, lower than max (unused currently)
     public static final double ROBOT_TRAJECTORY_MAX_SPEED = 3.0;
-    /// Max runtime acceleration, lower than max
+    /// Max runtime acceleration, lower than max (unused currently)
     public static final double ROBOT_TRAJECTORY_MAX_ACCEL = 3.0;
-    /// Max voltage motors will draw
+    /// Max voltage motors will draw (unused currently)
     public static final double ROBOT_TRAJECTORY_MAX_VOLTAGE = 10.0;
     /// Ticks per revolution of motor axle
     public static final double ROBOT_DRIVEBASE_TPR = 2048;
     /// Radius of drivebase wheels
     public static final double ROBOT_DRIVEBASE_WHEEL_RADIUS = 3;
     /// Multiplier from motor revolution to wheel revolution
-    public static final double ROBOT_DRIVEBASE_GEAR_RATIO = 2.7;
+    public static final double ROBOT_DRIVEBASE_GEAR_RATIO = 9.64;
     /// Gearbox description
     public static final DCMotor ROBOT_DRIVEBASE_GEAR_BOX = DCMotor.getFalcon500(2);
 
