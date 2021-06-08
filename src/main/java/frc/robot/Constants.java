@@ -94,10 +94,10 @@ public final class Constants {
 	
 	public static final double FLYWHEEL_VELOCITY_RANGE = 350;
     
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 11300;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 10500; //11900
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 17000; //11900
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.4;
 
     public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); //0.0474073170731707, 0.004
@@ -110,9 +110,9 @@ public final class Constants {
 	public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.5;
 
 
-    public static final long SHOOTER_FEEDER_BALL_DELAY = 1300;
-	public static final long SHOOTER_FEEDER_UP_DELAY = 1000;
-	public static final long SHOOTER_FEEDER_DOWN_DELAY = 200;
+    public static final long SHOOTER_FEEDER_BALL_DELAY = 1450;
+	public static final long SHOOTER_FEEDER_UP_DELAY = 1150;
+	public static final long SHOOTER_FEEDER_DOWN_DELAY = 225;
 
     // Intake Related
     public static final int INTAKE_ID = 5;
@@ -124,11 +124,11 @@ public final class Constants {
     public static final int PIVOT_ID = 12; // REMINDER: CHANGE TO 12 LATER
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
-    public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = (-50200 / 100) * 81; // 45000
-    public static final int PIVOT_UP_LIMIT = (-800 / 100) * 81; // 5000 
-    public static final int PIVOT_VELOCITY = 5000;
-    public static final double PIVOT_AFFECT_GRAVITY = -0.02;
+    public static final double PIVOT_DEFAULT_SPEED = 0.3;
+    public static final int PIVOT_DOWN_LIMIT = (-40300 / 100) * 81; // 45000
+    public static final int PIVOT_UP_LIMIT = (-3500 / 100) * 81; // 5000 
+    public static final int PIVOT_VELOCITY = 6000;
+    public static final double PIVOT_AFFECT_GRAVITY = -0.03;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
@@ -171,8 +171,8 @@ public final class Constants {
     // ================================================================================
 
     public static final double COUNTS_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 0; // TODO: Find Wheel Circumfrence
-    public static final int GEAR_RATIO = 0; // TODO: Find Gear Ratio
+    public static final double WHEEL_CIRCUMFERENCE = 18.85;
+    public static final double GEAR_RATIO = 9.64;
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
