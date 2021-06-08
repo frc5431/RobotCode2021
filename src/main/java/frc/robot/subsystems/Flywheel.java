@@ -21,7 +21,7 @@ import frc.team5431.titan.core.misc.Logger;
  */
 public class Flywheel extends SubsystemBase {
 	public static enum Speeds {
-		OFF(0), HALF(0.5), FULL(0.58);
+		OFF(0), HALF(0.5), FULL(1.0);
 
 		private double speed;
 
