@@ -11,8 +11,8 @@ import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.team5431.titan.core.joysticks.*;
-import frc.team5431.titan.core.vision.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
+import frc.team5431.titan.core.vision.*;
 
 /**
  * @author Ryan Hirasaki
@@ -51,7 +51,6 @@ public class RobotMap {
 		chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
 		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", AutonStates.DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE);
 		SmartDashboard.putData("Auton Select", chooser);
-		// SmartDashboard.putData("Auton Select", chooser);
 	}
 
 	private void bindKeys() {
@@ -158,7 +157,7 @@ public class RobotMap {
 
 			// Trigger Flywheel (Shoot Far)
 			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-					.whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.FULL))
+					.whenHeld(new FlywheelTriggerCommand(systems, Flywheel.Velocity.FULL, () -> -operator.getRawAxis(Axis.SLIDER)))
 					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
 			// Arbitrary Flywheel control (Shoot Close)
@@ -213,13 +212,13 @@ public class RobotMap {
 			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
 			systems.getDrivebase().setDefaultCommand(new DefaultDrive(systems,
-					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> 0.5*driver.getRawAxis(Xbox.Axis.LEFT_X)));
+					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
 			
-			systems.getFlywheel()
-					.setDefaultCommand(new DefaultFlywheel(systems, () -> -operator.getRawAxis(Axis.SLIDER)));
+			// systems.getFlywheel()
+			// 		.setDefaultCommand(new DefaultFlywheel(systems, () -> -operator.getRawAxis(Axis.SLIDER)));
 		}
 
 		// ===========================

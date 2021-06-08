@@ -96,8 +96,7 @@ public class Targetor extends CommandBase {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
 		SmartDashboard.putNumber("Limelight Pipeline", Constants.LIMELIGHT_PIPELINE_OFF); 
-		SmartDashboard.putBoolean("Limelight Command Finished", true
-		); 
+		SmartDashboard.putBoolean("Limelight Command Finished", true); 
 
     }
     @Override
