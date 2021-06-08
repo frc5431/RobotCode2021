@@ -161,19 +161,17 @@ public final class Constants {
     public static final DCMotor ROBOT_DRIVEBASE_GEAR_BOX = DCMotor.getFalcon500(2);
 
     // Calculated via frc-characterize/sysid
-    public static final double ROBOT_TRAJECTORY_kS = 0.729;
-    public static final double ROBOT_TRAJECTORY_kV = 0.303;
-    public static final double ROBOT_TRAJECTORY_kA = 0.0552;
+    public static final double ROBOT_TRAJECTORY_kS = 0.957;
+    public static final double ROBOT_TRAJECTORY_kV = 0.364;
+    public static final double ROBOT_TRAJECTORY_kA = 0.000375;
     public static final double ROBOT_TRAJECTORY_P = 0.000302;
-    public static final double ROBOT_DRIVEBASE_TRACK_WIDTH = 0.67;
+    public static final double ROBOT_DRIVEBASE_TRACK_WIDTH = 3.174432615259435;
     public static final double ROBOT_DRIVEBASE_V_LINEAR = 1.98;
     public static final double ROBOT_DRIVEBASE_A_LINEAR = 0.2;
     public static final double ROBOT_DRIVEBASE_V_ANGULAR = 1.5;
     public static final double ROBOT_DRIVEBASE_A_ANGULAR = 0.3;
     public static final PIDController ROBOT_TRAJECTORY_PID = new PIDController(ROBOT_TRAJECTORY_P, 0, 0);
-    public static final LinearSystem<N2, N2, N2> ROBOT_DRIVEBASE_LINEAR_SYSTEM = LinearSystemId
-            .identifyDrivetrainSystem(ROBOT_DRIVEBASE_V_LINEAR, ROBOT_DRIVEBASE_A_LINEAR, ROBOT_DRIVEBASE_V_ANGULAR,
-                    ROBOT_DRIVEBASE_A_ANGULAR);
+    public static final LinearSystem<N2, N2, N2> ROBOT_DRIVEBASE_LINEAR_SYSTEM = LinearSystemId.identifyDrivetrainSystem(ROBOT_DRIVEBASE_V_LINEAR, ROBOT_DRIVEBASE_A_LINEAR, ROBOT_DRIVEBASE_V_ANGULAR, ROBOT_DRIVEBASE_A_ANGULAR);
 
     // ================================================================================
     // PathWeaver Data
