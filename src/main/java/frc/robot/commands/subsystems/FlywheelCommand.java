@@ -14,21 +14,21 @@ public class FlywheelCommand extends CommandBase {
 	public static boolean KILL = false;
 
     private final Flywheel flywheel;
-    private final Flywheel.Speeds speed;    
+    // private final Flywheel.Speeds speed;    
     private final Flywheel.Velocity velocity;  
 
-    public FlywheelCommand(Systems systems, Flywheel.Speeds speed) {
-        this.flywheel = systems.getFlywheel();
-        this.speed = speed;
-        this.velocity = null;
+    // public FlywheelCommand(Systems systems, Flywheel.Speeds speed) {
+    //     this.flywheel = systems.getFlywheel();
+    //     this.speed = speed;
+    //     this.velocity = null;
 
-        addRequirements(flywheel);
-    }
+    //     addRequirements(flywheel);
+    // }
 
     public FlywheelCommand(Systems systems, Flywheel.Velocity velocity) {
         this.flywheel = systems.getFlywheel();
         this.velocity = velocity;
-        this.speed = null;
+        // this.speed = null;
 
         addRequirements(flywheel);
     }
@@ -36,10 +36,10 @@ public class FlywheelCommand extends CommandBase {
     @Override
     public void initialize() {
 		KILL = false;
-        if (speed == null)
+        // if (speed == null)
             flywheel.set(velocity);
-        if (velocity == null)
-            flywheel.set(speed);
+        // if (velocity == null)
+        //     flywheel.set(speed);
     }
 
     @Override

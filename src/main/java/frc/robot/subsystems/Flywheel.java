@@ -20,19 +20,19 @@ import frc.team5431.titan.core.misc.Logger;
  * @author Rishmita Rao
  */
 public class Flywheel extends SubsystemBase {
-	public static enum Speeds {
-		OFF(0), HALF(0.5), FULL(1.0);
+	// public static enum Speeds {
+	// 	OFF(0), HALF(0.5), FULL(1.0);
 
-		private double speed;
+	// 	private double speed;
 
-		private Speeds(double speed) {
-			this.speed = speed;
-		}
+	// 	private Speeds(double speed) {
+	// 		this.speed = speed;
+	// 	}
 
-		public double getSpeed() {
-			return speed;
-		}
-	}
+	// 	public double getSpeed() {
+	// 		return speed;
+	// 	}
+	// }
 
 	public static enum Velocity {
 		OFF(0, -1), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW, Constants.SLOT_0),
@@ -111,7 +111,7 @@ public class Flywheel extends SubsystemBase {
 		// Get Flywheel PID error rate for analysis: Far
 		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError());
 
-		SmartDashboard.putBoolean("Flywheel At Velocity", atVelocity());
+		SmartDashboard.putString("Flywheel At Velocity", (flywheel.getControlMode() == ControlMode.PercentOutput) ? "In PercentOutput Control Mode! No target velocity" : (atVelocity() + ""));
 	}
 
 	public List<WPI_TalonFX> getMotors() {
@@ -132,16 +132,13 @@ public class Flywheel extends SubsystemBase {
 		flywheel.set(mode, speed);
 	}
 
-	public void set(Speeds speed) {
-		setSpeed(ControlMode.PercentOutput, speed.getSpeed());
-	}
+	// public void set(Speeds speed) {
+	// 	setSpeed(ControlMode.PercentOutput, speed.getSpeed());
+	// }
 
 	public void set(Velocity velocity) {
 		setSlot(velocity.getSlot());
-		if (Velocity.OFF == velocity)
-			setSpeed(ControlMode.PercentOutput, 0);
-		else
-			setSpeed(ControlMode.Velocity, velocity.getSpeed());
+		setSpeed(ControlMode.Velocity, (Velocity.OFF == velocity) ? 0 : velocity.getSpeed());
 	}
 
 	public double getSpeed() {
@@ -153,7 +150,11 @@ public class Flywheel extends SubsystemBase {
 	}
 
 	public boolean atVelocity() {
+		if (flywheel.getControlMode() == ControlMode.PercentOutput)
+			return false;
+
 		double targetVel = flywheel.getClosedLoopTarget();
+		
 		double currentVel = flywheel.getSelectedSensorVelocity();
 
 		return Calc.approxEquals(Math.abs(targetVel), Math.abs(currentVel),Constants.FLYWHEEL_VELOCITY_RANGE);
