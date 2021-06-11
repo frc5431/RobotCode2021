@@ -10,6 +10,8 @@ import frc.robot.auton.DriveForward;
 import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
 import frc.robot.commands.defaults.*;
+import frc.robot.commands.music.*;
+import frc.robot.commands.music.MusicLoadCommand.LoadType;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
@@ -28,6 +30,8 @@ import frc.team5431.titan.core.vision.*;
 public class RobotMap {
 	private final Systems systems = new Systems();
 
+    private final Music music;
+
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
@@ -42,6 +46,9 @@ public class RobotMap {
 		bindKeys();
 
 		printAutonChooser();
+
+        music = new Music(systems.getAllFalcons());
+        music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
     }
 
 	public void printAutonChooser() {
@@ -209,6 +216,25 @@ public class RobotMap {
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
 		}
+
+		// ===========================
+		// ||                       ||
+		// ||     Music Controls    ||
+		// ||                       ||
+		// ===========================
+		{	// Sample Music Controls
+			// Play
+			new JoystickButton(buttonBoard, 8).whenPressed(new MusicPlayCommand(music));
+			// Pause
+			new JoystickButton(buttonBoard, 9).whenPressed(new MusicPauseCommand(music));
+			// Stop
+			new JoystickButton(buttonBoard, 10).whenPressed(new MusicStopCommand(music));
+
+			// Advance song by 1
+			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1));
+			// Decrement song by 1
+			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1));
+		}
 	}
 
 	public void resetBallCount() {
@@ -242,6 +268,7 @@ public class RobotMap {
 	public void disabled() {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
+		music.stop();
 		systems.clearAllCommands();
 		
 		systems.getPivot().setNeutralMode(Constants.PIVOT_NEUTRALMODE);

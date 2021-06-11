@@ -204,4 +204,9 @@ public final class Constants {
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
 	public static final int PIVOT_PDP_SLOT = 4;
 	public static final int FEEDER_PDP_SLOT = 5;
+    
+    // ================================================================================
+    // Music
+    // ================================================================================
+	public static final boolean MUSIC_AUTO_QUEUE = true;
 }
