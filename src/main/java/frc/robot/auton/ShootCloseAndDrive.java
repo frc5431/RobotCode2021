@@ -20,9 +20,9 @@ public class ShootCloseAndDrive extends SequentialCommandGroup {
 			new ShootSuperCommand(systems, ShootPosition.AUTON, true),
             new InstantCommand(()-> Logger.l("exiting shoot super command")),
 			new WaitCommand(0.2),
-			new DriveTime(systems, -0.25, 500),
+			new DriveTime(systems, -0.3, 500),
 			new WaitCommand(0.2),
-			new DriveTime(systems, 0.25, 1250)
+			new DriveTime(systems, 0.3, 1250)
 		);
 	}
 }

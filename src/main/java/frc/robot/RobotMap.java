@@ -24,8 +24,6 @@ import frc.team5431.titan.core.vision.*;
 public class RobotMap {
 	private final Systems systems = new Systems();
 
-    // private final Music music;
-
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
@@ -39,18 +37,10 @@ public class RobotMap {
 		limelight.setPipeline(9);
 		bindKeys();
 		outData();
-
-		// chooser.setDefaultOption("Shoot, Drive foward one, stop", StartPosition.SHOOT_AND_DRIVE_FOWARD_ONE);
-		// chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", StartPosition.DRIVE_BACK_AND_FOWARD_THEN_SHOOT_THEN_DRIVE_ONE);
-		// SmartDashboard.putData("Auton Select", chooser);
-
-        // music = new Music(systems.getAllFalcons());
-        // music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
     }
 
 	public void outData() {
-		chooser.setDefaultOption("Shoot, Drive foward one, stop", AutonStates.SHOOT_AND_DRIVE_FORWARD_ONE);
-		chooser.addOption("Drive back 0.5, Drive Foward 0.5, Shoot, Drive foward one, stop", AutonStates.DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE);
+		chooser.setDefaultOption("Shoot, drive backward, drive forward, stop", AutonStates.SHOOT_AND_DRIVE_BACK_AND_FORWARD);
 		SmartDashboard.putData("Auton Select", chooser);
 	}
 
@@ -221,25 +211,6 @@ public class RobotMap {
 			// systems.getFlywheel()
 			// 		.setDefaultCommand(new DefaultFlywheel(systems, () -> -operator.getRawAxis(Axis.SLIDER)));
 		}
-
-		// ===========================
-		// ||                       ||
-		// ||     Music Controls    ||
-		// ||                       ||
-		// ===========================
-		/* {	// Sample Music Controls
-			// Play
-			new JoystickButton(buttonBoard, 10).whenPressed(new MusicPlayCommand(music));
-			// Pause
-			new JoystickButton(buttonBoard, 11).whenPressed(new MusicPauseCommand(music));
-			// Stop
-			new JoystickButton(buttonBoard, 12).whenPressed(new MusicStopCommand(music));
-
-			// Advance song by 1
-			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1));
-			// Decrement song by 1
-			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1));
-		} */
 	}
 
 	public void resetBallCount() {
@@ -248,10 +219,9 @@ public class RobotMap {
 
 	public CommandBase getAutonomousCommand() {
 		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_FORWARD_ONE:
+		case SHOOT_AND_DRIVE_BACK_AND_FORWARD:
 			return new ShootCloseAndDrive(systems, limelight);
 		default:
-		case DRIVE_BACK_AND_FORWARD_THEN_SHOOT_THEN_DRIVE_ONE:
 			return new SequentialCommandGroup(
 				
 			);
@@ -266,7 +236,6 @@ public class RobotMap {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
 		// resetEncoders();
-		// music.stop();
 		systems.clearAllCommands();
 		resetEncoders();
 

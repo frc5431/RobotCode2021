@@ -200,9 +200,4 @@ public final class Constants {
 	public static final int PIVOT_PDP_SLOT = 4;
 	public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;
-    
-    // ================================================================================
-    // Music
-    // ================================================================================
-	public static final boolean MUSIC_AUTO_QUEUE = true;
 }
