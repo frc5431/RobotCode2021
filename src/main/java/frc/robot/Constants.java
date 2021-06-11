@@ -92,7 +92,9 @@ public final class Constants {
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
 	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
 	
-	public static final double FLYWHEEL_VELOCITY_RANGE = 350;
+    public static final double FLYWHEEL_VELOCITY_RANGE = 350;
+    
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 16500;
     
     public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
@@ -121,9 +123,9 @@ public final class Constants {
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Pivot related
-    public static final int PIVOT_ID = 12; // REMINDER: CHANGE TO 12 LATER
+    public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
-    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
     public static final double PIVOT_DEFAULT_SPEED = 0.3;
     public static final int PIVOT_DOWN_LIMIT = (-40300 / 100) * 81; // 45000
     public static final int PIVOT_UP_LIMIT = (-3500 / 100) * 81; // 5000 

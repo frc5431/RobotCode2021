@@ -36,7 +36,8 @@ public class Flywheel extends SubsystemBase {
 
 	public static enum Velocity {
 		OFF(0, -1), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW, Constants.SLOT_0),
-		FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH, Constants.SLOT_0);
+		FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH, Constants.SLOT_0),
+		AUTON(Constants.SHOOTER_FLYWHEEL_VELOCITY_AUTO, Constants.SLOT_0);
 
 		private double speed;
 		private int PIDSlot;

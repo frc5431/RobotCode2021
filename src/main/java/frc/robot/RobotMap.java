@@ -10,6 +10,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
+import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
 import frc.team5431.titan.core.vision.*;
@@ -113,11 +114,11 @@ public class RobotMap {
 
 			// Shoot Close
 			new JoystickButton(buttonBoard, 1)
-					.whenHeld(new ShootSuperCommand(systems, true, false));
+					.whenHeld(new ShootSuperCommand(systems, ShootPosition.CLOSE, false));
 
 			// // Shoot Far
 			new JoystickButton(buttonBoard, 14)
-					.whenHeld(new ShootSuperCommand(systems, false, false));
+					.whenHeld(new ShootSuperCommand(systems, ShootPosition.FAR, false));
 
 			// Intake (By itself)
 			// new JoystickButton(buttonBoard, 2)
