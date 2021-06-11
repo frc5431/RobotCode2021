@@ -94,12 +94,12 @@ public final class Constants {
 	
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
     
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 16500;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 15400;
     
     public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 17000; //11900
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 15200; //11900
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.4;
 
     public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); //0.0474073170731707, 0.004
@@ -125,12 +125,13 @@ public final class Constants {
     // Pivot related
     public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
-    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Brake;
-    public static final double PIVOT_DEFAULT_SPEED = 0.3;
+    public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
+    public static final NeutralMode PIVOT_DRIVEMODE = NeutralMode.Coast;
+    public static final double PIVOT_DEFAULT_SPEED = 0.4;
     public static final int PIVOT_DOWN_LIMIT = (-40300 / 100) * 81; // 45000
     public static final int PIVOT_UP_LIMIT = (-3500 / 100) * 81; // 5000 
     public static final int PIVOT_VELOCITY = 6000;
-    public static final double PIVOT_AFFECT_GRAVITY = -0.03;
+    public static final double PIVOT_AFFECT_GRAVITY = -0.04;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);

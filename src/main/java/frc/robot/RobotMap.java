@@ -13,6 +13,7 @@ import frc.robot.subsystems.*;
 import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
+import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
 
 /**
@@ -232,14 +233,22 @@ public class RobotMap {
 		systems.getPivot().reset();
 	}
 
+	public void enabled() {
+		systems.getPivot().setNeutralMode(Constants.PIVOT_DRIVEMODE);
+		Logger.l("enabled!");
+	}
+
 	public void disabled() {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
 		// resetEncoders();
 		systems.clearAllCommands();
 		resetEncoders();
+		systems.getPivot().setNeutralMode(Constants.PIVOT_NEUTRALMODE);
 
 		// Lets Not Blind the Refs :)
 		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+
+		Logger.l("disabled!");
 	}
 }

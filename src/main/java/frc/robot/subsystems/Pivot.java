@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -56,12 +57,13 @@ public class Pivot extends SubsystemBase {
 	private PIDController pidController;
 	private final PowerDistributionPanel pdp;
 
+    private NeutralMode nm;
 
     public Pivot(PowerDistributionPanel pdp, WPI_TalonFX pivotMotor) {
 		this.pdp = pdp;
         this.pivotMotor = pivotMotor;
         this.pivotMotor.setInverted(Constants.PIVOT_REVERSE);
-        this.pivotMotor.setNeutralMode(Constants.PIVOT_NEUTRALMODE);
+        setNeutralMode(Constants.PIVOT_NEUTRALMODE);
         this.pivotMotor.configFactoryDefault();
         
         // reset encoder
@@ -126,7 +128,8 @@ public class Pivot extends SubsystemBase {
         SmartDashboard.putNumber("Pivot Sensor Velocity", pivotMotor.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Pivot Speed", pivotMotor.get());
 		SmartDashboard.putNumber("Pivot Error Rate", pivotMotor.getClosedLoopError(Constants.SLOT_0));
-		SmartDashboard.putNumber("Pivot current", pdp.getCurrent(Constants.PIVOT_PDP_SLOT));
+        SmartDashboard.putNumber("Pivot current", pdp.getCurrent(Constants.PIVOT_PDP_SLOT));
+        SmartDashboard.putString("Pivot Neutral Mode", nm.name());
 		if(4 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
 			// Slow down pivot
 			pivotMotor.set(0);
@@ -145,6 +148,11 @@ public class Pivot extends SubsystemBase {
         double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
 
         pivotMotor.set(ControlMode.Position, pos.getValue(), DemandType.ArbitraryFeedForward ,CosineScalar * maxGravity);
+    }
+
+    public void setNeutralMode(NeutralMode nm) {
+        pivotMotor.setNeutralMode(nm);
+        this.nm = nm;
     }
 
     public void setSpeed(Pivot.SPEED speed) {
