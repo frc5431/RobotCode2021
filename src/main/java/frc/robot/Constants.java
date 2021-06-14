@@ -161,7 +161,7 @@ public final class Constants {
     // Distance calculations
     public static final double LIMELIGHT_ANGLE_FROM_GROUND = 10.0; // TODO: figure out updated angle
     public static final double POWER_PORT_HEIGHT = 98.25; // in inches
-    public static final double LIMELIGHT_HEIGHT = 32; // in inches
+    public static final double LIMELIGHT_HEIGHT = 32; // in inches TODO: make sure it's right
 
     // ================================================================================
     // IMU Data
