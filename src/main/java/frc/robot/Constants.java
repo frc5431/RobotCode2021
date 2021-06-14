@@ -156,7 +156,12 @@ public final class Constants {
 	public static final PIDController LIMELIGHT_PID = new PIDController(0.046, 0.002, 0);
 	public static final double LIMELIGHT_ERROR_RATE = 0.03;
 	public static final double LIMELIGHT_ASPECT_RATIO = 2.02;
-	public static final double LIMELIGHT_ASPECT_RATIO_ERROR = 0.5;
+    public static final double LIMELIGHT_ASPECT_RATIO_ERROR = 0.5;
+
+    // Distance calculations
+    public static final double LIMELIGHT_ANGLE_FROM_GROUND = 10.0; // TODO: figure out updated angle
+    public static final double POWER_PORT_HEIGHT = 98.25; // in inches
+    public static final double LIMELIGHT_HEIGHT = 32; // in inches
 
     // ================================================================================
     // IMU Data

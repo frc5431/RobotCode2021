@@ -241,8 +241,8 @@ public class RobotMap {
 	public void disabled() {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
-		// resetEncoders();
 		systems.clearAllCommands();
+		
 		resetEncoders();
 		systems.getPivot().setNeutralMode(Constants.PIVOT_NEUTRALMODE);
 

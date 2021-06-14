@@ -75,6 +75,9 @@ public class Targetor extends CommandBase {
 		double xError = Constants.LIMELIGHT_PID.calculate(limelight.getX());
 		SmartDashboard.putNumber("Limelight Error X", xError);
 		SmartDashboard.putNumber("Limelight Pipeline", Constants.LIMELIGHT_PIPELINE_ON);
+		
+		double distance = (Constants.POWER_PORT_HEIGHT - Constants.LIMELIGHT_HEIGHT) / Math.tan(Constants.LIMELIGHT_ANGLE_FROM_GROUND + limelight.getY());
+		SmartDashboard.putNumber("Distance from power port (in)", distance);
 
 		// double yError = positionController.calculate(limelight.getY());
 		if(isValid()){
