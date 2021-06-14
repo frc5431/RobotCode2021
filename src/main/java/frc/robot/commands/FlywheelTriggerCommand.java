@@ -1,4 +1,8 @@
-package frc.robot.commands.subsystems;
+package frc.robot.commands;
+
+import java.util.function.DoubleSupplier;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
@@ -9,12 +13,15 @@ import frc.team5431.titan.core.misc.Logger;
 /**
  * @author Ryan Hirasaki
  */
-public class FlywheelCommand extends CommandBase {
+public class FlywheelTriggerCommand extends CommandBase {
+
 	public static boolean KILL = false;
 
     private final Flywheel flywheel;
     // private final Flywheel.Speeds speed;    
     private final Flywheel.Velocity velocity;  
+
+    private final DoubleSupplier pow;
 
     // public FlywheelCommand(Systems systems, Flywheel.Speeds speed) {
     //     this.flywheel = systems.getFlywheel();
@@ -24,21 +31,27 @@ public class FlywheelCommand extends CommandBase {
     //     addRequirements(flywheel);
     // }
 
-    public FlywheelCommand(Systems systems, Flywheel.Velocity velocity) {
+    public FlywheelTriggerCommand(Systems systems, Flywheel.Velocity baseVel, DoubleSupplier pow) {
         this.flywheel = systems.getFlywheel();
-        this.velocity = velocity;
+        this.velocity = baseVel;
         // this.speed = null;
+        this.pow = pow;
 
         addRequirements(flywheel);
+    }
+
+    private double map(double v, double in_min, double in_max, double out_min, double out_max) {
+        return (v - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
     @Override
     public void initialize() {
 		KILL = false;
-        // if (speed == null)
-            flywheel.set(velocity);
-        // if (velocity == null)
-        //     flywheel.set(speed);
+    }
+
+    @Override
+    public void execute() {
+        flywheel.setSpeed(ControlMode.Velocity, map(pow.getAsDouble(), -1.0, 1.0, 0.0, velocity.getSpeed()*1.25));
     }
 
     @Override
@@ -49,10 +62,12 @@ public class FlywheelCommand extends CommandBase {
 	
 	@Override
 	public boolean isFinished() {
-		if (KILL) {
+		if(KILL) {
 			KILL = false;
 			return true;
-		} else
+		}
+		else {
 			return false;
+		}
 	}
 }

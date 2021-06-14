@@ -16,6 +16,8 @@ public class Robot extends TimedRobot {
   private RobotMap robotMap;
   private Command autonCommand;
 
+  private boolean performedEnabled = false;
+
   // The Following is Initializer Functions
 
   @Override
@@ -69,4 +71,26 @@ public class Robot extends TimedRobot {
 //   public void disabledPeriodic() {
 // 	  robotMap.disabled();
 //   }
+
+  @Override
+  public void autonomousPeriodic() {
+    if (!performedEnabled) {
+      robotMap.enabled();
+      performedEnabled = true;
+    }
+  }
+
+  @Override
+  public void teleopPeriodic() {
+    if (!performedEnabled) {
+      robotMap.enabled();
+      performedEnabled = true;
+    }
+  }
+  
+  @Override
+  public void disabledInit() {
+    robotMap.disabled();
+    performedEnabled = false;
+  }
 }

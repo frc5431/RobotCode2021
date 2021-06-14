@@ -112,10 +112,10 @@ public class Feeder extends SubsystemBase {
 	 */
 	public void ballUpdate() {
 
-		roof = getValueOfDIOSensor(3);
-		topMid = getValueOfDIOSensor(2);
-		lowMid = getValueOfDIOSensor(1);
-		floor = getValueOfDIOSensor(0);
+		roof = getValueOfDIOSensor(0);
+		topMid = getValueOfDIOSensor(1);
+		lowMid = getValueOfDIOSensor(2);
+		floor = getValueOfDIOSensor(3);
 
 		boolean topThreeActive = !roof && !topMid && !lowMid;
 

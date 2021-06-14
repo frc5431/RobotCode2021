@@ -3,6 +3,7 @@ package frc.robot.commands.states;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Flywheel.Velocity;
+import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.misc.Logger;
 import frc.robot.Systems;
 import frc.robot.commands.*;
@@ -18,13 +19,14 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	// private final SuperStopShoot stop;
 	private final Systems systems;
 
-	public ShootSuperCommand(Systems systems, boolean close, boolean rpmWait) {
+
+	public ShootSuperCommand(Systems systems, ShootPosition pos, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
 
 		addCommands(
 				new SequentialCommandGroup(
-					new WaitCommand(0.1), new FlywheelCommand(systems, close ? Flywheel.Velocity.HALF : Flywheel.Velocity.FULL)
+					new WaitCommand(0.1), new FlywheelCommand(systems, pos == ShootPosition.CLOSE ? Flywheel.Velocity.HALF : pos == ShootPosition.FAR ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON)
 				),
 				new SequentialCommandGroup(
 					// new ParallelCommandGroup(
@@ -36,7 +38,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 					// 	Logger.l("Leaving Flywheel Wait In (ShootSuperCommand.java)");
 					// }),
 					new WaitTillFlywheelAtSpeed(systems, rpmWait),
-					new PushBallsUpSubCommand(systems, close, rpmWait),
+					new PushBallsUpSubCommand(systems, pos, rpmWait),
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = true;}), // Enable Auto Indexer
 					new InstantCommand(() -> {FlywheelCommand.KILL = true;})
 				)

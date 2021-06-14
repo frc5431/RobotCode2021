@@ -96,14 +96,16 @@ public final class Constants {
     public static final boolean SHOOTER_FLYWHEEL_REVERSE = true;
 
     public static final NeutralMode SHOOTER_FLYWHEEL_NEUTRALMODE = NeutralMode.Brake;
-    public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
-
+	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
+	
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
-
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 15000; //11300;
+    
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 15400;
+    
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 14500; //10500; // 11900
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 15200; //11900
     public static final double SHOOTER_FLYWHEEL_SPEED_LOW = 0.4;
 
     public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); // 0.0474073170731707,
@@ -116,9 +118,9 @@ public final class Constants {
     public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.7;
     public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.5;
 
-    public static final long SHOOTER_FEEDER_BALL_DELAY = 1300;
-    public static final long SHOOTER_FEEDER_UP_DELAY = 1000;
-    public static final long SHOOTER_FEEDER_DOWN_DELAY = 200;
+    public static final long SHOOTER_FEEDER_BALL_DELAY = 1450;
+	public static final long SHOOTER_FEEDER_UP_DELAY = 1150;
+	public static final long SHOOTER_FEEDER_DOWN_DELAY = 225;
 
     // Intake Related
     public static final int INTAKE_ID = 5;
@@ -127,13 +129,14 @@ public final class Constants {
     public static final double INTAKE_DEFAULT_SPEED = 1.0;
 
     // Pivot related
-    public static final int PIVOT_ID = 12; // REMINDER: CHANGE TO 12 LATER
+    public static final int PIVOT_ID = 12;
     public static final boolean PIVOT_REVERSE = false;
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
-    public static final double PIVOT_DEFAULT_SPEED = 0.2;
-    public static final int PIVOT_DOWN_LIMIT = (-50200 / 100) * 81; // 45000
-    public static final int PIVOT_UP_LIMIT = (-800 / 100) * 81; // 5000
-    public static final int PIVOT_VELOCITY = 5000;
+    public static final NeutralMode PIVOT_DRIVEMODE = NeutralMode.Coast;
+    public static final double PIVOT_DEFAULT_SPEED = 0.4;
+    public static final int PIVOT_DOWN_LIMIT = (-40300 / 100) * 81; // 45000
+    public static final int PIVOT_UP_LIMIT = (-3500 / 100) * 81; // 5000 
+    public static final int PIVOT_VELOCITY = 6000;
     public static final double PIVOT_AFFECT_GRAVITY = -0.04;
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
@@ -200,10 +203,15 @@ public final class Constants {
     public static final String VISION_FRONT_LIMELIGHT = "limelight";
     public static final int LIMELIGHT_PIPELINE_OFF = 9;
     public static final int LIMELIGHT_PIPELINE_ON = 0;
-    public static final PIDController LIMELIGHT_PID = new PIDController(0.046, 0.002, 0);
-    public static final double LIMELIGHT_ERROR_RATE = 0.03;
-    public static final double LIMELIGHT_ASPECT_RATIO = 2.02;
+	public static final PIDController LIMELIGHT_PID = new PIDController(0.046, 0.002, 0);
+	public static final double LIMELIGHT_ERROR_RATE = 0.03;
+	public static final double LIMELIGHT_ASPECT_RATIO = 2.02;
     public static final double LIMELIGHT_ASPECT_RATIO_ERROR = 0.5;
+
+    // Distance calculations
+    public static final double LIMELIGHT_ANGLE_FROM_GROUND = 10.0; // TODO: figure out updated angle
+    public static final double POWER_PORT_HEIGHT = 98.25; // in inches
+    public static final double LIMELIGHT_HEIGHT = 32; // in inches TODO: make sure it's right
 
     // ================================================================================
     // IMU Data
@@ -220,9 +228,9 @@ public final class Constants {
     // Drive Base Numbers
     // ================================================================================
 
-    public static final double COUNTS_PER_REVOLUTION = 4096;
-    public static final double WHEEL_CIRCUMFERENCE = 0.478779;
-    public static final double GEAR_RATIO = 0.37;
+    public static final double COUNTS_PER_REVOLUTION = 2048;
+    public static final double WHEEL_CIRCUMFERENCE = 18.85;
+    public static final double GEAR_RATIO = 9.64;
     public static final double MAX_MOTOR_SPEED = 1;
 
     // TODO: Set Proper PID Values
@@ -248,9 +256,4 @@ public final class Constants {
     public static final int PIVOT_PDP_SLOT = 4;
     public static final int FEEDER_PDP_SLOT = 5;
     public static final long FEEDER_PUSH_BALL_DOWN = 300;
-
-    // ================================================================================
-    // Music
-    // ================================================================================
-    public static final boolean MUSIC_AUTO_QUEUE = true;
 }
