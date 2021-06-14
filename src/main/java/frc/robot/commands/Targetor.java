@@ -53,14 +53,14 @@ public class Targetor extends CommandBase {
 		isLocked = false; 
 	}
 
-	public boolean isValid(){
+	public boolean isValid() {
 		double aspectRatio = limelight.getTable().getEntry("thor").getDouble(0.0)/limelight.getTable().getEntry("tvert").getDouble(0.0); 
 		SmartDashboard.putNumber("Limelight Aspect Ratio", aspectRatio);
 		return aspectRatio >= 1 && limelight.getValid(); 
 
 	}
 
-	public boolean isLocked(){
+	public boolean isLocked() {
 		boolean targetLocked = Math.abs(Constants.LIMELIGHT_PID.calculate(limelight.getX())) <= Constants.LIMELIGHT_ERROR_RATE;
 		return targetLocked; 
 	}
@@ -80,12 +80,10 @@ public class Targetor extends CommandBase {
 		SmartDashboard.putNumber("Distance from power port (in)", distance);
 
 		// double yError = positionController.calculate(limelight.getY());
-		if(isValid()){
-			drivebase.drivePercentageArcade(0, xError + (0.15 * Math.signum(xError)));
-		}
-		else{
-			drivebase.drivePercentageArcade(0, 0);
-		}
+		if (isValid())
+			drivebase.driveArcade(0, xError + (0.15 * Math.signum(xError)));
+		else
+			drivebase.driveArcade(0, 0);
 
 	}
 
@@ -95,29 +93,26 @@ public class Targetor extends CommandBase {
 		if (interrupted)
 			Logger.l("Targetor Command Interuppted");
 		else
-			Logger.l("Targetor Command Finished");
+            Logger.l("Targetor Command Finished");
+        
 		limelight.setLEDState(LEDState.DEFAULT);
-		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+        limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+        
 		SmartDashboard.putNumber("Limelight Pipeline", Constants.LIMELIGHT_PIPELINE_OFF); 
 		SmartDashboard.putBoolean("Limelight Command Finished", true); 
-
     }
     @Override
     public boolean isFinished() {
-
 		boolean fullFinish = isLocked() && isValid();
-		if(fullFinish){
-			if(!isLocked){
+		if (fullFinish) {
+			if (!isLocked) {
 				isLocked = true;
 				startLockTime = System.currentTimeMillis(); 
 			}
-			else{
-				return startLockTime + 200 >= System.currentTimeMillis(); 
-			}
-		}
-		else{
-			isLocked = false; 
-		}
+			else
+				return startLockTime + 200 >= System.currentTimeMillis();
+		} else
+			isLocked = false;
 		return false;
     }
 }

@@ -10,7 +10,6 @@ import frc.team5431.titan.core.misc.Logger;
  * @author Ryan Hirasaki
  */
 public class FlywheelCommand extends CommandBase {
-
 	public static boolean KILL = false;
 
     private final Flywheel flywheel;
@@ -50,14 +49,10 @@ public class FlywheelCommand extends CommandBase {
 	
 	@Override
 	public boolean isFinished() {
-		if(KILL) {
+		if (KILL) {
 			KILL = false;
 			return true;
-		}
-		else {
+		} else
 			return false;
-		}
 	}
-
-
 }

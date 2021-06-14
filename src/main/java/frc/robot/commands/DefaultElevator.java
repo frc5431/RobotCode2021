@@ -13,7 +13,6 @@ import frc.robot.subsystems.Pivot;
  * @author Ryan Hirasaki
  */
 public class DefaultElevator extends CommandBase {
-
     private final Elevator elevator;
     private final Systems systems;
     private final DoubleSupplier pow;

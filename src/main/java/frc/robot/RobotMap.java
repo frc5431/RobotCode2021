@@ -1,20 +1,24 @@
 package frc.robot;
 
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.button.*;
-import frc.robot.auton.AutonStates;
 import frc.robot.auton.ShootCloseAndDrive;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
-import frc.robot.util.ShootPosition;
+import frc.robot.util.GeneratePaths;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
+import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.misc.Logger;
 import frc.team5431.titan.core.vision.*;
+import frc.team5431.titan.core.robot.POVButton;
+import frc.team5431.titan.core.robot.JoystickButton;
+import frc.team5431.titan.pathfinder.PathLoader;
 
 /**
  * @author Ryan Hirasaki
@@ -23,29 +27,35 @@ import frc.team5431.titan.core.vision.*;
  * @author Daniel Brubaker
  */
 public class RobotMap {
-	private final Systems systems = new Systems();
+    private final Systems systems = new Systems();
 
-	private final Xbox driver = new Xbox(0);
-	private final Joystick buttonBoard = new Joystick(1);
-	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
+    // private final Music music;
 
-	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
+    private final Xbox driver = new Xbox(0);
+    private final Joystick buttonBoard = new Joystick(1);
+    private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
-	SendableChooser<AutonStates> chooser = new SendableChooser<>();
+    private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
+    private final Map<String, PathLoader> paths = GeneratePaths.generate();
 
-	public RobotMap() {
-		limelight.setLEDState(LEDState.DEFAULT);
-		limelight.setPipeline(9);
-		bindKeys();
-		outData();
+    SendableChooser<String> chooser = new SendableChooser<>();
+
+    public RobotMap() {
+        limelight.setLEDState(LEDState.DEFAULT);
+        limelight.setPipeline(9);
+        bindKeys();
+        outData();
     }
 
-	public void outData() {
-		chooser.setDefaultOption("Shoot, drive backward, drive forward, stop", AutonStates.SHOOT_AND_DRIVE_BACK_AND_FORWARD);
-		SmartDashboard.putData("Auton Select", chooser);
-	}
-
-	private void bindKeys() {
+    public void outData() {
+        chooser.setDefaultOption("Drive forward, backward, shoot", "default");
+        for (String key : paths.keySet()) {
+            chooser.addOption(key, key);
+        }
+        SmartDashboard.putData("Auton Select", chooser);
+    }
+    
+    private void bindKeys() {
 		
 		// ===========================
 		// ||                       ||
@@ -83,7 +93,7 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems).andThen(new PivotCommand(systems, Pivot.POSITION.UP))); // TODO: test andThen
+			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems).andThen(new PivotCommand(systems, Pivot.POSITION.UP)));
 
 
 			// Pivot Down
@@ -218,11 +228,20 @@ public class RobotMap {
 		systems.getFeeder().resetVars();
 	}
 
-	public CommandBase getAutonomousCommand() {
+	public Command getAutonomousCommand() {
+        String cmd = chooser.getSelected();
 		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_BACK_AND_FORWARD:
+		case "default":
 			return new ShootCloseAndDrive(systems, limelight);
-		default:
+        default:
+            if (cmd != null) {
+                PathLoader loader = paths.get(cmd);
+                if (loader != null) {
+                    Logger.l("PathFinder Loaded");
+                    return loader.generateCommand(systems.getDrivebase());
+                }
+            }
+
 			return new SequentialCommandGroup(
 				
 			);

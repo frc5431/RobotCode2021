@@ -24,7 +24,7 @@ public class Feeder extends SubsystemBase {
 	public static boolean ENABLE_AUTO_FEEDER = true; // Should Be true by default
 
 	WPI_TalonFX feed;
-	HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.length);
+	HashMap<Integer, DigitalInput> dioSensors = new HashMap<Integer, DigitalInput>(Constants.DIGITAL_INPUT_IDS.size());
 
 	double feedSpeed, feedSpeedOffset = 0;
 	int stopCount;
@@ -54,23 +54,16 @@ public class Feeder extends SubsystemBase {
 		feed.setInverted(Constants.SHOOTER_FEEDER_REVERSE);
 		feed.setNeutralMode(Constants.SHOOTER_FEEDER_NEUTRALMODE);
 
-		dioSensors.put(0, new DigitalInput(Constants.DIGITAL_INPUT_IDS[0]));
-		dioSensors.put(1, new DigitalInput(Constants.DIGITAL_INPUT_IDS[1]));
-		dioSensors.put(2, new DigitalInput(Constants.DIGITAL_INPUT_IDS[2]));
-		dioSensors.put(3, new DigitalInput(Constants.DIGITAL_INPUT_IDS[3]));
-
-		// dioSensors.forEach((num, sensor) -> {
-		// sensor = new DigitalInput(Constants.DIGITAL_INPUT_IDS[num]);
-		// });
+        for (int i = 0; i < Constants.DIGITAL_INPUT_IDS.size(); i++)
+            dioSensors.put(i, new DigitalInput(Constants.DIGITAL_INPUT_IDS.get(i)));
 
 		resetVars();
 	}
 
 	@Override
 	public void periodic() {
-		dioSensors.forEach((num, sensor) -> {
-			SmartDashboard.putBoolean("DIO Sensor " + num, sensor.get());
-		});
+        dioSensors.forEach((num, sensor) -> 
+            SmartDashboard.putBoolean("DIO Sensor " + num, sensor.get()));
 
 		ballUpdate();
 
@@ -181,7 +174,7 @@ public class Feeder extends SubsystemBase {
 		 */
 
 		if (feedSpeed == 0) {
-			if(ENABLE_AUTO_FEEDER) {
+			if (ENABLE_AUTO_FEEDER) {
 				if (readyToLoad) {
 					// Logger.l("Auto Feeder Running");
 					feed.set(1 - (feedSpeedOffset * (feedSpeed >= 0 ? 1 : -1)));

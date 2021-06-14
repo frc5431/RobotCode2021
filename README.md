@@ -1,4 +1,4 @@
-# Titan Robotics Robot Code 2021 
+# Titan Robotics Robot Code 2021
 
 ## Build Status
 [![Build

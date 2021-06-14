@@ -20,8 +20,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	private final Systems systems;
 
 
-	public ShootSuperCommand(Systems systems,
-			ShootPosition pos, boolean rpmWait) {
+	public ShootSuperCommand(Systems systems, ShootPosition pos, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
 
@@ -34,8 +33,8 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = false;}), // Disable Auto Indexer
 					new PushBallDownCommand(systems),
 					// new InstantCommand(() -> {
-					// 	// while (flywheel.getTargetVelocity() == 0) {}
-					// 	while (){}
+					// 	// while (flywheel.getTargetVelocity() == 0) { }
+					// 	while () { }
 					// 	Logger.l("Leaving Flywheel Wait In (ShootSuperCommand.java)");
 					// }),
 					new WaitTillFlywheelAtSpeed(systems, rpmWait),
@@ -56,6 +55,5 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 		FlywheelCommand.KILL = false;
 		super.end(interrupted);
 		Logger.l("Shooter Super Command Finished!");
-
 	}
 }

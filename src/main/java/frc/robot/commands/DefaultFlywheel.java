@@ -8,7 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
 import frc.robot.subsystems.Flywheel;
 
-public class DefaultFlywheel extends CommandBase{
+/**
+ * @author Ryan Hirasaki
+ */
+public class DefaultFlywheel extends CommandBase {
 
     private final Flywheel flywheel;
     private final DoubleSupplier pow;
