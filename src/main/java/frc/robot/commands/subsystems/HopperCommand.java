@@ -14,7 +14,7 @@ import frc.team5431.titan.core.misc.Logger;
 public class HopperCommand extends CommandBase {
 	private final Hopper hopper;
 	private final Feeder feeder;
-    private final boolean direction;
+    private final int directionMult;
 	private final double speedLeft, speedRight;
 	private final Flywheel flywheel;
 
@@ -28,7 +28,7 @@ public class HopperCommand extends CommandBase {
 
     public HopperCommand(Systems systems, double speedLeft, double speedRight, boolean reverse) {
         this.hopper = systems.getHopper();
-        this.direction = reverse;
+        this.directionMult = reverse ? 1 : -1;
         this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 		this.feeder = systems.getFeeder();
@@ -39,7 +39,7 @@ public class HopperCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        hopper.set(direction ? speedLeft : -speedLeft, direction ? speedRight : -speedRight);
+        hopper.set(directionMult * speedLeft, directionMult * speedRight);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class HopperCommand extends CommandBase {
 			// Logger.l("Hopper Stop");
 			// Logger.l("Feeder is full; disabling hopper");
 		} else {
-			hopper.set(direction ? speedLeft : -speedLeft, direction ? speedRight : -speedRight);
+			hopper.set(directionMult * speedLeft, directionMult * speedRight);
 			// Logger.l("Running Hopper Command");
 		}
 

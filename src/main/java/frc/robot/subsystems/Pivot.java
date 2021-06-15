@@ -36,21 +36,6 @@ public class Pivot extends SubsystemBase {
         }
     }
 
-    public static enum SPEED {
-        SPEED_UP(Constants.PIVOT_DEFAULT_SPEED), SPEED_DOWN(-Constants.PIVOT_DEFAULT_SPEED), ZERO(0);
-
-        private final double value;
-
-        private SPEED(double value) {
-            this.value = value;
-        }
-
-        public double getValue() {
-            return value;
-        }
-    }
-
-
     private WPI_TalonFX pivotMotor;
     private POSITION position = POSITION.UP;
 
@@ -82,8 +67,6 @@ public class Pivot extends SubsystemBase {
         this.pivotMotor.config_kI(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kI, Constants.DRIVEBASE_TIMEOUT_MS);
         this.pivotMotor.config_kD(Constants.SLOT_0, Constants.PIVOT_MOTION_MAGIC.kD, Constants.DRIVEBASE_TIMEOUT_MS);
     }
-
-    
 
     // return the angle of the arm based on the current encoder value
     // public double getAngle() {
@@ -138,7 +121,6 @@ public class Pivot extends SubsystemBase {
     }
 
     public void setPivotLocation(POSITION pos) {
-        // setSpeed(pos.getValue());
         int horizontal = Constants.PIVOT_DOWN_LIMIT;
         double ticksToDegrees = (
                 2048 // Encoder ticks per revolution
@@ -163,10 +145,6 @@ public class Pivot extends SubsystemBase {
     public void setNeutralMode(NeutralMode nm) {
         pivotMotor.setNeutralMode(nm);
         this.nm = nm;
-    }
-
-    public void setSpeed(Pivot.SPEED speed) {
-        pivotMotor.set(ControlMode.PercentOutput, speed.getValue());
     }
 
     private double getEncoderPosition() {

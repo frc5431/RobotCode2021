@@ -126,9 +126,8 @@ public final class Constants {
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
     public static final NeutralMode PIVOT_DRIVEMODE = NeutralMode.Coast;
     public static final double PIVOT_DEFAULT_SPEED = 0.4;
-    public static final int PIVOT_DOWN_LIMIT = -41750;
-    public static final int PIVOT_UP_LIMIT = -5000; 
-    public static final int PIVOT_VELOCITY = 6000;
+    public static final int PIVOT_DOWN_LIMIT = -41500; // See pivot position on SmartDashboard when pivot is horizontal
+    public static final int PIVOT_UP_LIMIT = -5000; // See pivot position on SmartDashboard when pivot is vertical
     public static final double PIVOT_AFFECT_GRAVITY = 0.07; // Power (0-1) to add if the pivot is going from horizontal to vertical (i.e., against gravity)
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
