@@ -94,9 +94,10 @@ public final class Constants {
 	
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
     
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 19000;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 19000; //11900
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 18000; //11900
+    public static final double SHOOTER_FLYWHEEL_COMMAND_WAIT = 0.5;
 
     public static final MotionMagic SHOOTER_FLYWHEEL_GAINS = new MotionMagic(0, 0, 0, 0.053); //0.0474073170731707, 0.004
 
@@ -104,13 +105,12 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-	public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.55;
-	public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.45;
-
+	public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.45;
+	public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.375;
+    public static final double SHOOTER_FEEDER_COMMAND_DOWN_SPEED = 0.4;
 
     public static final long SHOOTER_FEEDER_BALL_DELAY = 1700;
 	public static final long SHOOTER_FEEDER_UP_DELAY = 1150;
-	public static final long SHOOTER_FEEDER_DOWN_DELAY = 225;
 
     // Intake Related
     public static final int INTAKE_ID = 5;
@@ -138,9 +138,8 @@ public final class Constants {
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
-    public static final double HOPPER_LEFT_SPEED = 0.65;
-    public static final double HOPPER_RIGHT_SPEED = 0.45;
-    
+    public static final double HOPPER_LEFT_SPEED = 0.5;
+    public static final double HOPPER_RIGHT_SPEED = 0.3;
     // ================================================================================
     // Vision Data
     // ================================================================================
@@ -203,5 +202,4 @@ public final class Constants {
     public static final int[] DIGITAL_INPUT_IDS = {6, 8, 7, 9};
 	public static final int PIVOT_PDP_SLOT = 4;
 	public static final int FEEDER_PDP_SLOT = 5;
-    public static final long FEEDER_PUSH_BALL_DOWN = 400;
 }

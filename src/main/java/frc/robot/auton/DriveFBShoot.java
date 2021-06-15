@@ -21,7 +21,7 @@ public class DriveFBShoot extends SequentialCommandGroup {
             new WaitCommand(AutoConstants.WAIT_TIMEOUT),
             new DriveTime(systems, AutoConstants.BACKWARD_AUTO.getFirst(), AutoConstants.BACKWARD_AUTO.getSecond()),
             new WaitCommand(AutoConstants.WAIT_TIMEOUT),
-			new ShootSuperCommand(systems, ShootPosition.AUTON, true)
+			new ShootSuperCommand(systems, ShootPosition.AUTON, false)
 		);
 	}
 }

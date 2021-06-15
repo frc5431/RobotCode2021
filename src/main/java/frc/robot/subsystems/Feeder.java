@@ -133,11 +133,7 @@ public class Feeder extends SubsystemBase {
 		// if (lowMid)
 		// ballCount++;
 
-		if (!floor && !topThreeActive) {
-			readyToLoad = true;
-		} else {
-			readyToLoad = false;
-		}
+		readyToLoad = !floor && !topThreeActive;
 
 	}
 
@@ -206,5 +202,9 @@ public class Feeder extends SubsystemBase {
 
 	public boolean isFull() {
 		return !(getValueOfDIOSensor(0) || getValueOfDIOSensor(1) || getValueOfDIOSensor(2) || getValueOfDIOSensor(3));
+	}
+
+	public boolean isTopBlocked() {
+		return !getValueOfDIOSensor(0);
 	}
 }

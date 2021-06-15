@@ -14,22 +14,14 @@ import frc.team5431.titan.core.misc.Logger;
 
 public class PushBallDownCommand extends CommandBase{
     private final Feeder feeder;
-	long startTime;
-	boolean done = false;
 	
     public PushBallDownCommand(Systems systems) {
 		this.feeder = systems.getFeeder();
     }
 
 	@Override
-	public void initialize() {
-		startTime = System.currentTimeMillis();
-		super.initialize();
-	}
-
-	@Override
 	public void execute() {
-		feeder.set(-0.4);	
+		feeder.set(-Constants.SHOOTER_FEEDER_COMMAND_DOWN_SPEED);	
 		Logger.l("Pushing balls down");
 		
 	}
@@ -43,6 +35,6 @@ public class PushBallDownCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-		return ((startTime + Constants.FEEDER_PUSH_BALL_DOWN) <= System.currentTimeMillis()) || feeder.getValueOfDIOSensor(3);
+		return !feeder.isTopBlocked();
     }
 }

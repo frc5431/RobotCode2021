@@ -114,6 +114,7 @@ public class Flywheel extends SubsystemBase {
 		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError());
 
 		SmartDashboard.putString("Flywheel At Velocity", (flywheel.getControlMode() == ControlMode.PercentOutput) ? "In PercentOutput Control Mode! No target velocity" : (atVelocity() + ""));
+		SmartDashboard.putString("Flywheel Control Mode", flywheel.getControlMode().toString());
 	}
 
 	public List<WPI_TalonFX> getMotors() {
@@ -156,8 +157,10 @@ public class Flywheel extends SubsystemBase {
 			return false;
 
 		double targetVel = flywheel.getClosedLoopTarget();
+		SmartDashboard.putNumber("Flywheel Target", targetVel);
 		
 		double currentVel = flywheel.getSelectedSensorVelocity();
+		SmartDashboard.putNumber("Flywheel Current Velocity", currentVel);
 
 		return Calc.approxEquals(Math.abs(targetVel), Math.abs(currentVel),Constants.FLYWHEEL_VELOCITY_RANGE);
 	}

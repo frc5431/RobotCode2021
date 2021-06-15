@@ -5,6 +5,7 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.Flywheel.Velocity;
 import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.misc.Logger;
+import frc.robot.Constants;
 import frc.robot.Systems;
 import frc.robot.commands.*;
 import frc.robot.commands.subsystems.*;
@@ -19,7 +20,6 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 	// private final SuperStopShoot stop;
 	private final Systems systems;
 
-
 	public ShootSuperCommand(Systems systems,
 			ShootPosition pos, boolean rpmWait) {
 		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
@@ -27,7 +27,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 
 		addCommands(
 				new SequentialCommandGroup(
-					new WaitCommand(0.45), new FlywheelCommand(systems, pos == ShootPosition.CLOSE ? Flywheel.Velocity.HALF : pos == ShootPosition.FAR ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON)
+					new WaitCommand(Constants.SHOOTER_FLYWHEEL_COMMAND_WAIT), new FlywheelCommand(systems, (pos == ShootPosition.CLOSE) ? Flywheel.Velocity.HALF : ((pos == ShootPosition.FAR) ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON))
 				),
 				new SequentialCommandGroup(
 					// new ParallelCommandGroup(

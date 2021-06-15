@@ -12,7 +12,7 @@ public class AutoConstants {
 	public static final double kRamseteB = 0;
 	public static double kRamseteZeta;
 
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 15400;
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 13600; // 15400
 
 	// Pairs are speed, ms timeout
 	public static final Pair<Double, Long> FORWARD_AUTO = Pair.of(-0.3, 500L);
