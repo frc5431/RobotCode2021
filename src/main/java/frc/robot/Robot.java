@@ -70,10 +70,10 @@ public class Robot extends TimedRobot {
     robotMap.resetBallCount();
   }
 
-//   @Override
-//   public void disabledPeriodic() {
-// 	  robotMap.disabled();
-//   }
+  @Override
+  public void disabledPeriodic() {
+	  robotMap.disabledPeriodic();
+  }
 
   @Override
   public void autonomousPeriodic() {

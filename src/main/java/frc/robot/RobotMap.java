@@ -251,12 +251,15 @@ public class RobotMap {
 		CommandScheduler.getInstance().cancelAll();
 		systems.clearAllCommands();
 		
-		resetEncoders();
 		systems.getPivot().setNeutralMode(Constants.PIVOT_NEUTRALMODE);
 
 		// Lets Not Blind the Refs :)
 		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
 
 		Logger.l("disabled!");
+	}
+
+	public void disabledPeriodic() {
+		resetEncoders();
 	}
 }

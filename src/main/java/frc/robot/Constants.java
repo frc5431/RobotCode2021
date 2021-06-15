@@ -126,8 +126,8 @@ public final class Constants {
     public static final NeutralMode PIVOT_NEUTRALMODE = NeutralMode.Coast;
     public static final NeutralMode PIVOT_DRIVEMODE = NeutralMode.Coast;
     public static final double PIVOT_DEFAULT_SPEED = 0.4;
-    public static final int PIVOT_DOWN_LIMIT = (-40300 / 100) * 81; // 45000
-    public static final int PIVOT_UP_LIMIT = (-3500 / 100) * 81; // 5000 
+    public static final int PIVOT_DOWN_LIMIT = -41750;
+    public static final int PIVOT_UP_LIMIT = -5000; 
     public static final int PIVOT_VELOCITY = 6000;
     public static final double PIVOT_AFFECT_GRAVITY = -0.04;
 

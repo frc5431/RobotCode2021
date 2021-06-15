@@ -140,14 +140,14 @@ public class Pivot extends SubsystemBase {
     public void setPivotLocation(POSITION pos) {
         // setSpeed(pos.getValue());
         int horizontal = Constants.PIVOT_DOWN_LIMIT;
-        double ticksToDegrees = (2048 / 360) / 81;
+        double ticksToDegrees = (2048 / 360);
         double curentPosition = getEncoderPosition();
         double degrees = (curentPosition - horizontal) / ticksToDegrees;
-        double radians = java.lang.Math.toRadians(degrees);
+        double radians = Math.toRadians(degrees);
         double CosineScalar = Math.cos(radians);
         double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
 
-        pivotMotor.set(ControlMode.Position, pos.getValue(), DemandType.ArbitraryFeedForward ,CosineScalar * maxGravity);
+        pivotMotor.set(ControlMode.Position, pos.getValue(), DemandType.ArbitraryFeedForward, CosineScalar * maxGravity);
     }
 
     public void setNeutralMode(NeutralMode nm) {
