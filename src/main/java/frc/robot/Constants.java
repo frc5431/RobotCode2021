@@ -80,7 +80,7 @@ public final class Constants {
     public static final boolean CLIMBER_ELEVATOR_REVERSE = true;
     public static final NeutralMode CLIMBER_ELEVATOR_NEUTRALMODE = NeutralMode.Brake;
     
-	public static final int CLIMBER_ELEVATOR_UPPER_LIMIT = 740000;
+	public static final int CLIMBER_ELEVATOR_UPPER_LIMIT = 700000;
 	public static final int CLIMBER_ELEVATOR_LOWER_LIMIT = 1000;
 
     // Shooter Flywheel Related
@@ -93,8 +93,6 @@ public final class Constants {
 	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
 	
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
-    
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_AUTO = 15400;
     
     public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
     public static final double SHOOTER_FLYWHEEL_SPEED_HIGH = 0.585; // .585
@@ -193,7 +191,9 @@ public final class Constants {
     public static final int DRIVEBASE_MOTIONMAGIC_TURN_REMOTE = REMOTE_1;
 
 
-    // AUTON
+    // ================================================================================
+    // Tolerances and Ranges
+    // ================================================================================
 
     public static final int ELEVATOR_POSITION_TOLERANCE = 300;
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.AutoConstants;
 import frc.robot.Constants;
 import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
@@ -37,7 +38,7 @@ public class Flywheel extends SubsystemBase {
 	public static enum Velocity {
 		OFF(0, -1), HALF(Constants.SHOOTER_FLYWHEEL_VELOCITY_LOW, Constants.SLOT_0),
 		FULL(Constants.SHOOTER_FLYWHEEL_VELOCITY_HIGH, Constants.SLOT_0),
-		AUTON(Constants.SHOOTER_FLYWHEEL_VELOCITY_AUTO, Constants.SLOT_0);
+		AUTON(AutoConstants.SHOOTER_FLYWHEEL_VELOCITY_AUTO, Constants.SLOT_0);
 
 		private double speed;
 		private int PIDSlot;

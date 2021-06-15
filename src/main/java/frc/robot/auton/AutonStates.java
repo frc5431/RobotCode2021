@@ -5,5 +5,7 @@ package frc.robot.auton;
  * @author Ryan Hirasaki
  */
 public enum AutonStates {
-	SHOOT_AND_DRIVE_BACK_AND_FORWARD
+	DRIVE_FORWARD,
+	DRIVE_FORWARD_BACKWARD,
+	DRIVE_FORWARD_BACKWARD_SHOOT
 }

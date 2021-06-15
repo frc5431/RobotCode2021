@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.auton.AutonStates;
-import frc.robot.auton.ShootCloseAndDrive;
+import frc.robot.auton.DriveFBShoot;
+import frc.robot.auton.DriveForward;
+import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
@@ -41,7 +43,9 @@ public class RobotMap {
     }
 
 	public void outData() {
-		chooser.setDefaultOption("Shoot, drive backward, drive forward, stop", AutonStates.SHOOT_AND_DRIVE_BACK_AND_FORWARD);
+		chooser.setDefaultOption("Drive forward, backward, shoot", AutonStates.DRIVE_FORWARD_BACKWARD_SHOOT);
+		chooser.addOption("Drive forward", AutonStates.DRIVE_FORWARD);
+		chooser.addOption("Drive forward, backward", AutonStates.DRIVE_FORWARD_BACKWARD);
 		SmartDashboard.putData("Auton Select", chooser);
 	}
 
@@ -220,12 +224,16 @@ public class RobotMap {
 
 	public CommandBase getAutonomousCommand() {
 		switch(chooser.getSelected()) {
-		case SHOOT_AND_DRIVE_BACK_AND_FORWARD:
-			return new ShootCloseAndDrive(systems, limelight);
-		default:
-			return new SequentialCommandGroup(
-				
-			);
+			case DRIVE_FORWARD:
+				return new DriveForward(systems);
+			case DRIVE_FORWARD_BACKWARD:
+				return new DriveForwardBackward(systems);
+			case DRIVE_FORWARD_BACKWARD_SHOOT:
+				return new DriveFBShoot(systems, limelight);
+			default:
+				return new SequentialCommandGroup(
+					
+				);
 		}
 	}
 
