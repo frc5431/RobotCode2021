@@ -6,7 +6,6 @@ import frc.robot.Systems;
 import frc.robot.commands.DriveTime;
 
 /**
- * Note: in a separate class to easily add commands if needed
  * @author Colin Wong
  */
 public class DriveForwardBackward extends SequentialCommandGroup {

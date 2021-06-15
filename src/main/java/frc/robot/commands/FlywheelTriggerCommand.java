@@ -12,6 +12,7 @@ import frc.team5431.titan.core.misc.Logger;
 
 /**
  * @author Ryan Hirasaki
+ * @author Colin Wong
  */
 public class FlywheelTriggerCommand extends CommandBase {
 

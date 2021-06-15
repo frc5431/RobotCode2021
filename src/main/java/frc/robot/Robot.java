@@ -26,15 +26,14 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Logger.DEBUG = true;
     robotMap = new RobotMap();
-	CameraServer.getInstance().startAutomaticCapture();
-	robotMap.outData();
-	robotMap.disabled();
-
+    CameraServer.getInstance().startAutomaticCapture();
+    robotMap.printAutonChooser();
+    robotMap.disabled();
   }
   
   @Override
   public void robotPeriodic() {
-	robotMap.outData();
+	  robotMap.printAutonChooser();
     CommandScheduler.getInstance().run();
   }
 
@@ -45,19 +44,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autonCommand = robotMap.getAutonomousCommand();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-
     // schedule the autonomous command (example)
     if (autonCommand != null) {
       autonCommand.schedule();
     }
 
     robotMap.resetBallCount();
+    robotMap.printAutonChooser();
   }
 
   @Override

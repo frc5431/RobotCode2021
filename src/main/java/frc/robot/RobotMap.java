@@ -39,10 +39,11 @@ public class RobotMap {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
 		bindKeys();
-		outData();
+
+		printAutonChooser();
     }
 
-	public void outData() {
+	public void printAutonChooser() {
 		chooser.setDefaultOption("Drive forward, backward, shoot", AutonStates.DRIVE_FORWARD_BACKWARD_SHOOT);
 		chooser.addOption("Drive forward", AutonStates.DRIVE_FORWARD);
 		chooser.addOption("Drive forward, backward", AutonStates.DRIVE_FORWARD_BACKWARD);
@@ -255,6 +256,9 @@ public class RobotMap {
 
 		// Lets Not Blind the Refs :)
 		limelight.setPipeline(Constants.LIMELIGHT_PIPELINE_OFF);
+
+		// Make sure chooser is always shown
+		printAutonChooser();
 
 		Logger.l("disabled!");
 	}

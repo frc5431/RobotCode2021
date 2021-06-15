@@ -29,6 +29,6 @@ public class DefaultElevator extends CommandBase {
     @Override
     public void execute() {
         elevator.setSpeed(pow.getAsDouble());
-        if (pow.getAsDouble() > 0) CommandScheduler.getInstance().schedule(new PivotCommand(systems, Pivot.POSITION.DOWN));
+        // if (pow.getAsDouble() > 0) CommandScheduler.getInstance().schedule(new PivotCommand(systems, Pivot.POSITION.DOWN));
     }
 }
