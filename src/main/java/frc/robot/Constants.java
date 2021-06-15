@@ -129,7 +129,7 @@ public final class Constants {
     public static final int PIVOT_DOWN_LIMIT = -41750;
     public static final int PIVOT_UP_LIMIT = -5000; 
     public static final int PIVOT_VELOCITY = 6000;
-    public static final double PIVOT_AFFECT_GRAVITY = -0.04;
+    public static final double PIVOT_AFFECT_GRAVITY = 0.07; // Power (0-1) to add if the pivot is going from horizontal to vertical (i.e., against gravity)
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
