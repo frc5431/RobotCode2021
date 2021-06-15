@@ -265,5 +265,6 @@ public class RobotMap {
 
 	public void disabledPeriodic() {
 		resetEncoders();
+		printAutonChooser();
 	}
 }

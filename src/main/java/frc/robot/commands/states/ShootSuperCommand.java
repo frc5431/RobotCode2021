@@ -27,7 +27,7 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 
 		addCommands(
 				new SequentialCommandGroup(
-					new WaitCommand(0.1), new FlywheelCommand(systems, pos == ShootPosition.CLOSE ? Flywheel.Velocity.HALF : pos == ShootPosition.FAR ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON)
+					new WaitCommand(0.45), new FlywheelCommand(systems, pos == ShootPosition.CLOSE ? Flywheel.Velocity.HALF : pos == ShootPosition.FAR ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON)
 				),
 				new SequentialCommandGroup(
 					// new ParallelCommandGroup(

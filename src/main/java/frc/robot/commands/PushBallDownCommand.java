@@ -19,11 +19,6 @@ public class PushBallDownCommand extends CommandBase{
 	
     public PushBallDownCommand(Systems systems) {
 		this.feeder = systems.getFeeder();
-        // addCommands(
-        //     new FeederCommand(feeder, true),
-        //     new HopperCommand(hopper, false)
-        //     // new IntakeCommand(intake, false)
-        // );
     }
 
 	@Override
@@ -35,9 +30,6 @@ public class PushBallDownCommand extends CommandBase{
 	@Override
 	public void execute() {
 		feeder.set(-0.4);	
-		// 	feeder.set(0);
-		// 	done = true;
-		// }
 		Logger.l("Pushing balls down");
 		
 	}
@@ -51,9 +43,6 @@ public class PushBallDownCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-		return startTime + Constants.FEEDER_PUSH_BALL_DOWN <= System.currentTimeMillis() || feeder.getValueOfDIOSensor(3);
-
-		// return done;
-	
+		return ((startTime + Constants.FEEDER_PUSH_BALL_DOWN) <= System.currentTimeMillis()) || feeder.getValueOfDIOSensor(3);
     }
 }
