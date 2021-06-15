@@ -12,10 +12,16 @@ import frc.team5431.titan.core.misc.Logger;
 public class PivotCommand extends CommandBase {
     private final Pivot pivot;
     private Pivot.POSITION position;
+    private final boolean interruptible;
 
     public PivotCommand(Systems systems, Pivot.POSITION pos) {
+        this(systems, pos, true);
+    }
+
+    public PivotCommand(Systems systems, Pivot.POSITION pos, boolean interruptible) {
         this.pivot = systems.getPivot();
         this.position = pos;
+        this.interruptible = interruptible;
 
         assert (pos != null);
 
@@ -36,5 +42,9 @@ public class PivotCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         return Calc.approxEquals(pivot.error(), position.getValue(), 500);
+    }
+
+    public boolean isInterruptible() {
+        return interruptible;
     }
 }

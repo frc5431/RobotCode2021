@@ -3,7 +3,6 @@ package frc.robot.commands.states;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.subsystems.*;
 import frc.robot.Systems;
-import frc.robot.subsystems.Pivot;
 
 /**
  * @author Rishmita Rao
@@ -15,8 +14,7 @@ public class HumanPlayerIntake extends ParallelCommandGroup {
 		this.systems = systems;
 
 		addCommands(
-			new HopperCommand(systems, false),
-			new PivotCommand(systems, Pivot.POSITION.DOWN)
+			new HopperCommand(systems, false)
 		);
 	}
 

@@ -84,7 +84,7 @@ public class RobotMap {
 		// ||                       ||
 		// ===========================
 		{
-			// Human Player Intake
+			// Human Player Intake (Feeder Intake)
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
@@ -112,7 +112,7 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 1)
 					.whenHeld(new ShootSuperCommand(systems, ShootPosition.CLOSE, false));
 
-			// // Shoot Far
+			// Shoot Far
 			new JoystickButton(buttonBoard, 14)
 					.whenHeld(new ShootSuperCommand(systems, ShootPosition.FAR, false));
 
@@ -131,6 +131,7 @@ public class RobotMap {
 			// Run Hopper and pivot up with intake on
 			// new JoystickButton(buttonBoard, 13);
 
+			// Stow
 			new JoystickButton(buttonBoard, 12)
 					.whenPressed(new StowSuperCommand(systems));
 
