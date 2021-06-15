@@ -127,8 +127,8 @@ public final class Constants {
     public static final NeutralMode PIVOT_DRIVEMODE = NeutralMode.Coast;
     public static final double PIVOT_DEFAULT_SPEED = 0.4;
     public static final int PIVOT_DOWN_LIMIT = -41500; // See pivot position on SmartDashboard when pivot is horizontal
-    public static final int PIVOT_UP_LIMIT = -5000; // See pivot position on SmartDashboard when pivot is vertical
-    public static final double PIVOT_AFFECT_GRAVITY = 0.10; // Power (0-1) to add if the pivot is going from horizontal to vertical (i.e., against gravity)
+    public static final int PIVOT_UP_LIMIT = -3000; // See pivot position on SmartDashboard when pivot is vertical
+    public static final double PIVOT_AFFECT_GRAVITY = 1.1; // Power (0-1) to add if the pivot is going from horizontal to vertical (i.e., against gravity)
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
@@ -140,8 +140,8 @@ public final class Constants {
     public static final int HOPPER_RIGHT_ID = 8;
     public static final boolean HOPPER_REVERSE = false;
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
-    public static final double HOPPER_LEFT_SPEED = 0.85;
-    public static final double HOPPER_RIGHT_SPEED = 0.7;
+    public static final double HOPPER_LEFT_SPEED = 0.9;
+    public static final double HOPPER_RIGHT_SPEED = 0.6;
     
     // ================================================================================
     // Vision Data
@@ -198,6 +198,7 @@ public final class Constants {
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 
     public static final double PIVOT_ERROR_RANGE = 100;
+    public static final double PIVOT_COSINE_MULT = 1.051;
     
     // Sensors
 

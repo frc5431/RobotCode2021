@@ -113,11 +113,25 @@ public class Pivot extends SubsystemBase {
 		SmartDashboard.putNumber("Pivot Error Rate", pivotMotor.getClosedLoopError(Constants.SLOT_0));
         SmartDashboard.putNumber("Pivot current", pdp.getCurrent(Constants.PIVOT_PDP_SLOT));
         SmartDashboard.putString("Pivot Neutral Mode", nm.name());
-		if(4 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
+		if(11 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
 			// Slow down pivot
 			pivotMotor.set(0);
 		}
 
+        int horizontal = Constants.PIVOT_DOWN_LIMIT;
+        double ticksToDegrees = (
+                2048 // Encoder ticks per revolution
+                / 360 // Degrees in one revolution
+                ) * 100; // Effective gear ratio to account for degree turn
+        double currentPosition = getEncoderPosition();
+        double degrees = 
+                Math.abs(currentPosition - horizontal) // Distance (in ticks) between current encoder value and "down" value
+                / ticksToDegrees; // Convert ticks to degrees
+        double radians = Math.toRadians(degrees); // Convert degrees to radians to prepare for cosine
+        double CosineScalar = Math.cos(radians * Constants.PIVOT_COSINE_MULT); // Apply cosine to the degree measurement to get an inverse curve 
+                                                 // When pivot is horizontal, the degree measurement is 0 but the scalar is 1
+                                                 // When pivot is vertical, the degree measurement is about 60-90 but the scalar is very low (around 0)
+        SmartDashboard.putNumber("Cosine Scalar", CosineScalar);
     }
 
     public void setPivotLocation(POSITION pos) {
@@ -131,7 +145,7 @@ public class Pivot extends SubsystemBase {
                 Math.abs(currentPosition - horizontal) // Distance (in ticks) between current encoder value and "down" value
                 / ticksToDegrees; // Convert ticks to degrees
         double radians = Math.toRadians(degrees); // Convert degrees to radians to prepare for cosine
-        double CosineScalar = Math.cos(radians); // Apply cosine to the degree measurement to get an inverse curve 
+        double CosineScalar = Math.cos(radians * Constants.PIVOT_COSINE_MULT); // Apply cosine to the degree measurement to get an inverse curve 
                                                  // When pivot is horizontal, the degree measurement is 0 but the scalar is 1
                                                  // When pivot is vertical, the degree measurement is about 60-90 but the scalar is very low (around 0)
         double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
