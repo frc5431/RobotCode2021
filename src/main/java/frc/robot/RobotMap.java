@@ -9,7 +9,7 @@ import frc.robot.auton.DriveFBShoot;
 import frc.robot.auton.DriveForward;
 import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
-import frc.robot.commands._default.*;
+import frc.robot.commands.defaults.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
