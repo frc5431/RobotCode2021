@@ -16,13 +16,10 @@ import frc.robot.commands.subsystems.*;
  * @author Rishmita Rao
  */
 public class ShootSuperCommand extends ParallelCommandGroup {
-	// public static boolean isAboutToShoot = false;
-	// private final SuperStopShoot stop;
 	private final Systems systems;
 
 	public ShootSuperCommand(Systems systems,
 			ShootPosition pos, boolean rpmWait) {
-		// stop = new SuperStopShoot(feeder, intake, hopper, flywheel);
 		this.systems = systems;
 
 		addCommands(
@@ -30,14 +27,8 @@ public class ShootSuperCommand extends ParallelCommandGroup {
 					new WaitCommand(Constants.SHOOTER_FLYWHEEL_COMMAND_WAIT), new FlywheelCommand(systems, (pos == ShootPosition.CLOSE) ? Flywheel.Velocity.HALF : ((pos == ShootPosition.FAR) ? Flywheel.Velocity.FULL : Flywheel.Velocity.AUTON))
 				),
 				new SequentialCommandGroup(
-					// new ParallelCommandGroup(
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = false;}), // Disable Auto Indexer
 					new PushBallDownCommand(systems),
-					// new InstantCommand(() -> {
-					// 	// while (flywheel.getTargetVelocity() == 0) {}
-					// 	while (){}
-					// 	Logger.l("Leaving Flywheel Wait In (ShootSuperCommand.java)");
-					// }),
 					new WaitTillFlywheelAtSpeed(systems, rpmWait),
 					new PushBallsUpSubCommand(systems, pos, rpmWait),
 					new InstantCommand(() -> {Feeder.ENABLE_AUTO_FEEDER = true;}), // Enable Auto Indexer

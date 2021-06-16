@@ -9,6 +9,7 @@ import frc.robot.auton.DriveFBShoot;
 import frc.robot.auton.DriveForward;
 import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
+import frc.robot.commands._default.*;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
@@ -155,7 +156,7 @@ public class RobotMap {
 
 			// Trigger Flywheel (Shoot Far)
 			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-					.whenHeld(new FlywheelTriggerCommand(systems, Flywheel.Velocity.FULL, () -> -operator.getRawAxis(Axis.SLIDER)))
+					.whenHeld(new FlywheelTriggerCommand(systems, Constants.FLYHWEEL_MAX_VELOCITY, () -> -operator.getRawAxis(Axis.SLIDER)))
 					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
 			// Arbitrary Flywheel control (Shoot Close)
@@ -214,9 +215,6 @@ public class RobotMap {
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
-			
-			// systems.getFlywheel()
-			// 		.setDefaultCommand(new DefaultFlywheel(systems, () -> -operator.getRawAxis(Axis.SLIDER)));
 		}
 	}
 

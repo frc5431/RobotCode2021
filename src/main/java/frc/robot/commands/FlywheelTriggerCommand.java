@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Flywheel.Velocity;
-import frc.team5431.titan.core.misc.Logger;
 
 /**
+ * Runs flywheel at a speed specified by the passed DoubleSupplier
+ * 
  * @author Ryan Hirasaki
  * @author Colin Wong
  */
@@ -19,23 +20,18 @@ public class FlywheelTriggerCommand extends CommandBase {
 	public static boolean KILL = false;
 
     private final Flywheel flywheel;
-    // private final Flywheel.Speeds speed;    
-    private final Flywheel.Velocity velocity;  
+    private final double velocity;  
 
     private final DoubleSupplier pow;
 
-    // public FlywheelCommand(Systems systems, Flywheel.Speeds speed) {
-    //     this.flywheel = systems.getFlywheel();
-    //     this.speed = speed;
-    //     this.velocity = null;
-
-    //     addRequirements(flywheel);
-    // }
-
-    public FlywheelTriggerCommand(Systems systems, Flywheel.Velocity baseVel, DoubleSupplier pow) {
+    /**
+     * @param systems the robot's systems
+     * @param maxVel the max velocity
+     * @param pow
+     */
+    public FlywheelTriggerCommand(Systems systems, double maxVel, DoubleSupplier pow) {
         this.flywheel = systems.getFlywheel();
-        this.velocity = baseVel;
-        // this.speed = null;
+        this.velocity = maxVel;
         this.pow = pow;
 
         addRequirements(flywheel);
@@ -52,12 +48,11 @@ public class FlywheelTriggerCommand extends CommandBase {
 
     @Override
     public void execute() {
-        flywheel.setSpeed(ControlMode.Velocity, map(pow.getAsDouble(), -1.0, 1.0, 0.0, velocity.getSpeed()*1.25));
+        flywheel.setSpeed(ControlMode.Velocity, map(pow.getAsDouble(), -1.0, 1.0, 0.0, velocity));
     }
 
     @Override
     public void end(boolean interrupted) {
-		Logger.l("Flywheel Command Done");
 		flywheel.set(Velocity.OFF);
 	}
 	
