@@ -106,8 +106,10 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_ID = 9;
     public static final boolean SHOOTER_FEEDER_REVERSE = true;
     public static final NeutralMode SHOOTER_FEEDER_NEUTRALMODE = NeutralMode.Brake;
-	public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.45;
-	public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.375;
+	public static final double SHOOTER_FEEDER_DEFAULT_SPEED = 0.35; // 0.45
+    public static final double SHOOTER_FEEDER_FAR_DEFAULT_SPEED = 0.25; // 0.375
+    public static final double SHOOTER_FEEDER_AUTON_DEFAULT_SPEED = 0.15;
+
     public static final double SHOOTER_FEEDER_COMMAND_DOWN_SPEED = 0.4;
 
     public static final long SHOOTER_FEEDER_BALL_DELAY = 1700;
@@ -130,7 +132,6 @@ public final class Constants {
     public static final double PIVOT_AFFECT_GRAVITY = 1.1; // Power (0-1) to add if the pivot is going from horizontal to vertical (i.e., against gravity)
 
     public static final int PIVOT_PID_SLOT = SLOT_0;
-    // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
     public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.1023, 0.0, 0, 0);
     // public static final MotionMagic PIVOT_MOTION_MAGIC = new MotionMagic(0.0, 0.0, 0.0, 0.0);
 

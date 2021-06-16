@@ -21,7 +21,7 @@ public class PushBallsUpSubCommand extends ParallelCommandGroup {
 		this.feeder = systems.getFeeder();
         addCommands(
 			new HopperCommand(systems, false),
-			new FeederCommand(systems, pos != ShootPosition.FAR ? Constants.SHOOTER_FEEDER_DEFAULT_SPEED : Constants.SHOOTER_FEEDER_FAR_DEFAULT_SPEED, true, rpmWait)
+			new FeederCommand(systems, ((pos == ShootPosition.CLOSE) ? Constants.SHOOTER_FEEDER_DEFAULT_SPEED : ((pos == ShootPosition.FAR) ? Constants.SHOOTER_FEEDER_FAR_DEFAULT_SPEED : Constants.SHOOTER_FEEDER_AUTON_DEFAULT_SPEED)), true, rpmWait)
             // new IntakeCommand(intake, false)
         );
     }
