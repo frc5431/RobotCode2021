@@ -193,7 +193,7 @@ public final class Constants {
     // Tolerances and Ranges
     // ================================================================================
 
-    public static final int ELEVATOR_POSITION_TOLERANCE = 300;
+    public static final double DRIVEBASE_MOTIONMAGIC_TOLERANCE = 150; // Tolerance in sensor units for deciding when motion magic is finished
 	public static final double DRIVEBASE_ANGLE_TOLERANCE = 5; //TODO: find good angle
 
     public static final double PIVOT_ERROR_RANGE = 100;

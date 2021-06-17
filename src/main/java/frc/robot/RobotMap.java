@@ -89,7 +89,7 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems).andThen(new PivotCommand(systems, Pivot.POSITION.UP))); // TODO: test andThen
+			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems));
 
 
 			// Pivot Down
@@ -103,11 +103,6 @@ public class RobotMap {
 
 			// Vision Close
 			new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(systems, limelight));
-
-			// // Human player Intake Super Command (labeled "in") TODO
-			// new JoystickButton(buttonBoard, 11)
-			// .whenPressed(new FloorIntakeSuperCommand(intake, hopper, flywheel, pivot,
-			// feeder));
 
 			// Shoot Close
 			new JoystickButton(buttonBoard, 1)
@@ -175,12 +170,10 @@ public class RobotMap {
 			// Six Intake Pivot Down
 			new JoystickButton(operator, LogitechExtreme3D.Button.SEVEN.ordinal() + 1)
 					.whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
-			// .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
 			// Four Intake Pivot Up
 			new JoystickButton(operator, LogitechExtreme3D.Button.EIGHT.ordinal() + 1)
 					.whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
-			// .whenReleased(new PivotCommand(pivot, SPEED.ZERO));
 
 			// Two Intake
 			new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)

@@ -1,6 +1,7 @@
 package frc.robot.commands.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Systems;
 import frc.robot.subsystems.Pivot;
 import frc.team5431.titan.core.misc.Calc;
@@ -44,7 +45,8 @@ public class PivotCommand extends CommandBase {
         return Calc.approxEquals(pivot.error(), position.getValue(), 500);
     }
 
-    public boolean isInterruptible() {
-        return interruptible;
+    @Override
+    public void schedule(boolean interruptible) {
+        CommandScheduler.getInstance().schedule(interruptible && this.interruptible, this); // Ensures that the command will not be interruptble if either we or the bult-in system declare it
     }
 }

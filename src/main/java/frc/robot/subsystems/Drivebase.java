@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.MotionMagic;
+import frc.team5431.titan.core.misc.Calc;
 import frc.team5431.titan.core.misc.Logger;
 /*
  * a lot of asserts were added as there are many things that can go wrong in this code
@@ -266,6 +267,12 @@ public class Drivebase extends SubsystemBase {
         return null;
     }
 
+    public boolean reachedMotionMagicTarget() {
+        if (right.getControlMode() != ControlMode.MotionMagic) return true;
+        return Calc.approxEquals(right.getActiveTrajectoryPosition(), right.getSelectedSensorPosition(), Constants.DRIVEBASE_MOTIONMAGIC_TOLERANCE);
+    }
+
+    // Trajectory and PathWeaver
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         left.setVoltage(leftVolts);
         right.setVoltage(-rightVolts);
