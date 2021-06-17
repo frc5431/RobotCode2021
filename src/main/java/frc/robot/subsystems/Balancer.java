@@ -20,6 +20,6 @@ public class Balancer extends SubsystemBase {
     }
 
     public void set(double speed) {
-        balancer.set(ControlMode.PercentOutput, speed);
+        // balancer.set(ControlMode.PercentOutput, speed);
     }
 }

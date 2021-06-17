@@ -3,12 +3,15 @@ package frc.robot.subsystems;
 import java.util.List;
 
 import com.ctre.phoenix.ErrorCode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.team5431.titan.core.misc.Logger;
 
 /**
  * A subsystem that handles music. Should be run in perpetuity.
@@ -27,7 +30,7 @@ public class Music extends SubsystemBase {
         PLAYING, PAUSED, STOPPED
     }
 
-    private MUSIC_STATE state;
+    private MUSIC_STATE state = MUSIC_STATE.STOPPED;
     private MUSIC_STATE prevChooserState;
 
     /* An array of songs that are available to be played, can you guess the song/artists? */
@@ -68,8 +71,16 @@ public class Music extends SubsystemBase {
      * @param motors The motors to pass in List form.
      */
     public Music(List<WPI_TalonFX> motors) {
+        orchestra = new Orchestra();
+
         talons = motors;
-        talons.forEach((motor) -> orchestra.addInstrument(motor));
+        talons.forEach((motor) -> { 
+            if (motor != null) {
+                motor.set(ControlMode.MusicTone, 0);
+                Logger.l("Orchestra adding instrument for motor %s and error code %s", motor.getDeviceID(), orchestra.addInstrument(motor));
+            }
+            else Logger.l("Orchestra adding null instrument!");
+        });
 
         SmartDashboard.putString("Current Playing Song", "None");
         SmartDashboard.putString("Music State", state.toString());
@@ -81,6 +92,7 @@ public class Music extends SubsystemBase {
         SmartDashboard.putData("Music State Chooser", stateChooser);
 
         prevChooserState = stateChooser.getSelected();
+        setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
     }
 
     @Override
@@ -101,6 +113,7 @@ public class Music extends SubsystemBase {
         }
 
         SmartDashboard.putString("Music State", state.toString());
+        SmartDashboard.putBoolean("Orchestra Playing", orchestra.isPlaying());
 
         String songRequest = SmartDashboard.getString("Song Request", "");
 
@@ -150,6 +163,10 @@ public class Music extends SubsystemBase {
         eCode = orchestra.stop();
         state = MUSIC_STATE.STOPPED;
         return eCode;
+    }
+
+    public boolean isPlaying() {
+        return orchestra.isPlaying();
     }
 
     /**

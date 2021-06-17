@@ -53,7 +53,7 @@ public class Elevator extends SubsystemBase {
         }
 
         SmartDashboard.putBoolean("Elevator Limit Reached", limitReached);
-        elevator.set(ControlMode.PercentOutput, speed);
+        // elevator.set(ControlMode.PercentOutput, speed);
     }
 
     public double getEncoderPosition() {

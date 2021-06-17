@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        intakeMotor.set(ControlMode.PercentOutput, speed);
+        // intakeMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public List<WPI_TalonFX> getMotors() {

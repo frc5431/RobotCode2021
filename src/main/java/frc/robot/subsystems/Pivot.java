@@ -150,8 +150,8 @@ public class Pivot extends SubsystemBase {
                                                  // When pivot is vertical, the degree measurement is about 60-90 but the scalar is very low (around 0)
         double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
 
-        pivotMotor.set(ControlMode.Position, pos.getValue(), // Set position to parameter, using the built-in PID
-                DemandType.ArbitraryFeedForward, CosineScalar * maxGravity); // Apply a constant power to the closed-loop output
+        // pivotMotor.set(ControlMode.Position, pos.getValue(), // Set position to parameter, using the built-in PID
+        //         DemandType.ArbitraryFeedForward, CosineScalar * maxGravity); // Apply a constant power to the closed-loop output
                                                                              // Meaning that if the pivot is going from horizontal to vertical, the power applied will always be 1 (scalar) times maxGravity
                                                                              // If the pivot is going from vertical to horizontal, the power applied will always be close to 0
     }

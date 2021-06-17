@@ -48,7 +48,7 @@ public class FlywheelTriggerCommand extends CommandBase {
 
     @Override
     public void execute() {
-        flywheel.setSpeed(ControlMode.Velocity, map(pow.getAsDouble(), -1.0, 1.0, 0.0, velocity));
+        // flywheel.setSpeed(ControlMode.Velocity, map(pow.getAsDouble(), -1.0, 1.0, 0.0, velocity));
     }
 
     @Override

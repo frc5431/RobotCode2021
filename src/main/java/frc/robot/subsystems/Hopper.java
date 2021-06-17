@@ -31,7 +31,7 @@ public class Hopper extends SubsystemBase {
 
     public void set(double hopperSpeedLeft, double hopperSpeedRight) {
         // Hopper Right is following hopper left
-        hopperLeft.set(ControlMode.PercentOutput, hopperSpeedLeft);
-        hopperRight.set(ControlMode.PercentOutput, hopperSpeedRight);
+        // hopperLeft.set(ControlMode.PercentOutput, hopperSpeedLeft);
+        // hopperRight.set(ControlMode.PercentOutput, hopperSpeedRight);
     }
 }

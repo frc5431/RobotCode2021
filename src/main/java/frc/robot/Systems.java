@@ -46,6 +46,8 @@ public class Systems {
 	private final Intake intake;
 	private final Pivot pivot;
 
+	private final Music music;
+
 	private final List<SubsystemBase> subsystems;
 
 	public Systems() {
@@ -105,6 +107,9 @@ public class Systems {
 		subsystems = List.of(
 			balancer, drivebase, elevator, flywheel, hopper, intake, feeder, pivot
 		);
+
+		Logger.l(constucting, "Music");
+		music = new Music(getAllFalcons());
 	}
 
 	/**
@@ -172,6 +177,13 @@ public class Systems {
 	 */
 	public Pivot getPivot() {
 		return pivot;
+	}
+
+	/**
+	 * @return the music
+	 */
+	public Music getMusic() {
+		return music;
 	}
 
 	/**

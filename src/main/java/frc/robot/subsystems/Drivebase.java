@@ -183,8 +183,8 @@ public class Drivebase extends SubsystemBase {
     }
 
     public void drivePercentageTank(double driveLeft, double driveRight) {
-        left.set(ControlMode.PercentOutput, driveLeft);
-        right.set(ControlMode.PercentOutput, driveRight);
+        // left.set(ControlMode.PercentOutput, driveLeft);
+        // right.set(ControlMode.PercentOutput, driveRight);
     }
 
     public void drivePercentageArcade(double power, double turn) {
@@ -197,15 +197,15 @@ public class Drivebase extends SubsystemBase {
             power = 0;
         }
 
-        left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
-        right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
+        // left.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, -turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
+        // right.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, +turn * Constants.DRIVEBASE_TURN_MAX_SPEED);
 
         // Logger.l("Power: %f, Turn: %f", power, turn);
     }
 
     public void driveMotionMagic(double distance, double angle) {
         left.follow(right, FollowerType.AuxOutput1);
-        right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
+        // right.set(ControlMode.MotionMagic, distance, DemandType.AuxPID, angle);
 
         Logger.l("Distance: %f, Angle: %f", distance, angle);
     }
@@ -268,7 +268,7 @@ public class Drivebase extends SubsystemBase {
     }
 
     public boolean reachedMotionMagicTarget() {
-        if (right.getControlMode() != ControlMode.MotionMagic) return true;
+        // if (right.getControlMode() != ControlMode.MotionMagic) return true;
         return Calc.approxEquals(right.getActiveTrajectoryPosition(), right.getSelectedSensorPosition(), Constants.DRIVEBASE_MOTIONMAGIC_TOLERANCE);
     }
 

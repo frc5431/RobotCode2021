@@ -29,8 +29,6 @@ import frc.team5431.titan.core.vision.*;
 public class RobotMap {
 	private final Systems systems = new Systems();
 
-    private final Music music;
-
 	private final Xbox driver = new Xbox(0);
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
@@ -42,12 +40,9 @@ public class RobotMap {
 	public RobotMap() {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
-		// bindKeys();
+		bindKeys();
 
 		printAutonChooser();
-
-        music = new Music(systems.getAllFalcons());
-        music.setAutoQueue(Constants.MUSIC_AUTO_QUEUE);
     }
 
 	public void printAutonChooser() {
@@ -58,182 +53,19 @@ public class RobotMap {
 	}
 
 	private void bindKeys() {
-		
-		// ===========================
-		// ||                       ||
-		// ||    XBOX Controller    ||
-		// ||                       ||
-		// ===========================
-		{
-			// Targetor REMINDER: SET TO FAR FOR TEST
-			new JoystickButton(driver, Xbox.Button.B.ordinal() + 1)
-					.whenHeld(new Targetor(systems, limelight));
-
-			// Calibrate the Limelight
-			new JoystickButton(driver, Xbox.Button.X.ordinal() + 1);
-
-			// Intake
-			new JoystickButton(driver, Xbox.Button.A.ordinal() + 1).whileHeld(new IntakeCommand(systems, 1));
-
-			// Balancer Left
-			new JoystickButton(driver, Xbox.Button.BUMPER_L.ordinal() + 1)
-					.whenHeld(new BalancerCommand(systems, true));
-
-			// Balancer Right
-			new JoystickButton(driver, Xbox.Button.BUMPER_R.ordinal() + 1)
-					.whenHeld(new BalancerCommand(systems, false));
-
-		}
-
-		// ===========================
-		// ||                       ||
-		// ||     Button  Board     ||
-		// ||                       ||
-		// ===========================
-		{
-			// Human Player Intake (Feeder Intake)
-			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
-
-			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems));
-
-
-			// Pivot Down
-			new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
-
-			// Pivot Up
-			new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
-
-			// Vision Far
-			// new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
-
-			// Vision Close
-			new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(systems, limelight));
-
-			// Shoot Close
-			new JoystickButton(buttonBoard, 1)
-					.whenHeld(new ShootSuperCommand(systems, ShootPosition.CLOSE, false));
-
-			// Shoot Far
-			new JoystickButton(buttonBoard, 14)
-					.whenHeld(new ShootSuperCommand(systems, ShootPosition.FAR, false));
-
-			// Intake (By itself)
-			// new JoystickButton(buttonBoard, 2)
-			// 		.toggleWhenPressed(new IntakeCommand(intake, Constants.INTAKE_DEFAULT_SPEED));
-
-			/*
-			 * Not used as it is bound to triggers for the driver but here for historical
-			 * purposes
-			 * 
-			 * // Climb new JoystickButton(buttonBoard, 8);
-			 */
-
-			// Stuck On Side.
-			// Run Hopper and pivot up with intake on
-			// new JoystickButton(buttonBoard, 13);
-
-			// Stow
-			new JoystickButton(buttonBoard, 12)
-					.whenPressed(new StowSuperCommand(systems));
-
-			// Auto Switch
-			// new JoystickButton(buttonBoard, 9).whenPressed(new KillBallCounter(feeder));
-		}
-
-		// ===========================
-		// ||                       ||
-		// ||   Logitech Operator   ||
-		// ||                       ||
-		// ===========================
-		{
-			// Indexer Up
-			new POVButton(operator, 0).whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
-					.whenReleased(new FeederCommand(systems, 0, false));
-
-			// Indexer Down
-			new POVButton(operator, 180).whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
-					.whenReleased(new FeederCommand(systems, 0, false));
-
-			// Trigger Flywheel (Shoot Far)
-			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-					.whenHeld(new FlywheelTriggerCommand(systems, Constants.FLYHWEEL_MAX_VELOCITY, () -> -operator.getRawAxis(Axis.SLIDER)))
-					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
-
-			// Arbitrary Flywheel control (Shoot Close)
-			new JoystickButton(operator, LogitechExtreme3D.Button.TWELVE.ordinal() + 1)
-					.whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF))
-					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
-
-			// Three Hopper Out
-			new JoystickButton(operator, LogitechExtreme3D.Button.THREE.ordinal() + 1)
-					.whenHeld(new HopperCommand(systems, Constants.HOPPER_LEFT_SPEED, Constants.HOPPER_RIGHT_SPEED));
-
-			// Five Hopper In
-			new JoystickButton(operator, LogitechExtreme3D.Button.FIVE.ordinal() + 1)
-					.whileHeld(new HopperCommand(systems, -Constants.HOPPER_LEFT_SPEED, -Constants.HOPPER_RIGHT_SPEED));
-
-			// Six Intake Pivot Down
-			new JoystickButton(operator, LogitechExtreme3D.Button.SEVEN.ordinal() + 1)
-					.whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
-
-			// Four Intake Pivot Up
-			new JoystickButton(operator, LogitechExtreme3D.Button.EIGHT.ordinal() + 1)
-					.whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
-
-			// Two Intake
-			new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)
-					.whenHeld(new IntakeCommand(systems, 1));
-
-			// Vision Far 11
-			new JoystickButton(operator, 11).whenHeld(new Targetor(systems, limelight));
-
-			// Vision Close 12
-			new JoystickButton(operator, 12).whenHeld(new Targetor(systems, limelight));
-
-			// Ten Intake
-			new JoystickButton(operator, 10).whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, false));
-
-			// Nine Intake Reverse
-			new JoystickButton(operator, 9).whenHeld(new IntakeCommand(systems, Constants.INTAKE_DEFAULT_SPEED, true));
-
-			// Flywheel close 6
-			new JoystickButton(operator, 6).whenHeld(new FlywheelCommand(systems, Flywheel.Velocity.HALF));
-		}
-
-		// ===========================
-		// ||                       ||
-		// ||   Default  Commands   ||
-		// ||                       ||
-		// ===========================
-		{
-			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
-
-			systems.getDrivebase().setDefaultCommand(new DefaultDrive(systems,
-					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
-
-			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
-					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
-		}
-
-		// ===========================
-		// ||                       ||
-		// ||     Music Controls    ||
-		// ||                       ||
-		// ===========================
-		/*{	// Sample Music Controls
+		{	// Sample Music Controls
 			// Play
-			new JoystickButton(buttonBoard, 8).whenPressed(new MusicPlayCommand(music));
+			new JoystickButton(buttonBoard, 2).whenPressed(new MusicPlayCommand(systems.getMusic()));
 			// Pause
-			new JoystickButton(buttonBoard, 9).whenPressed(new MusicPauseCommand(music));
+			new JoystickButton(buttonBoard, 16).whenPressed(new MusicPauseCommand(systems.getMusic()));
 			// Stop
-			new JoystickButton(buttonBoard, 10).whenPressed(new MusicStopCommand(music));
+			new JoystickButton(buttonBoard, 13).whenPressed(new MusicStopCommand(systems.getMusic()));
 
 			// Advance song by 1
-			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.NEXT_SONG(music));
+			new JoystickButton(buttonBoard, 3).whenPressed(MusicLoadCommand.NEXT_SONG(systems.getMusic()));
 			// Decrement song by 1
-			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
-		}*/
+			new JoystickButton(buttonBoard, 7).whenPressed(MusicLoadCommand.PREVIOUS_SONG(systems.getMusic()));
+		}
 	}
 
 	public void resetBallCount() {
@@ -267,7 +99,8 @@ public class RobotMap {
 	public void disabled() {
 		// These two functions should do the same thing but is both here just in case
 		CommandScheduler.getInstance().cancelAll();
-		music.stop();
+		if (systems.getMusic().isPlaying())
+			systems.getMusic().stop();
 		systems.clearAllCommands();
 		
 		systems.getPivot().setNeutralMode(Constants.PIVOT_NEUTRALMODE);
@@ -293,17 +126,17 @@ public class RobotMap {
 		// ||                       ||
 		// ===========================
 		{	// Sample Music Controls
-			// Play
-			new JoystickButton(buttonBoard, 2).whenPressed(new MusicPlayCommand(music));
-			// Pause
-			new JoystickButton(buttonBoard, 16).whenPressed(new MusicPauseCommand(music));
-			// Stop
-			new JoystickButton(buttonBoard, 13).whenPressed(new MusicStopCommand(music));
+			// // Play
+			// new JoystickButton(buttonBoard, 2).whenPressed(new MusicPlayCommand(systems.getMusic()));
+			// // Pause
+			// new JoystickButton(buttonBoard, 16).whenPressed(new MusicPauseCommand(systems.getMusic()));
+			// // Stop
+			// new JoystickButton(buttonBoard, 13).whenPressed(new MusicStopCommand(systems.getMusic()));
 
-			// Advance song by 1
-			new JoystickButton(buttonBoard, 3).whenPressed(MusicLoadCommand.NEXT_SONG(music));
-			// Decrement song by 1
-			new JoystickButton(buttonBoard, 7).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
+			// // Advance song by 1
+			// new JoystickButton(buttonBoard, 3).whenPressed(MusicLoadCommand.NEXT_SONG(systems.getMusic()));
+			// // Decrement song by 1
+			// new JoystickButton(buttonBoard, 7).whenPressed(MusicLoadCommand.PREVIOUS_SONG(systems.getMusic()));
 		}
 	}
 

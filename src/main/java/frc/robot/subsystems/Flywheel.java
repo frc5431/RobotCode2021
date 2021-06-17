@@ -141,7 +141,7 @@ public class Flywheel extends SubsystemBase {
 
 	public void set(Velocity velocity) {
 		setSlot(velocity.getSlot());
-		setSpeed(ControlMode.Velocity, (Velocity.OFF == velocity) ? 0 : velocity.getSpeed());
+		// setSpeed(ControlMode.Velocity, (Velocity.OFF == velocity) ? 0 : velocity.getSpeed());
 	}
 
 	public double getSpeed() {
