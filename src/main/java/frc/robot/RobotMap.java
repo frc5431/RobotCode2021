@@ -294,16 +294,16 @@ public class RobotMap {
 		// ===========================
 		{	// Sample Music Controls
 			// Play
-			new JoystickButton(buttonBoard, 8).whenPressed(new MusicPlayCommand(music));
+			new JoystickButton(buttonBoard, 2).whenPressed(new MusicPlayCommand(music));
 			// Pause
-			// new JoystickButton(buttonBoard, 9).whenPressed(new MusicPauseCommand(music));
+			new JoystickButton(buttonBoard, 16).whenPressed(new MusicPauseCommand(music));
 			// Stop
-			new JoystickButton(buttonBoard, 10).whenPressed(new MusicStopCommand(music));
+			new JoystickButton(buttonBoard, 13).whenPressed(new MusicStopCommand(music));
 
 			// Advance song by 1
-			// new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.NEXT_SONG(music));
+			new JoystickButton(buttonBoard, 3).whenPressed(MusicLoadCommand.NEXT_SONG(music));
 			// Decrement song by 1
-			// new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
+			new JoystickButton(buttonBoard, 7).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
 		}
 	}
 
