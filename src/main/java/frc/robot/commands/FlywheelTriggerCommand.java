@@ -2,8 +2,6 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Systems;
 import frc.robot.subsystems.Flywheel;
@@ -20,9 +18,9 @@ public class FlywheelTriggerCommand extends CommandBase {
 	public static boolean KILL = false;
 
     private final Flywheel flywheel;
-    private final double velocity;  
+    // private final double velocity;  
 
-    private final DoubleSupplier pow;
+    // private final DoubleSupplier pow;
 
     /**
      * @param systems the robot's systems
@@ -31,14 +29,10 @@ public class FlywheelTriggerCommand extends CommandBase {
      */
     public FlywheelTriggerCommand(Systems systems, double maxVel, DoubleSupplier pow) {
         this.flywheel = systems.getFlywheel();
-        this.velocity = maxVel;
-        this.pow = pow;
+        // this.velocity = maxVel;
+        // this.pow = pow;
 
         addRequirements(flywheel);
-    }
-
-    private double map(double v, double in_min, double in_max, double out_min, double out_max) {
-        return (v - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
     @Override

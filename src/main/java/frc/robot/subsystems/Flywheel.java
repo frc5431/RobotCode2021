@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import java.util.List;
 
 import com.ctre.phoenix.ErrorCode;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -113,7 +112,7 @@ public class Flywheel extends SubsystemBase {
 		// Get Flywheel PID error rate for analysis: Far
 		SmartDashboard.putNumber("Flywheel Error Rate Current", flywheel.getClosedLoopError());
 
-		SmartDashboard.putString("Flywheel At Velocity", (flywheel.getControlMode() == ControlMode.PercentOutput) ? "In PercentOutput Control Mode! No target velocity" : (atVelocity() + ""));
+		// SmartDashboard.putString("Flywheel At Velocity", (flywheel.getControlMode() == ControlMode.PercentOutput) ? "In PercentOutput Control Mode! No target velocity" : (atVelocity() + ""));
 		SmartDashboard.putString("Flywheel Control Mode", flywheel.getControlMode().toString());
 	}
 
@@ -130,10 +129,10 @@ public class Flywheel extends SubsystemBase {
 		// flywheel.selectProfileSlot(slot, Constants.REMOTE_0);
 	}
 
-	public void setSpeed(ControlMode mode, double speed) {
-		assert (mode != null);
-		flywheel.set(mode, speed);
-	}
+	// public void setSpeed(ControlMode mode, double speed) {
+	// 	assert (mode != null);
+	// 	flywheel.set(mode, speed);
+	// }
 
 	// public void set(Speeds speed) {
 	// 	setSpeed(ControlMode.PercentOutput, speed.getSpeed());
@@ -153,8 +152,8 @@ public class Flywheel extends SubsystemBase {
 	}
 
 	public boolean atVelocity() {
-		if (flywheel.getControlMode() == ControlMode.PercentOutput)
-			return false;
+		// if (flywheel.getControlMode() == ControlMode.PercentOutput)
+		// 	return false;
 
 		double targetVel = flywheel.getClosedLoopTarget();
 		SmartDashboard.putNumber("Flywheel Target", targetVel);

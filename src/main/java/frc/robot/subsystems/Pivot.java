@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -135,20 +133,20 @@ public class Pivot extends SubsystemBase {
     }
 
     public void setPivotLocation(POSITION pos) {
-        int horizontal = Constants.PIVOT_DOWN_LIMIT;
-        double ticksToDegrees = (
-                2048 // Encoder ticks per revolution
-                / 360 // Degrees in one revolution
-                ) * 100; // Effective gear ratio to account for degree turn
-        double currentPosition = getEncoderPosition();
-        double degrees = 
-                Math.abs(currentPosition - horizontal) // Distance (in ticks) between current encoder value and "down" value
-                / ticksToDegrees; // Convert ticks to degrees
-        double radians = Math.toRadians(degrees); // Convert degrees to radians to prepare for cosine
-        double CosineScalar = Math.cos(radians * Constants.PIVOT_COSINE_MULT); // Apply cosine to the degree measurement to get an inverse curve 
-                                                 // When pivot is horizontal, the degree measurement is 0 but the scalar is 1
-                                                 // When pivot is vertical, the degree measurement is about 60-90 but the scalar is very low (around 0)
-        double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
+        // int horizontal = Constants.PIVOT_DOWN_LIMIT;
+        // double ticksToDegrees = (
+        //         2048 // Encoder ticks per revolution
+        //         / 360 // Degrees in one revolution
+        //         ) * 100; // Effective gear ratio to account for degree turn
+        // double currentPosition = getEncoderPosition();
+        // double degrees = 
+        //         Math.abs(currentPosition - horizontal) // Distance (in ticks) between current encoder value and "down" value
+        //         / ticksToDegrees; // Convert ticks to degrees
+        // double radians = Math.toRadians(degrees); // Convert degrees to radians to prepare for cosine
+        // double CosineScalar = Math.cos(radians * Constants.PIVOT_COSINE_MULT); // Apply cosine to the degree measurement to get an inverse curve 
+        //                                          // When pivot is horizontal, the degree measurement is 0 but the scalar is 1
+        //                                          // When pivot is vertical, the degree measurement is about 60-90 but the scalar is very low (around 0)
+        // double maxGravity = Constants.PIVOT_AFFECT_GRAVITY;
 
         // pivotMotor.set(ControlMode.Position, pos.getValue(), // Set position to parameter, using the built-in PID
         //         DemandType.ArbitraryFeedForward, CosineScalar * maxGravity); // Apply a constant power to the closed-loop output

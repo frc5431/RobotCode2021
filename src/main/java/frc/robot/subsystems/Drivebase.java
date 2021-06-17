@@ -3,8 +3,6 @@ package frc.robot.subsystems;
 import java.util.List;
 
 import com.ctre.phoenix.ErrorCode;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
