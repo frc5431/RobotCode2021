@@ -8,6 +8,9 @@ public class MusicLoadCommand extends InstantCommand {
         OFFSET, ABSOLUTE, NAME
     }
 
+    public static final MusicLoadCommand NEXT_SONG(Music music)     { return MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1); }
+    public static final MusicLoadCommand PREVIOUS_SONG(Music music) { return MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1); }
+
     public static MusicLoadCommand createMusicLoadCommand(Music music, LoadType type, Object param) {
         if (type == LoadType.OFFSET)
             return new MusicLoadCommand(music, (int) param);

@@ -89,4 +89,14 @@ public class Robot extends TimedRobot {
     robotMap.disabled();
     performedEnabled = false;
   }
+
+  @Override
+  public void testInit() {
+    robotMap.testInit();
+  }
+
+  @Override
+  public void testPeriodic() {
+    robotMap.testPeriodic();
+  }
 }

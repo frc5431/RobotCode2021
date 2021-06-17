@@ -11,7 +11,6 @@ import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
 import frc.robot.commands.defaults.*;
 import frc.robot.commands.music.*;
-import frc.robot.commands.music.MusicLoadCommand.LoadType;
 import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
@@ -43,7 +42,7 @@ public class RobotMap {
 	public RobotMap() {
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
-		bindKeys();
+		// bindKeys();
 
 		printAutonChooser();
 
@@ -222,7 +221,7 @@ public class RobotMap {
 		// ||     Music Controls    ||
 		// ||                       ||
 		// ===========================
-		{	// Sample Music Controls
+		/*{	// Sample Music Controls
 			// Play
 			new JoystickButton(buttonBoard, 8).whenPressed(new MusicPlayCommand(music));
 			// Pause
@@ -231,10 +230,10 @@ public class RobotMap {
 			new JoystickButton(buttonBoard, 10).whenPressed(new MusicStopCommand(music));
 
 			// Advance song by 1
-			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, +1));
+			new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.NEXT_SONG(music));
 			// Decrement song by 1
-			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.createMusicLoadCommand(music, LoadType.OFFSET, -1));
-		}
+			new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
+		}*/
 	}
 
 	public void resetBallCount() {
@@ -285,5 +284,30 @@ public class RobotMap {
 	public void disabledPeriodic() {
 		resetEncoders();
 		printAutonChooser();
+	}
+
+	public void testInit() {
+		// ===========================
+		// ||                       ||
+		// ||     Music Controls    ||
+		// ||                       ||
+		// ===========================
+		{	// Sample Music Controls
+			// Play
+			new JoystickButton(buttonBoard, 8).whenPressed(new MusicPlayCommand(music));
+			// Pause
+			// new JoystickButton(buttonBoard, 9).whenPressed(new MusicPauseCommand(music));
+			// Stop
+			new JoystickButton(buttonBoard, 10).whenPressed(new MusicStopCommand(music));
+
+			// Advance song by 1
+			// new JoystickButton(buttonBoard, 13).whenPressed(MusicLoadCommand.NEXT_SONG(music));
+			// Decrement song by 1
+			// new JoystickButton(buttonBoard, 14).whenPressed(MusicLoadCommand.PREVIOUS_SONG(music));
+		}
+	}
+
+	public void testPeriodic() {
+
 	}
 }
