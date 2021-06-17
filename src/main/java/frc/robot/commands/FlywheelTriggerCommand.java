@@ -35,6 +35,10 @@ public class FlywheelTriggerCommand extends CommandBase {
         addRequirements(flywheel);
     }
 
+    // private double map(double v, double in_min, double in_max, double out_min, double out_max) {
+    //   return (v - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    // }
+
     @Override
     public void initialize() {
 		KILL = false;
