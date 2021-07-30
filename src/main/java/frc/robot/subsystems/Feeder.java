@@ -72,9 +72,9 @@ public class Feeder extends SubsystemBase {
 			SmartDashboard.putBoolean("DIO Sensor " + num, sensor.get());
 		});
 
-		ballUpdate();
+		// ballUpdate();
 
-		feederLoadAndShoot();
+		// feederLoadAndShoot();
 
 		if (15 <= pdp.getCurrent(Constants.FEEDER_PDP_SLOT)) {
 			// Slow down indexer

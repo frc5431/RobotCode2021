@@ -113,7 +113,7 @@ public class Pivot extends SubsystemBase {
         SmartDashboard.putString("Pivot Neutral Mode", nm.name());
 		if(12 <= pdp.getCurrent(Constants.PIVOT_PDP_SLOT)) {
 			// Slow down pivot
-			pivotMotor.set(0);
+			// pivotMotor.set(0);
 		}
 
         int horizontal = Constants.PIVOT_DOWN_LIMIT;
