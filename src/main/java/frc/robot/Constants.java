@@ -93,10 +93,10 @@ public final class Constants {
 	public static final double SHOOTER_FLYWHEEL_RAMPING_SPEED = 0.2500;
 	
     public static final double FLYWHEEL_VELOCITY_RANGE = 350;
-    public static final double FLYHWEEL_MAX_VELOCITY = 21800;
+    public static final double FLYHWEEL_MAX_VELOCITY = 15700; // 21800
     
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 18000;
-    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 19000; //11900
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_HIGH = 10500; // 18000
+    public static final int SHOOTER_FLYWHEEL_VELOCITY_LOW = 11000; // 19000 //11900
 
     public static final double SHOOTER_FLYWHEEL_COMMAND_WAIT = 0.5;
 
