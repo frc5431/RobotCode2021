@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -29,7 +28,7 @@ import frc.team5431.titan.core.misc.Logger;
  */
 public class Drivebase extends SubsystemBase {
 
-    private PigeonIMU pidgey;
+    // private PigeonIMU pidgey;
 
     private WPI_TalonFX left;
     private WPI_TalonFX right;
@@ -43,7 +42,7 @@ public class Drivebase extends SubsystemBase {
 
     public Drivebase(WPI_TalonFX frontLeft, WPI_TalonFX frontRight, WPI_TalonFX rearLeft, WPI_TalonFX rearRight) {
 
-        pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
+        // pidgey = new PigeonIMU(Constants.DRIVEBASE_PIGEON_IMU_ID);
 
         left = frontLeft;
         right = frontRight;
@@ -65,8 +64,8 @@ public class Drivebase extends SubsystemBase {
         assert (eCode == ErrorCode.OK);
         eCode = right.configFactoryDefault();
         assert (eCode == ErrorCode.OK);
-        eCode = pidgey.configFactoryDefault();
-        assert (eCode == ErrorCode.OK);
+        // eCode = pidgey.configFactoryDefault();
+        // assert (eCode == ErrorCode.OK);
 
         /* Set what state the motors will be at when the speed is at zero */
         left.setNeutralMode(Constants.DRIVEBASE_NEUTRAL_MODE);
@@ -91,9 +90,9 @@ public class Drivebase extends SubsystemBase {
         eCode = right.configRemoteFeedbackFilter(left.getDeviceID(), RemoteSensorSource.TalonFX_SelectedSensor,
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
         assert (eCode == ErrorCode.OK);
-        eCode = right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
-                Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
-        assert (eCode == ErrorCode.OK);
+        // eCode = right.configRemoteFeedbackFilter(pidgey.getDeviceID(), RemoteSensorSource.Pigeon_Yaw,
+        //         Constants.DRIVEBASE_MOTIONMAGIC_TURN_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
+        // assert (eCode == ErrorCode.OK);
 
         eCode = right.configSelectedFeedbackSensor(FeedbackDevice.SensorSum,
                 Constants.DRIVEBASE_MOTIONMAGIC_DRIVE_REMOTE, Constants.DRIVEBASE_TIMEOUT_MS);
@@ -157,7 +156,7 @@ public class Drivebase extends SubsystemBase {
     private void zeroGyro() {
         zeroDistance();
 
-        pidgey.setYaw(0);
+        // pidgey.setYaw(0);
     }
 
     @Override
@@ -210,9 +209,9 @@ public class Drivebase extends SubsystemBase {
         Logger.l("Distance: %f, Angle: %f", distance, angle);
     }
 
-    public float getHeading() {
-        return (float) pidgey.getCompassHeading();
-    }
+    // public float getHeading() {
+    //     return (float) pidgey.getCompassHeading();
+    // }
 
     public void setRamping(double ramping) {
         this.ramping = ramping;
