@@ -6,7 +6,7 @@ import java.util.List;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -44,9 +44,9 @@ public class Feeder extends SubsystemBase {
 	boolean readyToShoot = false;
 	boolean readyToLoad = false;
 	boolean shooting = false;
-	private final PowerDistributionPanel pdp;
+	private final PowerDistribution pdp;
 
-	public Feeder(PowerDistributionPanel pdp, WPI_TalonFX feeder) {
+	public Feeder(PowerDistribution pdp, WPI_TalonFX feeder) {
 		this.pdp = pdp;
 
 		feed = feeder;

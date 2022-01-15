@@ -167,7 +167,7 @@ public class Flywheel extends SubsystemBase {
 
 	public double getTargetVelocity() {
 		double curr = flywheel.getSelectedSensorVelocity();
-		if (DriverStation.getInstance().isEnabled())
+		if (DriverStation.isEnabled())
 			Logger.l("Retriving Flywheel Target: %f", curr);
 		return curr;
 	}

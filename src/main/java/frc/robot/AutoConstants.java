@@ -1,6 +1,6 @@
 package frc.robot;
 
-import edu.wpi.first.wpiutil.math.Pair;
+import edu.wpi.first.math.Pair;
 
 /**
  * @author Ryan Hirasaki

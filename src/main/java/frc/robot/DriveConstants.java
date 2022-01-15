@@ -1,6 +1,6 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
  * @author Ryan Hirasaki

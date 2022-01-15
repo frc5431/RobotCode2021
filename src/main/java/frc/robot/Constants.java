@@ -3,7 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 
 /**
  * Haha, the names are there because literally everyone on programming has touched Constants.

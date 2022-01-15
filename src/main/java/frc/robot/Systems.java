@@ -5,7 +5,7 @@ import java.util.List;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.*;
@@ -35,7 +35,7 @@ public class Systems {
 
 	private final WPI_TalonFX pivot_Falcon;
 
-	private final PowerDistributionPanel pdp;
+	private final PowerDistribution pdp;
 
 	private final Balancer balancer;
 	private final Drivebase drivebase;
@@ -73,8 +73,8 @@ public class Systems {
 
 		final String constucting = "Constructing %s Object!";
 
-		Logger.l(constucting, "PowerDistributionPanel");
-		pdp = new PowerDistributionPanel();
+		Logger.l(constucting, "PowerDistribution");
+		pdp = new PowerDistribution();
 
 		// Independent Subsystems
 		Logger.l(constucting, "Balancer");
@@ -177,7 +177,7 @@ public class Systems {
 	/**
 	 * @return the pdp
 	 */
-	public PowerDistributionPanel getPdp() {
+	public PowerDistribution getPdp() {
 		return pdp;
 	}
 

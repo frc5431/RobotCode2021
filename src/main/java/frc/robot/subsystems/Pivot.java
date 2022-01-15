@@ -7,8 +7,8 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -40,11 +40,11 @@ public class Pivot extends SubsystemBase {
     private POSITION position = POSITION.UP;
 
 	private PIDController pidController;
-	private final PowerDistributionPanel pdp;
+	private final PowerDistribution pdp;
 
     private NeutralMode nm;
 
-    public Pivot(PowerDistributionPanel pdp, WPI_TalonFX pivotMotor) {
+    public Pivot(PowerDistribution pdp, WPI_TalonFX pivotMotor) {
 		this.pdp = pdp;
         this.pivotMotor = pivotMotor;
         this.pivotMotor.setInverted(Constants.PIVOT_REVERSE);

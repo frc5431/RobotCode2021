@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Logger.DEBUG = true;
     robotMap = new RobotMap();
-    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
     robotMap.printAutonChooser();
     robotMap.disabled();
   }
