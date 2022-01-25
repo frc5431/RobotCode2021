@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.net.URI;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -14,6 +16,7 @@ import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.ShootPosition;
+import frc.robot.util.WebsocketButtonPad;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
 import frc.team5431.titan.core.misc.Logger;
@@ -32,11 +35,15 @@ public class RobotMap {
 	private final Joystick buttonBoard = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
+	protected WebsocketButtonPad launchpad;
+
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
 	public RobotMap() {
+		setupLaunchpad();
+
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
 		bindKeys();
@@ -142,11 +149,15 @@ public class RobotMap {
 		// ===========================
 		{
 			// Indexer Up
-			new POVButton(operator, 0).whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+			// new POVButton(operator, 0)
+			this.launchpad.getButtonInstance(1, 1)
+					.whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
 					.whenReleased(new FeederCommand(systems, 0, false));
 
 			// Indexer Down
-			new POVButton(operator, 180).whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+			// new POVButton(operator, 180)
+			this.launchpad.getButtonInstance(2, 1)
+					.whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
 					.whenReleased(new FeederCommand(systems, 0, false));
 
 			// Trigger Flywheel (Shoot Far)
@@ -208,6 +219,40 @@ public class RobotMap {
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
+		}
+	}
+
+	public void setupLaunchpad() {
+		try {
+			launchpad = new WebsocketButtonPad(new URI(
+				"ws://10.54.31.507:5802"
+			));
+			launchpad.connect();
+		} catch (Exception e) {
+			System.out.println("Websocket failure: ");
+			e.printStackTrace();
+		}
+	}
+
+	public void connectLaunchpad() {
+		if (launchpad == null) {
+			try {
+				launchpad = new WebsocketButtonPad(new URI(
+					"ws://10.54.31.507:5802"
+				));
+			} catch (Exception e) {
+				System.out.println("Websocket URI failure");
+			}
+		}
+		if(!launchpad.isOpen()){
+			try {
+				launchpad.connect();
+			} catch (Exception e) {
+				System.out.println("Websocket connection failure");
+			}
+		}
+		else {
+			System.out.println("Websocket connected");
 		}
 	}
 
