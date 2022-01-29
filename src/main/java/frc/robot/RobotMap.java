@@ -1,6 +1,7 @@
 package frc.robot;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +43,14 @@ public class RobotMap {
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
 	public RobotMap() {
+		try {
+			launchpad = new WebsocketButtonPad(new URI(
+					"ws://10.54.31.507:5802"
+			));
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
 		setupLaunchpad();
 
 		limelight.setLEDState(LEDState.DEFAULT);
@@ -224,9 +233,6 @@ public class RobotMap {
 
 	public void setupLaunchpad() {
 		try {
-			launchpad = new WebsocketButtonPad(new URI(
-				"ws://10.54.31.507:5802"
-			));
 			launchpad.connect();
 		} catch (Exception e) {
 			System.out.println("Websocket failure: ");
@@ -236,13 +242,7 @@ public class RobotMap {
 
 	public void connectLaunchpad() {
 		if (launchpad == null) {
-			try {
-				launchpad = new WebsocketButtonPad(new URI(
-					"ws://10.54.31.507:5802"
-				));
-			} catch (Exception e) {
-				System.out.println("Websocket URI failure");
-			}
+			throw new RuntimeException("Launchpad is null, cannot connect!");
 		}
 		if(!launchpad.isOpen()){
 			try {

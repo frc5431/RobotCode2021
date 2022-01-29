@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class WebsocketButton extends JoystickButton {
 
-    private static final GenericHID m_joystick = null;
+    private static final GenericHID m_joystick = new GenericHID(-1);
     private boolean buttonState = false;
 
     WebsocketButton() {
