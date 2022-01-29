@@ -53,7 +53,7 @@ public class WebsocketButtonPad extends WebSocketClient {
 
 	@Override
 	public void onClose( int code, String reason, boolean remote ) {
-        System.out.println("Closing button server");
+        System.out.println("Closing button server: " + reason);
     }
 
 	@Override
