@@ -43,15 +43,15 @@ public class RobotMap {
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
 
 	public RobotMap() {
-		try {
-			launchpad = new WebsocketButtonPad(new URI(
-					"ws://10.54.31.507:5802"
-			));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// 	launchpad = new WebsocketButtonPad(new URI(
+		// 			"ws://10.54.31.57:5802"
+		// 	));
+		// } catch (URISyntaxException e) {
+		// 	e.printStackTrace();
+		// }
 
-		setupLaunchpad();
+		// setupLaunchpad();
 
 		limelight.setLEDState(LEDState.DEFAULT);
 		limelight.setPipeline(9);
@@ -158,14 +158,14 @@ public class RobotMap {
 		// ===========================
 		{
 			// Indexer Up
-			// new POVButton(operator, 0)
-			this.launchpad.getButtonInstance(1, 1)
+			new POVButton(operator, 0)
+			// this.launchpad.getButtonInstance(1, 1)
 					.whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
 					.whenReleased(new FeederCommand(systems, 0, false));
 
 			// Indexer Down
-			// new POVButton(operator, 180)
-			this.launchpad.getButtonInstance(2, 1)
+			new POVButton(operator, 180)
+			// this.launchpad.getButtonInstance(2, 1)
 					.whenPressed(new FeederCommand(systems, Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
 					.whenReleased(new FeederCommand(systems, 0, false));
 
@@ -224,7 +224,7 @@ public class RobotMap {
 			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
 			systems.getDrivebase().setDefaultCommand(new DefaultDrive(systems,
-					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y)*0.5,() -> -driver.getRawAxis(Xbox.Axis.LEFT_X)*0.5));
+					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
