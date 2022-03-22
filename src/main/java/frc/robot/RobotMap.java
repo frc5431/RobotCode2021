@@ -1,8 +1,5 @@
 package frc.robot;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
@@ -17,7 +14,6 @@ import frc.robot.commands.states.*;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.ShootPosition;
-import frc.robot.util.WebsocketButtonPad;
 import frc.team5431.titan.core.joysticks.*;
 import frc.team5431.titan.core.joysticks.LogitechExtreme3D.Axis;
 import frc.team5431.titan.core.misc.Logger;
@@ -33,10 +29,10 @@ public class RobotMap {
 	private final Systems systems = new Systems();
 
 	private final Xbox driver = new Xbox(0);
-	private final Joystick buttonBoard = new Joystick(1);
+	//private final Joystick vjoy = new Joystick(1);
 	private final LogitechExtreme3D operator = new LogitechExtreme3D(2);
 
-	protected WebsocketButtonPad launchpad;
+	private final Joystick vjoy = new Joystick(4);
 
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
@@ -102,30 +98,30 @@ public class RobotMap {
 		// ===========================
 		{
 			// Human Player Intake (Feeder Intake)
-			new JoystickButton(buttonBoard, 11).toggleWhenPressed(new HumanPlayerIntake(systems));
+			new JoystickButton(vjoy, 1).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(buttonBoard, 4).toggleWhenPressed(new FloorIntakeCommand(systems));
+			new JoystickButton(vjoy, 2).toggleWhenPressed(new FloorIntakeCommand(systems));
 
 
 			// Pivot Down
-			new JoystickButton(buttonBoard, 6).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
+			new JoystickButton(vjoy, 3).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
 
 			// Pivot Up
-			new JoystickButton(buttonBoard, 5).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
+			new JoystickButton(vjoy, 4).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
 
 			// Vision Far
 			// new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
 
 			// Vision Close
-			new JoystickButton(buttonBoard, 7).whenPressed(new Targetor(systems, limelight));
+			new JoystickButton(vjoy, 5).whenPressed(new Targetor(systems, limelight));
 
 			// Shoot Close
-			new JoystickButton(buttonBoard, 1)
+			new JoystickButton(vjoy, 6)
 					.whenHeld(new ShootSuperCommand(systems, ShootPosition.CLOSE, false));
 
 			// Shoot Far
-			new JoystickButton(buttonBoard, 14)
+			new JoystickButton(vjoy, 7)
 					.whenHeld(new ShootSuperCommand(systems, ShootPosition.FAR, false));
 
 			// Intake (By itself)
@@ -144,7 +140,7 @@ public class RobotMap {
 			// new JoystickButton(buttonBoard, 13);
 
 			// Stow
-			new JoystickButton(buttonBoard, 12)
+			new JoystickButton(vjoy, 8)
 					.whenPressed(new StowSuperCommand(systems));
 
 			// Auto Switch
@@ -228,31 +224,6 @@ public class RobotMap {
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
-		}
-	}
-
-	public void setupLaunchpad() {
-		try {
-			launchpad.connect();
-		} catch (Exception e) {
-			System.out.println("Websocket failure: ");
-			e.printStackTrace();
-		}
-	}
-
-	public void connectLaunchpad() {
-		if (launchpad == null) {
-			throw new RuntimeException("Launchpad is null, cannot connect!");
-		}
-		if(!launchpad.isOpen()){
-			try {
-				launchpad.connect();
-			} catch (Exception e) {
-				System.out.println("Websocket connection failure");
-			}
-		}
-		else {
-			System.out.println("Websocket connected");
 		}
 	}
 
