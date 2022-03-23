@@ -101,23 +101,23 @@ public class RobotMap {
 			// new JoystickButton(vjoy, 1).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(vjoy, 1).toggleWhenPressed(new FloorIntakeCommand(systems));
+			new JoystickButton(vjoy, 11).toggleWhenPressed(new FloorIntakeCommand(systems));
 
 
 			// Pivot Down
-			new JoystickButton(vjoy, 3).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
+			new JoystickButton(vjoy, 4).whenPressed(new PivotCommand(systems, Pivot.POSITION.DOWN));
 
 			// Pivot Up
-			new JoystickButton(vjoy, 4).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
+			new JoystickButton(vjoy, 3).whenPressed(new PivotCommand(systems, Pivot.POSITION.UP));
 
 			// Vision Far
 			// new JoystickButton(buttonBoard, 3).whenHeld(new Targetor(drivebase, limelight));
 
 			// Vision Close
-			new JoystickButton(vjoy, 5).whenPressed(new Targetor(systems, limelight));
+			//new JoystickButton(vjoy, 5).whenPressed(new Targetor(systems, limelight));
 
 			// Shoot Close
-			new JoystickButton(vjoy, 6)
+			new JoystickButton(vjoy, 8)
 					.whenHeld(new ShootSuperCommand(systems, ShootPosition.CLOSE, false));
 
 			// Shoot Far
@@ -140,7 +140,7 @@ public class RobotMap {
 			// new JoystickButton(buttonBoard, 13);
 
 			// Stow
-			new JoystickButton(vjoy, 8)
+			new JoystickButton(vjoy, 13)
 					.whenPressed(new StowSuperCommand(systems));
 
 			// Auto Switch
