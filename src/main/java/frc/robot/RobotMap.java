@@ -98,10 +98,10 @@ public class RobotMap {
 		// ===========================
 		{
 			// Human Player Intake (Feeder Intake)
-			new JoystickButton(vjoy, 1).toggleWhenPressed(new HumanPlayerIntake(systems));
+			// new JoystickButton(vjoy, 1).toggleWhenPressed(new HumanPlayerIntake(systems));
 
 			// Floor Intake
-			new JoystickButton(vjoy, 2).toggleWhenPressed(new FloorIntakeCommand(systems));
+			new JoystickButton(vjoy, 1).toggleWhenPressed(new FloorIntakeCommand(systems));
 
 
 			// Pivot Down
@@ -166,7 +166,8 @@ public class RobotMap {
 					.whenReleased(new FeederCommand(systems, 0, false));
 
 			// Trigger Flywheel (Shoot Far)
-			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
+			// new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
+			new JoystickButton(vjoy, 1)
 					.whenHeld(new FlywheelTriggerCommand(systems, Constants.FLYHWEEL_MAX_VELOCITY, () -> -operator.getRawAxis(Axis.SLIDER)))
 					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
