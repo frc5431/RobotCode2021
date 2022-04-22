@@ -156,7 +156,7 @@ public class RobotMap {
 			// Indexer Up
 			new POVButton(operator, 0)
 			// this.launchpad.getButtonInstance(1, 1)
-					.whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, false))
+					.whenPressed(new FeederCommand(systems, -Constants.SHOOTER_FEEDER_DEFAULT_SPEED, true))
 					.whenReleased(new FeederCommand(systems, 0, false));
 
 			// Indexer Down
@@ -167,7 +167,7 @@ public class RobotMap {
 
 			// Trigger Flywheel (Shoot Far)
 			// new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
-			new JoystickButton(vjoy, 1)
+			new JoystickButton(operator, LogitechExtreme3D.Button.TRIGGER.ordinal() + 1)
 					.whenHeld(new FlywheelTriggerCommand(systems, Constants.FLYHWEEL_MAX_VELOCITY, () -> -operator.getRawAxis(Axis.SLIDER)))
 					.whenReleased(new FlywheelCommand(systems, Flywheel.Velocity.OFF));
 
@@ -195,6 +195,10 @@ public class RobotMap {
 			// Two Intake
 			new JoystickButton(operator, LogitechExtreme3D.Button.TWO.ordinal() + 1)
 					.whenHeld(new IntakeCommand(systems, 1));
+			
+			// Four Floor Intake
+			new JoystickButton(operator, LogitechExtreme3D.Button.FOUR.ordinal() + 1)
+					.toggleWhenPressed(new FloorIntakeCommand(systems));
 
 			// Vision Far 11
 			new JoystickButton(operator, 11).whenHeld(new Targetor(systems, limelight));
