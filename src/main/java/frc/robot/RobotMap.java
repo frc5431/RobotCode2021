@@ -256,6 +256,7 @@ public class RobotMap {
 	}
 
 	public void enabled() {
+		systems.getLed().set(Constants.BLINKIN_DEFAULT_PATTERN);
 		systems.getPivot().setNeutralMode(Constants.PIVOT_DRIVEMODE);
 		Logger.l("enabled!");
 	}

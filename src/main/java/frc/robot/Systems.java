@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.*;
+import frc.team5431.titan.core.leds.Blinkin;
 import frc.team5431.titan.core.misc.Logger;
 
 public class Systems {
@@ -45,6 +46,8 @@ public class Systems {
 	private final Hopper hopper;
 	private final Intake intake;
 	private final Pivot pivot;
+
+	private final Blinkin led;
 
 	private final List<SubsystemBase> subsystems;
 
@@ -101,6 +104,9 @@ public class Systems {
 
 		Logger.l(constucting, "Pivot");
 		pivot = new Pivot(pdp, pivot_Falcon);
+		
+		Logger.l(constucting, "LEDs");
+		led = new Blinkin(0, Constants.BLINKIN_DEFAULT_PATTERN);
 
 		subsystems = List.of(
 			balancer, drivebase, elevator, flywheel, hopper, intake, feeder, pivot
@@ -179,6 +185,10 @@ public class Systems {
 	 */
 	public PowerDistribution getPdp() {
 		return pdp;
+	}
+
+	public Blinkin getLed() {
+		return led;
 	}
 
 	/**

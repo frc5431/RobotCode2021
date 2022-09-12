@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.util.MotionMagic;
+import frc.team5431.titan.core.leds.BlinkinPattern;
 import edu.wpi.first.math.controller.PIDController;
 
 /**
@@ -142,6 +143,10 @@ public final class Constants {
     public static final NeutralMode HOPPER_NEUTRALMODE = NeutralMode.Coast;
     public static final double HOPPER_LEFT_SPEED = 0.5;
     public static final double HOPPER_RIGHT_SPEED = 0.3;
+
+    public static final int BLINKIN_SLOT = 0;
+    public static final BlinkinPattern BLINKIN_DEFAULT_PATTERN = BlinkinPattern.LIGHT_CHASE_BLUE;
+
     // ================================================================================
     // Vision Data
     // ================================================================================

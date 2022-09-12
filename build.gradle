@@ -75,7 +75,7 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.12'
-    implementation 'com.github.frc5431:titanutil:2022.1.1.2'
+    implementation 'com.github.frc5431:titanutil:2022.4.1.3'
     implementation "org.java-websocket:Java-WebSocket:1.3.9"
     implementation "org.rjung.util:launchpad:1.0"
 }
