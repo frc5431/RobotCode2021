@@ -42,13 +42,13 @@ public class Elevator extends SubsystemBase {
 
         // If Going down set a lower limit of a encoder value of the constant lower limit
         if (speed <= 0 && encoder < Constants.CLIMBER_ELEVATOR_LOWER_LIMIT) {
-            speed = 0;
+            // speed = 0;
             limitReached = true;
         }
 
         // If Going up set a upper limit of a encoder value of the constant upper limit
         else if (speed >= 0 && encoder > Constants.CLIMBER_ELEVATOR_UPPER_LIMIT) {
-            speed = 0;
+            // speed = 0;
             limitReached = true;
         }
 
