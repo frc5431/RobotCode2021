@@ -56,10 +56,7 @@ public class RobotMap {
 		bindKeys();
 
 		printAutonChooser();
-
-		driveMode.setDefaultOption("Arcade", DriveMode.ARCADE);
-		driveMode.addOption("Tank", DriveMode.TANK);
-		SmartDashboard.putData("Drive mode", driveMode);
+		printDriveModeChooser();
     }
 
 	public void printAutonChooser() {
@@ -67,6 +64,12 @@ public class RobotMap {
 		chooser.addOption("Drive forward", AutonStates.DRIVE_FORWARD);
 		chooser.addOption("Drive forward, backward", AutonStates.DRIVE_FORWARD_BACKWARD);
 		SmartDashboard.putData("Auton Select", chooser);
+	}
+
+	public void printDriveModeChooser() {
+		driveMode.setDefaultOption("Arcade", DriveMode.ARCADE);
+		driveMode.addOption("Tank", DriveMode.TANK);
+		SmartDashboard.putData("Drive mode", driveMode);
 	}
 
 	private void bindKeys() {
