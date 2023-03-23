@@ -10,6 +10,7 @@ import frc.robot.auton.DriveForward;
 import frc.robot.auton.DriveForwardBackward;
 import frc.robot.commands.*;
 import frc.robot.commands.defaults.*;
+import frc.robot.commands.defaults.DefaultDrive.DriveMode;
 import frc.robot.commands.subsystems.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.ShootPosition;
@@ -37,6 +38,7 @@ public class RobotMap {
 	private final Limelight limelight = new Limelight(Constants.VISION_FRONT_LIMELIGHT);
 
 	SendableChooser<AutonStates> chooser = new SendableChooser<>();
+	SendableChooser<DriveMode> driveMode = new SendableChooser<>();
 
 	public RobotMap() {
 		// try {
@@ -54,6 +56,10 @@ public class RobotMap {
 		bindKeys();
 
 		printAutonChooser();
+
+		driveMode.setDefaultOption("Arcade", DriveMode.ARCADE);
+		driveMode.addOption("Tank", DriveMode.TANK);
+		SmartDashboard.putData("Drive mode", driveMode);
     }
 
 	public void printAutonChooser() {
@@ -226,7 +232,10 @@ public class RobotMap {
 			driver.setDeadzone(Constants.DRIVER_XBOX_DEADZONE);
 
 			systems.getDrivebase().setDefaultCommand(new DefaultDrive(systems,
-					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.LEFT_X)));
+					driveMode::getSelected,
+					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.LEFT_X), // arcade
+					() -> -driver.getRawAxis(Xbox.Axis.LEFT_Y),() -> -driver.getRawAxis(Xbox.Axis.RIGHT_Y) // tank
+			));
 
 			systems.getElevator().setDefaultCommand(new DefaultElevator(systems,
 					() -> driver.getRawAxis(Xbox.Axis.TRIGGER_RIGHT) - driver.getRawAxis(Xbox.Axis.TRIGGER_LEFT)));
