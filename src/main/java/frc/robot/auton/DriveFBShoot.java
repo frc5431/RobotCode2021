@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.AutoConstants;
 import frc.robot.Systems;
 import frc.robot.commands.DriveTime;
-import frc.robot.commands.states.ShootSuperCommand;
 import frc.robot.util.ShootPosition;
 import frc.team5431.titan.core.vision.Limelight;
+import static frc.robot.commands.CommandGroups.ShootSuperCommand;
 
 /**
  * @author Rishmita Rao
@@ -21,7 +21,7 @@ public class DriveFBShoot extends SequentialCommandGroup {
             new WaitCommand(AutoConstants.WAIT_TIMEOUT),
             new DriveTime(systems, AutoConstants.BACKWARD_AUTO.getFirst(), AutoConstants.BACKWARD_AUTO.getSecond()),
             new WaitCommand(AutoConstants.WAIT_TIMEOUT),
-			new ShootSuperCommand(systems, ShootPosition.AUTON, false)
+			ShootSuperCommand(systems, ShootPosition.AUTON, false)
 		);
 	}
 }
